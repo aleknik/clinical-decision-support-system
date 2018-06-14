@@ -7,9 +7,7 @@ public final class RoleConstants {
 
     public static final String ADMIN = "ADMIN_ROLE";
 
-    public static final String OPERATOR = "OPERATOR_ROLE";
-
-    public static final String USER = "USER_ROLE";
+    public  static  final String DOCTOR = "DOCTOR_ROLE";
 
     private RoleConstants() {
     }
