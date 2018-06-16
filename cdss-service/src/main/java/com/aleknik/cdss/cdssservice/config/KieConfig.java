@@ -3,7 +3,6 @@ package com.aleknik.cdss.cdssservice.config;
 import org.kie.api.KieServices;
 import org.kie.api.builder.KieScanner;
 import org.kie.api.runtime.KieContainer;
-import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,17 +19,14 @@ public class KieConfig {
     @Value("${rules.version}")
     private String version;
 
-    @Value("${rules.sessionName}")
-    private String sessionName;
-
     @Bean
-    public KieSession kieSession() {
+    public KieContainer kieSession() {
         final KieServices kieServices = KieServices.Factory.get();
 
         final KieContainer kieContainer = kieServices.newKieContainer(kieServices.newReleaseId(groupId, artifactId, version));
         final KieScanner kieScanner = kieServices.newKieScanner(kieContainer);
         kieScanner.start(10000);
 
-        return kieContainer.newKieSession(sessionName);
+        return kieContainer;
     }
 }

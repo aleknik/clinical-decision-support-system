@@ -1,6 +1,6 @@
 package com.aleknik.cdss.cdssservice.model;
 
-public enum GroupEnum {
+public enum DiseaseGroup {
     FIRST,
     SECOND,
     THIRD

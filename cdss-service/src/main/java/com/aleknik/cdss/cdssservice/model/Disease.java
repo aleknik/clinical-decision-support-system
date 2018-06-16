@@ -1,6 +1,7 @@
 package com.aleknik.cdss.cdssservice.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -13,19 +14,24 @@ public class Disease {
     private String name;
 
     @Enumerated(EnumType.STRING)
-    private GroupEnum group;
+    private DiseaseGroup diseaseGroup;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(name = "general_symptom",
             joinColumns = @JoinColumn(name = "disease_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "symptom_id", referencedColumnName = "id"))
-    private Set<Symptom> generalSymptoms;
+    private Set<Symptom> generalSymptoms = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(name = "specific_symptom",
             joinColumns = @JoinColumn(name = "disease_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "symptom_id", referencedColumnName = "id"))
-    private Set<Symptom> specificSymptoms;
+    private Set<Symptom> specificSymptoms = new HashSet<>();
+
+    public Disease(String name, DiseaseGroup diseaseGroup) {
+        this.name = name;
+        this.diseaseGroup = diseaseGroup;
+    }
 
     public long getId() {
         return id;
@@ -59,12 +65,12 @@ public class Disease {
         this.specificSymptoms = specificSymptoms;
     }
 
-    public GroupEnum getGroup() {
-        return group;
+    public DiseaseGroup getDiseaseGroup() {
+        return diseaseGroup;
     }
 
-    public void setGroup(GroupEnum group) {
-        this.group = group;
+    public void setDiseaseGroup(DiseaseGroup diseaseGroup) {
+        this.diseaseGroup = diseaseGroup;
     }
 
     @Override

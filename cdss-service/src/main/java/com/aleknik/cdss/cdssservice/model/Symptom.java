@@ -1,9 +1,6 @@
 package com.aleknik.cdss.cdssservice.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Symptom {
@@ -13,6 +10,14 @@ public class Symptom {
     private long id;
 
     private String name;
+
+    @Enumerated(EnumType.STRING)
+    private SymptomType symptomType;
+
+    public Symptom(String name, SymptomType symptomType) {
+        this.name = name;
+        this.symptomType = symptomType;
+    }
 
     public long getId() {
         return id;
@@ -28,6 +33,14 @@ public class Symptom {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public SymptomType getSymptomType() {
+        return symptomType;
+    }
+
+    public void setSymptomType(SymptomType symptomType) {
+        this.symptomType = symptomType;
     }
 
     @Override
