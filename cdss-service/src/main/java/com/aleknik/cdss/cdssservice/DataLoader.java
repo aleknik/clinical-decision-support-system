@@ -5,7 +5,6 @@ import com.aleknik.cdss.cdssservice.repository.DiseaseRepository;
 import com.aleknik.cdss.cdssservice.repository.SymptomRepository;
 import com.aleknik.cdss.cdssservice.repository.UserRepository;
 import com.aleknik.cdss.cdssservice.security.RoleConstants;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,7 +24,6 @@ public class DataLoader implements ApplicationRunner {
 
     private final  DiseaseRepository diseaseRepository;
 
-    @Autowired
     public DataLoader(UserRepository userRepository,
                       PasswordEncoder passwordEncoder,
                       SymptomRepository symptomRepository,

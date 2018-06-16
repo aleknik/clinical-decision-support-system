@@ -28,9 +28,16 @@ public class Disease {
             inverseJoinColumns = @JoinColumn(name = "symptom_id", referencedColumnName = "id"))
     private Set<Symptom> specificSymptoms = new HashSet<>();
 
+    public Disease() {
+    }
+
     public Disease(String name, DiseaseGroup diseaseGroup) {
         this.name = name;
         this.diseaseGroup = diseaseGroup;
+    }
+
+    public int getSymptomCount() {
+        return generalSymptoms.size() + specificSymptoms.size();
     }
 
     public long getId() {

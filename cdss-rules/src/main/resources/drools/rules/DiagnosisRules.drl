@@ -1,0 +1,68 @@
+import com.aleknik.cdss.cdssservice.model.Patient;
+import com.aleknik.cdss.cdssservice.model.Disease;
+import com.aleknik.cdss.cdssservice.model.DiseaseGroup;
+import com.aleknik.cdss.cdssservice.model.Symptom;
+import com.aleknik.cdss.cdssservice.model.dto.DiagnosisResultDto;
+import com.aleknik.cdss.cdssservice.model.dto.SymptomListDto;
+import com.aleknik.cdss.cdssservice.model.dto.DiseaseCandidate;
+import java.util.List;
+
+//rule "test rule"
+//    when
+//        $patient: Patient()
+//        $result: DiagnosisResultDto()
+//    then
+//        modify($result){ getDiseases().add(new Disease());  }
+//end
+
+
+rule "First group disease candidates"
+    salience 100
+    when
+        $patient: Patient()
+        $result: DiagnosisResultDto()
+        $symptoms: SymptomListDto()
+        $disease: Disease( diseaseGroup == DiseaseGroup.FIRST, $general: generalSymptoms, $specific: specificSymptoms)
+        Number($generalCount: intValue) from accumulate(
+            $s: Symptom( $symptoms.contains(id) ) from $general,
+            count()
+        )
+        Number($specificCount: intValue + $generalCount >= 4) from accumulate(
+            $s: Symptom( $symptoms.contains(id) ) from $specific,
+            count()
+        )
+    then
+    System.out.println($disease.getName() + " --- " + $generalCount + " " + $specificCount);
+        insert(new DiseaseCandidate($disease, $generalCount, $specificCount));
+end
+
+rule "First group disease all symptoms"
+    salience 50
+    when
+        $result: DiagnosisResultDto($found: diseases)
+        not Disease(diseaseGroup == DiseaseGroup.FIRST) from $found
+        $candidates: List() from collect(DiseaseCandidate(disease.diseaseGroup == DiseaseGroup.FIRST))
+        DiseaseCandidate($disease: disease, getSymptomCount() == disease.getSymptomCount()) from $candidates
+    then
+        modify($result){
+            getDiseases().add($disease);
+        }
+ end
+
+rule "First group disease max symptoms"
+ salience 50
+// lock-on-active
+ when
+     $result: DiagnosisResultDto($found: diseases)
+     not Disease(diseaseGroup == DiseaseGroup.FIRST) from $found
+     $candidates: List() from collect(DiseaseCandidate(disease.diseaseGroup == DiseaseGroup.FIRST))
+     not DiseaseCandidate(getSymptomCount() == disease.getSymptomCount()) from $candidates
+
+     DiseaseCandidate($disease: disease, $maxSymptomCount: getSymptomCount()) from $candidates
+     not DiseaseCandidate(getSymptomCount() > $maxSymptomCount) from $candidates
+
+ then
+     modify($result){
+         getDiseases().add($disease);
+     }
+end

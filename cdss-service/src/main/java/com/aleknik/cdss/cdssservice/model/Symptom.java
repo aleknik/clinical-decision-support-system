@@ -14,6 +14,9 @@ public class Symptom {
     @Enumerated(EnumType.STRING)
     private SymptomType symptomType;
 
+    public Symptom() {
+    }
+
     public Symptom(String name, SymptomType symptomType) {
         this.name = name;
         this.symptomType = symptomType;
