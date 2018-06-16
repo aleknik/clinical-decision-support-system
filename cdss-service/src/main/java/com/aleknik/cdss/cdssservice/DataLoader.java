@@ -22,7 +22,7 @@ public class DataLoader implements ApplicationRunner {
 
     private final SymptomRepository symptomRepository;
 
-    private final  DiseaseRepository diseaseRepository;
+    private final DiseaseRepository diseaseRepository;
 
     public DataLoader(UserRepository userRepository,
                       PasswordEncoder passwordEncoder,
@@ -67,10 +67,8 @@ public class DataLoader implements ApplicationRunner {
         symptomRepository.save(symptom12);
         Symptom symptom13 = new Symptom("Oticanje oko očiju", SymptomType.SIMPLE);
         symptomRepository.save(symptom13);
-        Symptom symptom14 = new Symptom("Oticanje oko očiju", SymptomType.SIMPLE);
+        Symptom symptom14 = new Symptom("Bolovao od prehlade ili groznice u poslednjih 60 dana.", SymptomType.COMPLEX);
         symptomRepository.save(symptom14);
-        Symptom symptom15 = new Symptom("Bolovao od prehlade ili groznice u poslednjih 60 dana.", SymptomType.COMPLEX);
-        symptomRepository.save(symptom15);
 
         // Disease
         Disease disease1 = new Disease("Prehlada", DiseaseGroup.FIRST);
@@ -109,11 +107,8 @@ public class DataLoader implements ApplicationRunner {
         disease4.getGeneralSymptoms().add(symptom2);
         disease4.getGeneralSymptoms().add(symptom6);
         disease4.getGeneralSymptoms().add(symptom5);
-        disease4.getSpecificSymptoms().add(symptom15);
+        disease4.getSpecificSymptoms().add(symptom14);
         diseaseRepository.save(disease4);
-
-
-
     }
 
     private void initializeUser(String username, String password, String roleName) {

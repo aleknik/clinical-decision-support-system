@@ -1,6 +1,5 @@
 package com.aleknik.cdss.cdssservice.controller.exception.resolver;
 
-
 import com.aleknik.cdss.cdssservice.controller.exception.AuthorizationException;
 import com.aleknik.cdss.cdssservice.controller.exception.BadRequestException;
 import com.aleknik.cdss.cdssservice.controller.exception.ForbiddenException;
@@ -12,8 +11,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-
-import java.util.regex.PatternSyntaxException;
 
 /**
  * Catches exceptions that occur in any layer of the application (domain, service, controller).

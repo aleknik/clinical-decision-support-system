@@ -41,6 +41,8 @@ public class DiagnosisReasonerService {
 
         kieSession.fireAllRules();
 
+        kieSession.dispose();
+
         return result.getDiseases();
     }
 }

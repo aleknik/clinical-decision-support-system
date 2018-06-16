@@ -2,7 +2,6 @@ package com.aleknik.cdss.cdssservice.model.dto;
 
 import com.aleknik.cdss.cdssservice.model.Symptom;
 
-import java.util.List;
 import java.util.Set;
 
 public class SymptomListDto {
