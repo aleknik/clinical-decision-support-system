@@ -35,8 +35,8 @@ public class DiagnosisController {
         symptomsFirst.add(symptomService.findByName("Bol u grlu"));
         symptomsFirst.add(symptomService.findByName("Glavobolja"));
         symptomsFirst.add(symptomService.findByName("Kijanje"));
-        symptomsFirst.add(symptomService.findByName("Drhtavica"));
-        symptomsFirst.add(symptomService.findByName("Kašalj"));
+//        symptomsFirst.add(symptomService.findByName("Drhtavica"));
+//        symptomsFirst.add(symptomService.findByName("Kašalj"));
 
         Set<Symptom> symptomsSecond = new HashSet<>();
         symptomsSecond.add(symptomService.findByName("6 meseci 10 slučajeva visok pritisak"));

@@ -14,7 +14,7 @@ public class Patient {
 
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.EAGER, mappedBy = "patient")
-    Set<Diagnosis> diagnoses;
+    private Set<Diagnosis> diagnoses;
 
     public long getId() {
         return id;

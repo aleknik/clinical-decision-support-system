@@ -173,6 +173,10 @@ public class DataLoader implements ApplicationRunner {
         disease.getSpecificSymptoms().add(symptom28);
         disease.getSpecificSymptoms().add(symptom29);
         diseaseRepository.save(disease);
+
+        // other
+        disease = new Disease("Visok pritisak", DiseaseGroup.FIRST);
+        diseaseRepository.save(disease);
     }
 
     private void initializeUser(String username, String password, String roleName) {

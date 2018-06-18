@@ -32,7 +32,13 @@ rule "First group disease all symptoms"
         $result: DiagnosisResultDto($found: diseases)
         not Disease(diseaseGroup == DiseaseGroup.FIRST) from $found
         $candidates: List() from collect(DiseaseCandidate(disease.diseaseGroup == DiseaseGroup.FIRST))
-        DiseaseCandidate($disease: disease, getSymptomCount() == disease.getSymptomCount()) from $candidates
+        $allSymptomsCandidates: List() from collect
+            (DiseaseCandidate(getSymptomCount() == disease.getSymptomCount())
+                from $candidates)
+
+        DiseaseCandidate($disease: disease, $maxSymptomCount: getSymptomCount() / disease.getSymptomCount()) from $allSymptomsCandidates
+        not DiseaseCandidate(getSymptomCount() / disease.getSymptomCount() > $maxSymptomCount) from $allSymptomsCandidates
+
     then
         modify($result){
             getDiseases().add($disease);
@@ -47,8 +53,8 @@ rule "First group disease max symptoms"
      $candidates: List() from collect(DiseaseCandidate(disease.diseaseGroup == DiseaseGroup.FIRST))
      not DiseaseCandidate(getSymptomCount() == disease.getSymptomCount()) from $candidates
 
-     DiseaseCandidate($disease: disease, $maxSymptomCount: getSymptomCount()) from $candidates
-     not DiseaseCandidate(getSymptomCount() > $maxSymptomCount) from $candidates
+     DiseaseCandidate($disease: disease, $maxSymptomCount: getSymptomCount() / disease.getSymptomCount()) from $candidates
+     not DiseaseCandidate(getSymptomCount() / disease.getSymptomCount() > $maxSymptomCount) from $candidates
 
  then
      modify($result){

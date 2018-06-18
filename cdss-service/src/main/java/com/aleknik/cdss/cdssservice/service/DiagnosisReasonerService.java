@@ -19,11 +19,16 @@ public class DiagnosisReasonerService {
 
     private final KieContainer kieContainer;
 
-    private DiseaseRepository diseaseRepository;
+    private final DiseaseRepository diseaseRepository;
 
-    public DiagnosisReasonerService(KieContainer kieContainer, DiseaseRepository diseaseRepository) {
+    private final SymptomService symptomService;
+
+    public DiagnosisReasonerService(KieContainer kieContainer,
+                                    DiseaseRepository diseaseRepository,
+                                    SymptomService symptomService) {
         this.kieContainer = kieContainer;
         this.diseaseRepository = diseaseRepository;
+        this.symptomService = symptomService;
     }
 
     public List<Disease> diagnose(Patient patient, Set<Symptom> symptoms) {
@@ -38,6 +43,7 @@ public class DiagnosisReasonerService {
         kieSession.insert(patient);
         kieSession.insert(result);
         kieSession.insert(symptomListDto);
+        kieSession.insert(symptomService);
 
         kieSession.fireAllRules();
 

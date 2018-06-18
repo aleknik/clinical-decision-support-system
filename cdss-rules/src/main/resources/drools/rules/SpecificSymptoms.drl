@@ -1,0 +1,39 @@
+import com.aleknik.cdss.cdssservice.model.Patient;
+import com.aleknik.cdss.cdssservice.model.Diagnosis;
+import java.util.Date;
+import com.aleknik.cdss.cdssservice.util.DateUtil;
+import com.aleknik.cdss.cdssservice.service.SymptomService;
+import com.aleknik.cdss.cdssservice.model.dto.SymptomListDto;
+import com.aleknik.cdss.cdssservice.model.Disease;
+
+rule "Bolovao od prehlade ili groznice u poslednjih 60 dana"
+    salience 150
+    when
+        $symptomService: SymptomService()
+        $symptoms: SymptomListDto()
+        $patient: Patient($diagnoses: diagnoses)
+        Diagnosis(date >  DateUtil.Days(new Date(), 60), $diseases: diseases) from $diagnoses
+        exists Disease(name.equals("Prehlada") || name.equals("Groznica")) from $diseases
+    then
+        modify($symptoms){
+            getSymptoms().add($symptomService.findByName("Bolovao od prehlade ili groznice u poslednjih 60 dana"));
+        }
+end
+
+
+//rule "6 meseci 10 slučajeva visok pritisak"
+//    salience 150
+//    when
+//        $symptomService: SymptomService()
+//        $symptoms: SymptomListDto()
+//        $patient: Patient($diagnoses: diagnoses)
+//        Diagnosis(date >  DateUtil.Months(new Date(), 6), $diseases: diseases) from $diagnoses
+//
+//        Number(intValue >= 10) from accumulate
+//
+//        exists Disease(name.equals("Prehlada") || name.equals("Groznica")) from $diseases
+//    then
+//        modify($symptoms){
+//            getSymptoms().add($symptomService.findByName("Bolovao od prehlade ili groznice u poslednjih 60 dana"));
+//        }
+//end
