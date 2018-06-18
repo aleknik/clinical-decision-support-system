@@ -1,0 +1,31 @@
+import com.aleknik.cdss.cdssservice.model.Patient;
+import com.aleknik.cdss.cdssservice.model.Disease;
+import com.aleknik.cdss.cdssservice.model.DiseaseGroup;
+import com.aleknik.cdss.cdssservice.model.Symptom;
+import com.aleknik.cdss.cdssservice.model.dto.DiagnosisResultDto;
+import com.aleknik.cdss.cdssservice.model.dto.SymptomListDto;
+import com.aleknik.cdss.cdssservice.model.dto.DiseaseCandidate;
+import java.util.List;
+
+
+rule "Third group disease"
+    salience 100
+    when
+        $patient: Patient()
+        $result: DiagnosisResultDto()
+        not Disease(diseaseGroup == DiseaseGroup.THIRD) from $result.diseases
+        $symptoms: SymptomListDto()
+        $disease: Disease( diseaseGroup == DiseaseGroup.THIRD, $general: generalSymptoms, $specific: specificSymptoms)
+        Number(intValue >= 2) from accumulate(
+            $s: Symptom( $symptoms.contains(name) ) from $general,
+            count()
+        )
+        Number(intValue >= 1) from accumulate(
+            $s: Symptom( $symptoms.contains(name) ) from $specific,
+            count()
+        )
+    then
+         modify($result){
+             getDiseases().add($disease);
+         }
+end

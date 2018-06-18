@@ -16,7 +16,7 @@ public class SymptomListDto {
         this.symptoms = symptoms;
     }
 
-    public boolean contains(long id) {
-        return symptoms.stream().anyMatch(symptom -> symptom.getId() == id);
+    public boolean contains(String name) {
+        return symptoms.stream().anyMatch(symptom -> symptom.getName().equals(name));
     }
 }

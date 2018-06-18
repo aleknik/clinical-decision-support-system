@@ -1,0 +1,30 @@
+import com.aleknik.cdss.cdssservice.model.Patient;
+import com.aleknik.cdss.cdssservice.model.Disease;
+import com.aleknik.cdss.cdssservice.model.DiseaseGroup;
+import com.aleknik.cdss.cdssservice.model.Symptom;
+import com.aleknik.cdss.cdssservice.model.dto.DiagnosisResultDto;
+import com.aleknik.cdss.cdssservice.model.dto.SymptomListDto;
+import com.aleknik.cdss.cdssservice.model.dto.DiseaseCandidate;
+import java.util.List;
+
+
+rule "Second group disease"
+    salience 100
+    when
+        $patient: Patient()
+        $result: DiagnosisResultDto()
+        $symptoms: SymptomListDto()
+        $disease: Disease( diseaseGroup == DiseaseGroup.SECOND, $general: generalSymptoms, $specific: specificSymptoms)
+        Number(intValue == $general.size()) from accumulate(
+            $s: Symptom( $symptoms.contains(name) ) from $general,
+            count()
+        )
+        Number(intValue == $specific.size()) from accumulate(
+            $s: Symptom( $symptoms.contains(name) ) from $specific,
+            count()
+        )
+    then
+         modify($result){
+             getDiseases().add($disease);
+         }
+end

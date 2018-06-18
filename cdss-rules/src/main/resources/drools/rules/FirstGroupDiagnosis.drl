@@ -7,15 +7,6 @@ import com.aleknik.cdss.cdssservice.model.dto.SymptomListDto;
 import com.aleknik.cdss.cdssservice.model.dto.DiseaseCandidate;
 import java.util.List;
 
-//rule "test rule"
-//    when
-//        $patient: Patient()
-//        $result: DiagnosisResultDto()
-//    then
-//        modify($result){ getDiseases().add(new Disease());  }
-//end
-
-
 rule "First group disease candidates"
     salience 100
     when
@@ -24,15 +15,14 @@ rule "First group disease candidates"
         $symptoms: SymptomListDto()
         $disease: Disease( diseaseGroup == DiseaseGroup.FIRST, $general: generalSymptoms, $specific: specificSymptoms)
         Number($generalCount: intValue) from accumulate(
-            $s: Symptom( $symptoms.contains(id) ) from $general,
+            $s: Symptom( $symptoms.contains(name) ) from $general,
             count()
         )
         Number($specificCount: intValue + $generalCount >= 4) from accumulate(
-            $s: Symptom( $symptoms.contains(id) ) from $specific,
+            $s: Symptom( $symptoms.contains(name) ) from $specific,
             count()
         )
     then
-    System.out.println($disease.getName() + " --- " + $generalCount + " " + $specificCount);
         insert(new DiseaseCandidate($disease, $generalCount, $specificCount));
 end
 
@@ -51,7 +41,6 @@ rule "First group disease all symptoms"
 
 rule "First group disease max symptoms"
  salience 50
-// lock-on-active
  when
      $result: DiagnosisResultDto($found: diseases)
      not Disease(diseaseGroup == DiseaseGroup.FIRST) from $found

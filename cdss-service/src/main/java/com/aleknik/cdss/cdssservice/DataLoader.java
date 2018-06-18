@@ -67,10 +67,41 @@ public class DataLoader implements ApplicationRunner {
         symptomRepository.save(symptom12);
         Symptom symptom13 = new Symptom("Oticanje oko očiju", SymptomType.SIMPLE);
         symptomRepository.save(symptom13);
-        Symptom symptom14 = new Symptom("Bolovao od prehlade ili groznice u poslednjih 60 dana.", SymptomType.COMPLEX);
+        Symptom symptom14 = new Symptom("Bolovao od prehlade ili groznice u poslednjih 60 dana", SymptomType.COMPLEX);
         symptomRepository.save(symptom14);
+        Symptom symptom15 = new Symptom("6 meseci 10 slučajeva visok pritisak", SymptomType.COMPLEX);
+        symptomRepository.save(symptom15);
+        Symptom symptom16 = new Symptom("Često uriniranje", SymptomType.SIMPLE);
+        symptomRepository.save(symptom16);
+        Symptom symptom17 = new Symptom("Gubitak telesne težine", SymptomType.SIMPLE);
+        symptomRepository.save(symptom17);
+        Symptom symptom18 = new Symptom("Zamor", SymptomType.SIMPLE);
+        symptomRepository.save(symptom18);
+        Symptom symptom19 = new Symptom("Mučnina i povraćanje", SymptomType.SIMPLE);
+        symptomRepository.save(symptom19);
+        Symptom symptom20 = new Symptom("Nocturia", SymptomType.SIMPLE);
+        symptomRepository.save(symptom20);
+        Symptom symptom21 = new Symptom("Otoci nogu i zglobova", SymptomType.SIMPLE);
+        symptomRepository.save(symptom21);
+        Symptom symptom22 = new Symptom("Gušenje", SymptomType.SIMPLE);
+        symptomRepository.save(symptom22);
+        Symptom symptom23 = new Symptom("Bol u grudima", SymptomType.SIMPLE);
+        symptomRepository.save(symptom23);
+        Symptom symptom24 = new Symptom("Pacijent boluje od hipertenzije više od 6 meseci", SymptomType.COMPLEX);
+        symptomRepository.save(symptom24);
+        Symptom symptom25 = new Symptom("Pacijent boluje od dijabetesa", SymptomType.COMPLEX);
+        symptomRepository.save(symptom25);
+        Symptom symptom26 = new Symptom("Oporavlja se od operacije", SymptomType.SIMPLE);
+        symptomRepository.save(symptom26);
+        Symptom symptom27 = new Symptom("Dijareja", SymptomType.SIMPLE);
+        symptomRepository.save(symptom27);
+        Symptom symptom28 = new Symptom("U poslednjih 14 dana dijagnostikovana bolest koja kao simptom ima povišenu telesnu temperaturu", SymptomType.COMPLEX);
+        symptomRepository.save(symptom28);
+        Symptom symptom29 = new Symptom("U poslednjih 21 dana dijagnostikovana bolest za koju je primao antibiotike", SymptomType.COMPLEX);
+        symptomRepository.save(symptom29);
 
         // Disease
+        // First
         Disease disease1 = new Disease("Prehlada", DiseaseGroup.FIRST);
         disease1.getGeneralSymptoms().add(symptom1);
         disease1.getGeneralSymptoms().add(symptom2);
@@ -109,6 +140,39 @@ public class DataLoader implements ApplicationRunner {
         disease4.getGeneralSymptoms().add(symptom5);
         disease4.getSpecificSymptoms().add(symptom14);
         diseaseRepository.save(disease4);
+
+        // Second
+        Disease disease = new Disease("Hipertenzija", DiseaseGroup.SECOND);
+        disease.getGeneralSymptoms().add(symptom15);
+        diseaseRepository.save(disease);
+
+        disease = new Disease("Dijabetes", DiseaseGroup.SECOND);
+        disease.getGeneralSymptoms().add(symptom16);
+        disease.getGeneralSymptoms().add(symptom17);
+        disease.getGeneralSymptoms().add(symptom18);
+        disease.getGeneralSymptoms().add(symptom19);
+        diseaseRepository.save(disease);
+
+        // Third
+        disease = new Disease("Hronična bubrežna bolest", DiseaseGroup.THIRD);
+        disease.getGeneralSymptoms().add(symptom18);
+        disease.getGeneralSymptoms().add(symptom20);
+        disease.getGeneralSymptoms().add(symptom21);
+        disease.getGeneralSymptoms().add(symptom22);
+        disease.getGeneralSymptoms().add(symptom23);
+        disease.getSpecificSymptoms().add(symptom24);
+        disease.getSpecificSymptoms().add(symptom25);
+        diseaseRepository.save(disease);
+
+        disease = new Disease("Akutna bubrežna povreda", DiseaseGroup.THIRD);
+        disease.getSpecificSymptoms().add(symptom26);
+        disease.getGeneralSymptoms().add(symptom18);
+        disease.getGeneralSymptoms().add(symptom22);
+        disease.getGeneralSymptoms().add(symptom21);
+        disease.getGeneralSymptoms().add(symptom27);
+        disease.getSpecificSymptoms().add(symptom28);
+        disease.getSpecificSymptoms().add(symptom29);
+        diseaseRepository.save(disease);
     }
 
     private void initializeUser(String username, String password, String roleName) {
