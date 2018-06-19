@@ -32,7 +32,7 @@ public class DiagnosisReasonerService {
     }
 
     public List<Disease> diagnose(Patient patient, Set<Symptom> symptoms) {
-        final KieSession kieSession = kieContainer.newKieSession();
+        final KieSession kieSession = kieContainer.newKieSession("cdssSession");
         kieSession.addEventListener(new DebugAgendaEventListener());
 
         final SymptomListDto symptomListDto = new SymptomListDto();

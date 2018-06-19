@@ -44,16 +44,16 @@ public class DiagnosisController {
         this.patientService = patientService;
     }
 
-    @PostMapping("/patients/suggest-diagnose")
+    @PostMapping("/patients/suggest-diagnosis")
     public ResponseEntity diagnose(@RequestParam long patientId) {
-        Patient patient = new Patient();
+        final Patient patient = patientService.findById(patientId);
         Set<Symptom> symptomsFirst = new HashSet<>();
         symptomsFirst.add(symptomService.findByName("Curenje iz nosa"));
         symptomsFirst.add(symptomService.findByName("Bol u grlu"));
         symptomsFirst.add(symptomService.findByName("Glavobolja"));
         symptomsFirst.add(symptomService.findByName("Kijanje"));
 //        symptomsFirst.add(symptomService.findByName("Drhtavica"));
-//        symptomsFirst.add(symptomService.findByName("Kašalj"));
+        symptomsFirst.add(symptomService.findByName("Kašalj"));
 
         Set<Symptom> symptomsSecond = new HashSet<>();
         symptomsSecond.add(symptomService.findByName("6 meseci 10 slučajeva visok pritisak"));
@@ -74,7 +74,6 @@ public class DiagnosisController {
 
         return ResponseEntity.ok(diseases);
     }
-
 
     @PostMapping("/diagnoses")
     public ResponseEntity create(@RequestBody @Valid DiagnosisCreateDto diagnosisCreateDto, @RequestParam long patientId) {

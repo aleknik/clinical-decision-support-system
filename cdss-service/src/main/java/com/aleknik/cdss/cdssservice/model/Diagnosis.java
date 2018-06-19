@@ -6,6 +6,7 @@ import org.kie.api.definition.type.Timestamp;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Role(Role.Type.EVENT)
@@ -27,13 +28,17 @@ public class Diagnosis {
     @JoinTable(name = "diagnosis_disease",
             joinColumns = @JoinColumn(name = "diagnosis_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "disease_id", referencedColumnName = "id"))
-    private Set<Disease> diseases;
+    private Set<Disease> diseases = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "diagnosis_medicine",
             joinColumns = @JoinColumn(name = "diagnosis_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "medicine_id", referencedColumnName = "id"))
-    private Set<Medicine> medicines;
+    private Set<Medicine> medicines = new HashSet<>();
+
+    public boolean hasDisease(String name) {
+        return diseases.stream().anyMatch(disease -> disease.getName().equals(name));
+    }
 
     public long getId() {
         return id;

@@ -10,7 +10,6 @@ public class DiseaseService {
 
     private final DiseaseRepository diseaseRepository;
 
-
     public DiseaseService(DiseaseRepository diseaseRepository) {
         this.diseaseRepository = diseaseRepository;
     }

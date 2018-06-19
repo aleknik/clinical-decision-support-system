@@ -1,9 +1,7 @@
 package com.aleknik.cdss.cdssservice;
 
 import com.aleknik.cdss.cdssservice.model.*;
-import com.aleknik.cdss.cdssservice.repository.DiseaseRepository;
-import com.aleknik.cdss.cdssservice.repository.SymptomRepository;
-import com.aleknik.cdss.cdssservice.repository.UserRepository;
+import com.aleknik.cdss.cdssservice.repository.*;
 import com.aleknik.cdss.cdssservice.security.RoleConstants;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -11,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -24,14 +23,26 @@ public class DataLoader implements ApplicationRunner {
 
     private final DiseaseRepository diseaseRepository;
 
+    private final PatientRepository patientRepository;
+
+    private final MedicineRepository medicineRepository;
+
+    private final DiagnosisRepository diagnosisRepository;
+
     public DataLoader(UserRepository userRepository,
                       PasswordEncoder passwordEncoder,
                       SymptomRepository symptomRepository,
-                      DiseaseRepository diseaseRepository) {
+                      DiseaseRepository diseaseRepository,
+                      PatientRepository patientRepository,
+                      MedicineRepository medicineRepository,
+                      DiagnosisRepository diagnosisRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.symptomRepository = symptomRepository;
         this.diseaseRepository = diseaseRepository;
+        this.patientRepository = patientRepository;
+        this.medicineRepository = medicineRepository;
+        this.diagnosisRepository = diagnosisRepository;
     }
 
     public void run(ApplicationArguments args) {
@@ -177,6 +188,19 @@ public class DataLoader implements ApplicationRunner {
         // other
         disease = new Disease("Visok pritisak", DiseaseGroup.FIRST);
         diseaseRepository.save(disease);
+
+        Patient patient = new Patient();
+        patient.setFirstName("pera");
+        patient.setLastName("mile");
+        patientRepository.save(patient);
+
+        Diagnosis diagnosis = new Diagnosis();
+        diagnosis.setDate(new Date());
+        diagnosis.setPatient(patient);
+        diagnosis.getDiseases().add(diseaseRepository.findByName("Prehlada").get());
+        diagnosisRepository.save(diagnosis);
+
+        medicineRepository.save(new Medicine());
     }
 
     private void initializeUser(String username, String password, String roleName) {

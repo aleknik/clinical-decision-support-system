@@ -14,35 +14,35 @@ rule "First group disease candidates"
         $symptoms: SymptomListDto()
         $disease: Disease( diseaseGroup == DiseaseGroup.FIRST, $general: generalSymptoms, $specific: specificSymptoms)
         Number($generalCount: intValue) from accumulate(
-            $s: Symptom( $symptoms.contains(firstName) ) from $general,
+            $s: Symptom( $symptoms.contains(name) ) from $general,
             count()
         )
         Number($specificCount: intValue + $generalCount >= 4) from accumulate(
-            $s: Symptom( $symptoms.contains(firstName) ) from $specific,
+            $s: Symptom( $symptoms.contains(name) ) from $specific,
             count()
         )
     then
         insert(new DiseaseCandidate($disease, $generalCount, $specificCount));
 end
 
-rule "First group disease all symptoms"
-    salience 50
-    when
-        $result: DiagnosisResultDto($found: diseases)
-        not Disease(diseaseGroup == DiseaseGroup.FIRST) from $found
-        $candidates: List() from collect(DiseaseCandidate(disease.diseaseGroup == DiseaseGroup.FIRST))
-        $allSymptomsCandidates: List() from collect
-            (DiseaseCandidate(getSymptomCount() == disease.getSymptomCount())
-                from $candidates)
-
-        DiseaseCandidate($disease: disease, $maxSymptomCount: getSymptomCount() / disease.getSymptomCount()) from $allSymptomsCandidates
-        not DiseaseCandidate(getSymptomCount() / disease.getSymptomCount() > $maxSymptomCount) from $allSymptomsCandidates
-
-    then
-        modify($result){
-            getDiseases().add($disease);
-        }
- end
+//rule "First group disease all symptoms"
+//    salience 50
+//    when
+//        $result: DiagnosisResultDto($found: diseases)
+//        not Disease(diseaseGroup == DiseaseGroup.FIRST) from $found
+//        $candidates: List() from collect(DiseaseCandidate(disease.diseaseGroup == DiseaseGroup.FIRST))
+//        $allSymptomsCandidates: List() from collect
+//            (DiseaseCandidate(getSymptomCount() == disease.getSymptomCount())
+//                from $candidates)
+//
+//        DiseaseCandidate($disease: disease, $maxSymptomCount: getSymptomCount() / disease.getSymptomCount()) from $allSymptomsCandidates
+//        not DiseaseCandidate(getSymptomCount() / disease.getSymptomCount() > $maxSymptomCount) from $allSymptomsCandidates
+//
+//    then
+//        modify($result){
+//            getDiseases().add($disease);
+//        }
+// end
 
 rule "First group disease max symptoms"
  salience 50
@@ -50,7 +50,6 @@ rule "First group disease max symptoms"
      $result: DiagnosisResultDto($found: diseases)
      not Disease(diseaseGroup == DiseaseGroup.FIRST) from $found
      $candidates: List() from collect(DiseaseCandidate(disease.diseaseGroup == DiseaseGroup.FIRST))
-     not DiseaseCandidate(getSymptomCount() == disease.getSymptomCount()) from $candidates
 
      DiseaseCandidate($disease: disease, $maxSymptomCount: getSymptomCount() / disease.getSymptomCount()) from $candidates
      not DiseaseCandidate(getSymptomCount() / disease.getSymptomCount() > $maxSymptomCount) from $candidates

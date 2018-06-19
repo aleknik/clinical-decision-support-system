@@ -1,19 +1,22 @@
 import com.aleknik.cdss.cdssservice.model.Patient;
 import com.aleknik.cdss.cdssservice.model.Diagnosis;
-import java.util.Date;
+import com.aleknik.cdss.cdssservice.model.Symptom;
+import com.aleknik.cdss.cdssservice.model.Disease;
 import com.aleknik.cdss.cdssservice.util.DateUtil;
 import com.aleknik.cdss.cdssservice.service.SymptomService;
 import com.aleknik.cdss.cdssservice.model.dto.SymptomListDto;
 import com.aleknik.cdss.cdssservice.model.Disease;
+import java.util.List;
 
 rule "Bolovao od prehlade ili groznice u poslednjih 60 dana"
     salience 150
     when
         $symptomService: SymptomService()
-        $symptoms: SymptomListDto()
-        $patient: Patient($diagnoses: diagnoses)
-        Diagnosis(date >  DateUtil.Days(new Date(), 60), $diseases: diseases) from $diagnoses
-        exists Disease(firstName.equals("Prehlada") || firstName.equals("Groznica")) from $diseases
+        $symptoms: SymptomListDto($symptomList: symptoms)
+        not Symptom(name.equals("Bolovao od prehlade ili groznice u poslednjih 60 dana")) from $symptomList
+
+        Diagnosis($diseases: diseases) over window:time( 60d )
+        exists Disease(name.equals("Prehlada") || name.equals("Groznica")) from $diseases
     then
         modify($symptoms){
             getSymptoms().add($symptomService.findByName("Bolovao od prehlade ili groznice u poslednjih 60 dana"));
@@ -21,19 +24,60 @@ rule "Bolovao od prehlade ili groznice u poslednjih 60 dana"
 end
 
 
-//rule "6 meseci 10 slučajeva visok pritisak"
-//    salience 150
-//    when
-//        $symptomService: SymptomService()
-//        $symptoms: SymptomListDto()
-//        $patient: Patient($diagnoses: diagnoses)
-//        Diagnosis(date >  DateUtil.Months(new Date(), 6), $diseases: diseases) from $diagnoses
-//
-//        Number(intValue >= 10) from accumulate
-//
-//        exists Disease(firstName.equals("Prehlada") || firstName.equals("Groznica")) from $diseases
-//    then
-//        modify($symptoms){
-//            getSymptoms().add($symptomService.findByName("Bolovao od prehlade ili groznice u poslednjih 60 dana"));
-//        }
-//end
+rule "6 meseci 10 slučajeva visok pritisak"
+    salience 150
+    when
+        $symptomService: SymptomService()
+        $symptoms: SymptomListDto($symptomList: symptoms)
+        not Symptom(name.equals("6 meseci 10 slučajeva visok pritisak")) from $symptomList
+
+        Diagnosis( $diseases: diseases) over window:time( 180d )
+
+        Number(intValue >= 10) from accumulate (
+            Disease(name.equals("Visok pritisak")) from $diseases,
+            count()
+        )
+    then
+        modify($symptoms){
+            getSymptoms().add($symptomService.findByName("6 meseci 10 slučajeva visok pritisak"));
+        }
+end
+
+rule "Pacijent boluje od hipertenzije više od 6 meseci"
+    salience 150
+    when
+        $symptomService: SymptomService()
+        $symptoms: SymptomListDto($symptomList: symptoms)
+        not Symptom(name.equals("Pacijent boluje od hipertenzije više od 6 meseci")) from $symptomList
+
+        $allDiagnoses: List() from collect (Diagnosis())
+
+        Number($highPreasureCount: intValue) from accumulate (
+            Diagnosis(hasDisease("Visok pritisak")) from $allDiagnoses,
+            count()
+        )
+        Number(intValue < $highPreasureCount) from accumulate (
+            Diagnosis(hasDisease("Visok pritisak")) over window:time( 180d ),
+            count()
+        )
+    then
+        modify($symptoms){
+            getSymptoms().add($symptomService.findByName("Pacijent boluje od hipertenzije više od 6 meseci"));
+        }
+end
+
+
+rule "Pacijent boluje od dijabetesa"
+    salience 150
+    when
+        $symptomService: SymptomService()
+        $symptoms: SymptomListDto($symptomList: symptoms)
+        not Symptom(name.equals("Pacijent boluje od dijabetesa")) from $symptomList
+
+        Diagnosis( $diseases: diseases)
+        exists Disease(name.equals("Dijabetes")) from $diseases
+    then
+        modify($symptoms){
+            getSymptoms().add($symptomService.findByName("Pacijent boluje od dijabetesa"));
+        }
+end
