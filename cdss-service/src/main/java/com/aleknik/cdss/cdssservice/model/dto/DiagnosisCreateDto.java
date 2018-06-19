@@ -6,9 +6,7 @@ import java.util.List;
 
 public class DiagnosisCreateDto {
 
-    @NotNull
-    @NotEmpty
-    private List<Long> diseaseIds;
+    private long diseaseId;
 
     @NotNull
     @NotEmpty
@@ -17,12 +15,12 @@ public class DiagnosisCreateDto {
     public DiagnosisCreateDto() {
     }
 
-    public List<Long> getDiseaseIds() {
-        return diseaseIds;
+    public long getDiseaseId() {
+        return diseaseId;
     }
 
-    public void setDiseaseIds(List<Long> diseaseIds) {
-        this.diseaseIds = diseaseIds;
+    public void setDiseaseId(long diseaseId) {
+        this.diseaseId = diseaseId;
     }
 
     public List<Long> getMedicineIds() {

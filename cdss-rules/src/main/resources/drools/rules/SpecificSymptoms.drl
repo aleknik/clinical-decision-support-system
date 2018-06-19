@@ -2,6 +2,8 @@ import com.aleknik.cdss.cdssservice.model.Patient;
 import com.aleknik.cdss.cdssservice.model.Diagnosis;
 import com.aleknik.cdss.cdssservice.model.Symptom;
 import com.aleknik.cdss.cdssservice.model.Disease;
+import com.aleknik.cdss.cdssservice.model.Medicine;
+import com.aleknik.cdss.cdssservice.model.MedicineType;
 import com.aleknik.cdss.cdssservice.util.DateUtil;
 import com.aleknik.cdss.cdssservice.service.SymptomService;
 import com.aleknik.cdss.cdssservice.model.dto.SymptomListDto;
@@ -15,8 +17,7 @@ rule "Bolovao od prehlade ili groznice u poslednjih 60 dana"
         $symptoms: SymptomListDto($symptomList: symptoms)
         not Symptom(name.equals("Bolovao od prehlade ili groznice u poslednjih 60 dana")) from $symptomList
 
-        Diagnosis($diseases: diseases) over window:time( 60d )
-        exists Disease(name.equals("Prehlada") || name.equals("Groznica")) from $diseases
+        Diagnosis(disease.name.equals("Prehlada") || disease.name.equals("Groznica")) over window:time( 60d )
     then
         modify($symptoms){
             getSymptoms().add($symptomService.findByName("Bolovao od prehlade ili groznice u poslednjih 60 dana"));
@@ -31,10 +32,8 @@ rule "6 meseci 10 slučajeva visok pritisak"
         $symptoms: SymptomListDto($symptomList: symptoms)
         not Symptom(name.equals("6 meseci 10 slučajeva visok pritisak")) from $symptomList
 
-        Diagnosis( $diseases: diseases) over window:time( 180d )
-
         Number(intValue >= 10) from accumulate (
-            Disease(name.equals("Visok pritisak")) from $diseases,
+             Diagnosis(disease.name.equals("Visok pritisak")) over window:time( 180d ),
             count()
         )
     then
@@ -53,11 +52,11 @@ rule "Pacijent boluje od hipertenzije više od 6 meseci"
         $allDiagnoses: List() from collect (Diagnosis())
 
         Number($highPreasureCount: intValue) from accumulate (
-            Diagnosis(hasDisease("Visok pritisak")) from $allDiagnoses,
+            Diagnosis(disease.name.equals("Visok pritisak")) from $allDiagnoses,
             count()
         )
         Number(intValue < $highPreasureCount) from accumulate (
-            Diagnosis(hasDisease("Visok pritisak")) over window:time( 180d ),
+            Diagnosis(disease.name.equals("Visok pritisak")) over window:time( 180d ),
             count()
         )
     then
@@ -74,10 +73,60 @@ rule "Pacijent boluje od dijabetesa"
         $symptoms: SymptomListDto($symptomList: symptoms)
         not Symptom(name.equals("Pacijent boluje od dijabetesa")) from $symptomList
 
-        Diagnosis( $diseases: diseases)
-        exists Disease(name.equals("Dijabetes")) from $diseases
+        exists Diagnosis(disease.name.equals("Dijabetes"))
     then
         modify($symptoms){
             getSymptoms().add($symptomService.findByName("Pacijent boluje od dijabetesa"));
+        }
+end
+
+rule "U poslednjih 14 dana dijagnostikovana bolest koja kao simptom ima povišenu telesnu temperaturu general"
+    salience 150
+    when
+        $symptomService: SymptomService()
+        $symptoms: SymptomListDto($symptomList: symptoms)
+        not Symptom(name.equals("U poslednjih 14 dana dijagnostikovana bolest koja kao simptom ima povišenu telesnu temperaturu")) from $symptomList
+
+        Diagnosis($generalSymptoms: disease.generalSymptoms) over window:time( 14d )
+        exists Symptom(name.contains("Temperatura")) from $generalSymptoms
+    then
+        modify($symptoms){
+            getSymptoms().add($symptomService.findByName("U poslednjih 14 dana dijagnostikovana bolest koja kao simptom ima povišenu telesnu temperaturu"));
+        }
+end
+
+
+rule "U poslednjih 14 dana dijagnostikovana bolest koja kao simptom ima povišenu telesnu temperaturu specific"
+    salience 150
+    when
+        $symptomService: SymptomService()
+        $symptoms: SymptomListDto($symptomList: symptoms)
+        not Symptom(name.equals("U poslednjih 14 dana dijagnostikovana bolest koja kao simptom ima povišenu telesnu temperaturu")) from $symptomList
+
+        Diagnosis($specificSymptoms: disease.specificSymptoms) over window:time( 14d )
+        exists Symptom(name.contains("Temperatura")) from $specificSymptoms
+    then
+        modify($symptoms){
+            getSymptoms().add($symptomService.findByName("U poslednjih 14 dana dijagnostikovana bolest koja kao simptom ima povišenu telesnu temperaturu"));
+        }
+end
+
+
+rule "U poslednjih 21 dana dijagnostikovana bolest za koju je primao antibiotike"
+    salience 150
+    when
+        $symptomService: SymptomService()
+        $symptoms: SymptomListDto($symptomList: symptoms)
+        not Symptom(name.equals("U poslednjih 21 dana dijagnostikovana bolest za koju je primao antibiotike")) from $symptomList
+
+        Diagnosis($medicines: medicines) over window:time( 21d )
+
+        Number(intValue > 0) from accumulate (
+            Medicine(medicineType == MedicineType.ANTIBIOTIC) from $medicines,
+            count()
+        )
+    then
+        modify($symptoms){
+            getSymptoms().add($symptomService.findByName("U poslednjih 21 dana dijagnostikovana bolest za koju je primao antibiotike"));
         }
 end

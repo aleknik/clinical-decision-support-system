@@ -18,8 +18,19 @@ public class Medicine {
             inverseJoinColumns = @JoinColumn(name = "ingredient_id", referencedColumnName = "id"))
     private Set<Ingredient> ingredients;
 
+    @Enumerated(EnumType.STRING)
+    private MedicineType medicineType;
+
     public long getId() {
         return id;
+    }
+
+    public MedicineType getMedicineType() {
+        return medicineType;
+    }
+
+    public void setMedicineType(MedicineType medicineType) {
+        this.medicineType = medicineType;
     }
 
     public void setId(long id) {

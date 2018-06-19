@@ -24,21 +24,14 @@ public class Diagnosis {
     @JsonIgnore
     private Patient patient;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "diagnosis_disease",
-            joinColumns = @JoinColumn(name = "diagnosis_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "disease_id", referencedColumnName = "id"))
-    private Set<Disease> diseases = new HashSet<>();
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Disease disease;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "diagnosis_medicine",
             joinColumns = @JoinColumn(name = "diagnosis_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "medicine_id", referencedColumnName = "id"))
     private Set<Medicine> medicines = new HashSet<>();
-
-    public boolean hasDisease(String name) {
-        return diseases.stream().anyMatch(disease -> disease.getName().equals(name));
-    }
 
     public long getId() {
         return id;
@@ -64,12 +57,12 @@ public class Diagnosis {
         this.patient = patient;
     }
 
-    public Set<Disease> getDiseases() {
-        return diseases;
+    public Disease getDisease() {
+        return disease;
     }
 
-    public void setDiseases(Set<Disease> diseases) {
-        this.diseases = diseases;
+    public void setDisease(Disease disease) {
+        this.disease = disease;
     }
 
     public Set<Medicine> getMedicines() {

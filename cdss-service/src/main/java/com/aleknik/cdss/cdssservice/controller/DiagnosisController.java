@@ -80,17 +80,13 @@ public class DiagnosisController {
 
         final Patient patient = patientService.findById(patientId);
 
-        Set<Disease> diseases = diagnosisCreateDto.getDiseaseIds().stream().
-                map(diseaseService::findById)
-                .collect(Collectors.toSet());
-
         Set<Medicine> medicines = diagnosisCreateDto.getMedicineIds().stream().
                 map(medicineService::findById)
                 .collect(Collectors.toSet());
 
         Diagnosis diagnosis = new Diagnosis();
         diagnosis.setDate(new Date());
-        diagnosis.setDiseases(diseases);
+        diagnosis.setDisease(diseaseService.findById(diagnosisCreateDto.getDiseaseId()));
         diagnosis.setMedicines(medicines);
         diagnosis.setPatient(patient);
 

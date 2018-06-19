@@ -28,6 +28,11 @@ public class Disease {
             inverseJoinColumns = @JoinColumn(name = "symptom_id", referencedColumnName = "id"))
     private Set<Symptom> specificSymptoms = new HashSet<>();
 
+    public boolean hasSymptom(String name) {
+        return generalSymptoms.stream().anyMatch(disease -> disease.getName().contains(name))
+                || specificSymptoms.stream().anyMatch(disease -> disease.getName().contains(name));
+    }
+
     public Disease() {
     }
 
