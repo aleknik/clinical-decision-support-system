@@ -18,3 +18,17 @@ query "Get diseases" (Symptom[] mySymptoms)
         count()
     )
 end
+
+query "Get symptoms" (String diseaseName)
+    SymptomListDto($symptomList: symptoms)
+    Disease(name == diseaseName, $specific: specificSymptoms, $general: generalSymptoms)
+    $foundSpecific: List() from accumulate(
+        $s: Symptom(this memberOf $specific) from $symptomList,
+        collectList($s)
+    )
+
+    $foundGeneral: List() from accumulate(
+        $s: Symptom(this memberOf $general) from $symptomList,
+        collectList($s)
+    )
+end
