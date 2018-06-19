@@ -36,6 +36,14 @@ public class Disease {
     public Disease() {
     }
 
+    public Set<Symptom> getAllSymptoms() {
+        final Set<Symptom> all = new HashSet<>();
+        all.addAll(generalSymptoms);
+        all.addAll(specificSymptoms);
+
+        return all;
+    }
+
     public Disease(String name, DiseaseGroup diseaseGroup) {
         this.name = name;
         this.diseaseGroup = diseaseGroup;

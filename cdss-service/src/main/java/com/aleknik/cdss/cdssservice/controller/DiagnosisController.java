@@ -2,6 +2,7 @@ package com.aleknik.cdss.cdssservice.controller;
 
 import com.aleknik.cdss.cdssservice.model.*;
 import com.aleknik.cdss.cdssservice.model.dto.DiagnosisCreateDto;
+import com.aleknik.cdss.cdssservice.model.dto.IdListDto;
 import com.aleknik.cdss.cdssservice.service.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -93,5 +94,13 @@ public class DiagnosisController {
         diagnosis = diagnosisService.create(diagnosis);
 
         return ResponseEntity.created(URI.create(String.format("api/diagnoses/%d", diagnosis.getId()))).body(diagnosis);
+    }
+
+    @PostMapping("diagnoses/suggest-diseases")
+    public ResponseEntity getSuggestedDiseases(@RequestBody IdListDto symptomIds) {
+        symptomIds.getIds().add(symptomService.findByName("Kijanje").getId());
+        final List<Symptom> symptoms = symptomIds.getIds().stream().map(symptomService::findById).collect(Collectors.toList());
+
+        return ResponseEntity.ok(diagnosisReasonerService.getSortedDiseases(symptoms));
     }
 }

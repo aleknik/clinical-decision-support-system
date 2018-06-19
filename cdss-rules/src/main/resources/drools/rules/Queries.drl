@@ -1,0 +1,20 @@
+import com.aleknik.cdss.cdssservice.model.Patient;
+import com.aleknik.cdss.cdssservice.model.Diagnosis;
+import com.aleknik.cdss.cdssservice.model.Symptom;
+import com.aleknik.cdss.cdssservice.model.Disease;
+import com.aleknik.cdss.cdssservice.model.Medicine;
+import com.aleknik.cdss.cdssservice.model.MedicineType;
+import com.aleknik.cdss.cdssservice.util.DateUtil;
+import com.aleknik.cdss.cdssservice.service.SymptomService;
+import com.aleknik.cdss.cdssservice.model.dto.SymptomListDto;
+import com.aleknik.cdss.cdssservice.model.Disease;
+import java.util.List;
+
+query "Get diseases" (Symptom[] mySymptoms)
+    $disease: Disease($symptoms: getAllSymptoms())
+
+    Number(intValue > 0) from accumulate(
+        Symptom(this memberOf $symptoms) from mySymptoms,
+        count()
+    )
+end
