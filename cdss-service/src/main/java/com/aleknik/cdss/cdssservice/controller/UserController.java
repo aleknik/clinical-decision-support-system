@@ -28,7 +28,7 @@ public class UserController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @PostMapping("/users")
+    @PostMapping("/doctors")
     public ResponseEntity createDoctor(@RequestBody @Valid UserCreateDto userCreateDto) {
         User user = new User();
         user.setUsername(userCreateDto.getUsername());

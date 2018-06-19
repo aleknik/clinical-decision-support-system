@@ -1,6 +1,7 @@
 package com.aleknik.cdss.cdssservice.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -14,7 +15,7 @@ public class Patient {
 
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.EAGER, mappedBy = "patient")
-    private Set<Diagnosis> diagnoses;
+    private Set<Diagnosis> diagnoses = new HashSet<>();
 
     public long getId() {
         return id;
