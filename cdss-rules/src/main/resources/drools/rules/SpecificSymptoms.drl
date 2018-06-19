@@ -13,7 +13,7 @@ rule "Bolovao od prehlade ili groznice u poslednjih 60 dana"
         $symptoms: SymptomListDto()
         $patient: Patient($diagnoses: diagnoses)
         Diagnosis(date >  DateUtil.Days(new Date(), 60), $diseases: diseases) from $diagnoses
-        exists Disease(name.equals("Prehlada") || name.equals("Groznica")) from $diseases
+        exists Disease(firstName.equals("Prehlada") || firstName.equals("Groznica")) from $diseases
     then
         modify($symptoms){
             getSymptoms().add($symptomService.findByName("Bolovao od prehlade ili groznice u poslednjih 60 dana"));
@@ -31,7 +31,7 @@ end
 //
 //        Number(intValue >= 10) from accumulate
 //
-//        exists Disease(name.equals("Prehlada") || name.equals("Groznica")) from $diseases
+//        exists Disease(firstName.equals("Prehlada") || firstName.equals("Groznica")) from $diseases
 //    then
 //        modify($symptoms){
 //            getSymptoms().add($symptomService.findByName("Bolovao od prehlade ili groznice u poslednjih 60 dana"));

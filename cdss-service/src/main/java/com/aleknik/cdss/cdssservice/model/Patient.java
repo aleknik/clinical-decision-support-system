@@ -11,7 +11,9 @@ public class Patient {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    private String name;
+    private String firstName;
+
+    private String lastName;
 
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.EAGER, mappedBy = "patient")
@@ -25,12 +27,12 @@ public class Patient {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public Set<Diagnosis> getDiagnoses() {
@@ -39,5 +41,13 @@ public class Patient {
 
     public void setDiagnoses(Set<Diagnosis> diagnoses) {
         this.diagnoses = diagnoses;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 }

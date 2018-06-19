@@ -14,11 +14,11 @@ rule "First group disease candidates"
         $symptoms: SymptomListDto()
         $disease: Disease( diseaseGroup == DiseaseGroup.FIRST, $general: generalSymptoms, $specific: specificSymptoms)
         Number($generalCount: intValue) from accumulate(
-            $s: Symptom( $symptoms.contains(name) ) from $general,
+            $s: Symptom( $symptoms.contains(firstName) ) from $general,
             count()
         )
         Number($specificCount: intValue + $generalCount >= 4) from accumulate(
-            $s: Symptom( $symptoms.contains(name) ) from $specific,
+            $s: Symptom( $symptoms.contains(firstName) ) from $specific,
             count()
         )
     then

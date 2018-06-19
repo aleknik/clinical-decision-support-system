@@ -28,19 +28,24 @@ public class DiagnosisController {
 
     private final DiagnosisService diagnosisService;
 
+    private final PatientService patientService;
+
     public DiagnosisController(DiagnosisReasonerService diagnosisReasonerService,
                                MedicineService medicineService,
                                DiseaseService diseaseService,
-                               SymptomService symptomService, DiagnosisService diagnosisService) {
+                               SymptomService symptomService,
+                               DiagnosisService diagnosisService,
+                               PatientService patientService) {
         this.diagnosisReasonerService = diagnosisReasonerService;
         this.medicineService = medicineService;
         this.diseaseService = diseaseService;
         this.symptomService = symptomService;
         this.diagnosisService = diagnosisService;
+        this.patientService = patientService;
     }
 
-    @PostMapping("/{userId}/suggest-diagnose")
-    public ResponseEntity diagnose() {
+    @PostMapping("/patients/suggest-diagnose")
+    public ResponseEntity diagnose(@RequestParam long patientId) {
         Patient patient = new Patient();
         Set<Symptom> symptomsFirst = new HashSet<>();
         symptomsFirst.add(symptomService.findByName("Curenje iz nosa"));
@@ -71,8 +76,10 @@ public class DiagnosisController {
     }
 
 
-    @PostMapping("{userId}/diagnoses")
-    public ResponseEntity create(@RequestBody @Valid DiagnosisCreateDto diagnosisCreateDto, @PathVariable long userId) {
+    @PostMapping("/diagnoses")
+    public ResponseEntity create(@RequestBody @Valid DiagnosisCreateDto diagnosisCreateDto, @RequestParam long patientId) {
+
+        final Patient patient = patientService.findById(patientId);
 
         Set<Disease> diseases = diagnosisCreateDto.getDiseaseIds().stream().
                 map(diseaseService::findById)
@@ -86,9 +93,10 @@ public class DiagnosisController {
         diagnosis.setDate(new Date());
         diagnosis.setDiseases(diseases);
         diagnosis.setMedicines(medicines);
+        diagnosis.setPatient(patient);
 
         diagnosis = diagnosisService.create(diagnosis);
 
-        return ResponseEntity.created(URI.create(String.format("api/%d/diagnoses/%d", userId, diagnosis.getId()))).body(diagnosis);
+        return ResponseEntity.created(URI.create(String.format("api/diagnoses/%d", diagnosis.getId()))).body(diagnosis);
     }
 }

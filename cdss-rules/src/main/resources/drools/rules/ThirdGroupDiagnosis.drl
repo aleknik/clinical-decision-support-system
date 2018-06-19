@@ -16,11 +16,11 @@ rule "Third group disease"
         $symptoms: SymptomListDto()
         $disease: Disease( diseaseGroup == DiseaseGroup.THIRD, $general: generalSymptoms, $specific: specificSymptoms)
         Number(intValue >= 2) from accumulate(
-            $s: Symptom( $symptoms.contains(name) ) from $general,
+            $s: Symptom( $symptoms.contains(firstName) ) from $general,
             count()
         )
         Number(intValue >= 1) from accumulate(
-            $s: Symptom( $symptoms.contains(name) ) from $specific,
+            $s: Symptom( $symptoms.contains(firstName) ) from $specific,
             count()
         )
     then

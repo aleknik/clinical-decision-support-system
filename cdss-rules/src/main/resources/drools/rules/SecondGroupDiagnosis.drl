@@ -15,11 +15,11 @@ rule "Second group disease"
         $symptoms: SymptomListDto()
         $disease: Disease( diseaseGroup == DiseaseGroup.SECOND, $general: generalSymptoms, $specific: specificSymptoms)
         Number(intValue == $general.size()) from accumulate(
-            $s: Symptom( $symptoms.contains(name) ) from $general,
+            $s: Symptom( $symptoms.contains(firstName) ) from $general,
             count()
         )
         Number(intValue == $specific.size()) from accumulate(
-            $s: Symptom( $symptoms.contains(name) ) from $specific,
+            $s: Symptom( $symptoms.contains(firstName) ) from $specific,
             count()
         )
     then
