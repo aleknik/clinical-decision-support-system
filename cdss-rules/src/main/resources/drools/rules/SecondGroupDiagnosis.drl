@@ -11,7 +11,6 @@ import java.util.List;
 rule "Second group disease"
     salience 100
     when
-        $patient: Patient()
         $result: DiagnosisResultDto()
         $symptoms: SymptomListDto()
         $disease: Disease( diseaseGroup == DiseaseGroup.SECOND, $general: generalSymptoms, $specific: specificSymptoms)

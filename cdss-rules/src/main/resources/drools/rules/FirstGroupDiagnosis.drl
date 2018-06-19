@@ -10,7 +10,6 @@ import java.util.List;
 rule "First group disease candidates"
     salience 100
     when
-        $patient: Patient()
         $result: DiagnosisResultDto()
         $symptoms: SymptomListDto()
         $disease: Disease( diseaseGroup == DiseaseGroup.FIRST, $general: generalSymptoms, $specific: specificSymptoms)

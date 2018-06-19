@@ -39,6 +39,7 @@ public class DiagnosisReasonerService {
         symptomListDto.setSymptoms(symptoms);
         final DiagnosisResultDto result = new DiagnosisResultDto();
 
+        patient.getDiagnoses().forEach(kieSession::insert);
         diseaseRepository.findAll().forEach(kieSession::insert);
         kieSession.insert(patient);
         kieSession.insert(result);

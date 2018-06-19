@@ -3,7 +3,11 @@ package com.aleknik.cdss.cdssservice.model;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
+import org.kie.api.definition.type.Role;
+import org.kie.api.definition.type.Timestamp;
 
+@Role(Role.Type.EVENT)
+@Timestamp("date")
 @Entity
 public class Diagnosis {
 
