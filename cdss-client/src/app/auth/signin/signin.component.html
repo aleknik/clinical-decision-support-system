@@ -1,3 +1,10 @@
-<p>
-  signin works!
-</p>
+<form class="form" (ngSubmit)="signin()" #signinForm="ngForm">
+  <h2 class="form-heading">Sign in</h2>
+
+  <label>Username</label>
+  <input type="text" class="form-control" [(ngModel)]="user.username" name="username" required autofocus>
+  <label>Password</label>
+  <input type="password" class="form-control" [(ngModel)]="user.password" name="password" required>
+  <br/>
+  <button id="signinButton" [disabled]="signinForm.form.invalid" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+</form>

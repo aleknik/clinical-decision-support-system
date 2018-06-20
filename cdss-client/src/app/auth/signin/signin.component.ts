@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from '../../shared/model/user.model';
+import { AuthService } from '../../core/http/auth.service';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-signin',
@@ -7,9 +11,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SigninComponent implements OnInit {
 
-  constructor() { }
+  user: User = new User();
+
+  constructor(private authService: AuthService,
+    private router: Router,
+    private toastr: ToastrService) { }
 
   ngOnInit() {
+  }
+
+  signin() {
+    this.authService.authenticate(this.user).subscribe(
+      response => {
+        this.toastr.success(`Welcome ${this.user.username}`);
+      },
+      err => { });
   }
 
 }
