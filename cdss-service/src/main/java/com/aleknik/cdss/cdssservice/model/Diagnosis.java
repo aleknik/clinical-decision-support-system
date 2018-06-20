@@ -27,11 +27,18 @@ public class Diagnosis {
     @ManyToOne(fetch = FetchType.EAGER)
     private Disease disease;
 
+    @ManyToOne()
+    private User doctor;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "diagnosis_medicine",
             joinColumns = @JoinColumn(name = "diagnosis_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "medicine_id", referencedColumnName = "id"))
     private Set<Medicine> medicines = new HashSet<>();
+
+    public boolean hasMedicineType(MedicineType medicineType) {
+        return medicines.stream().anyMatch(medicine -> medicine.getMedicineType() == medicineType);
+    }
 
     public long getId() {
         return id;
@@ -51,6 +58,14 @@ public class Diagnosis {
 
     public Patient getPatient() {
         return patient;
+    }
+
+    public User getDoctor() {
+        return doctor;
+    }
+
+    public void setDoctor(User doctor) {
+        this.doctor = doctor;
     }
 
     public void setPatient(Patient patient) {
