@@ -6,6 +6,7 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { FormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 
 @NgModule({
   imports: [
@@ -15,14 +16,16 @@ import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
     FormsModule,
     ModalModule.forRoot(),
     TypeaheadModule.forRoot(),
-    AngularFontAwesomeModule
+    AngularFontAwesomeModule,
+    TabsModule.forRoot()
   ],
   declarations: [],
   exports: [
     BsDropdownModule,
     CollapseModule,
     FormsModule,
-    TypeaheadModule
+    TypeaheadModule,
+    TabsModule
   ],
 })
 export class SharedModule { }

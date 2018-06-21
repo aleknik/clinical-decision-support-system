@@ -41,6 +41,7 @@ export class NewPatientComponent implements OnInit {
     this.patient.medicineAllergies = this.selectedMedicines;
     this.patientService.create(this.patient).subscribe(result => {
       this.toastr.success('Patient created');
+      this.router.navigate(['patients', result.id]);
     });
   }
 
@@ -59,15 +60,15 @@ export class NewPatientComponent implements OnInit {
   medicineSelected(event) {
     if (!this.selectedMedicines.some(x => x.id === event.itm.id)) {
       this.selectedMedicines.push(event.item);
-      this.selectedMedicineName = '';
     }
+    this.selectedMedicineName = '';
   }
 
   ingredientSelected(event) {
     if (!this.selectedIngredients.some(x => x.id === event.itm.id)) {
       this.selectedIngredients.push(event.item);
-      this.selectedIngredientName = '';
     }
+    this.selectedIngredientName = '';
   }
 
   removeMedicine(medicine: Medicine) {

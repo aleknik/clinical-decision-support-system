@@ -45,9 +45,12 @@ public class DiagnosisController {
         this.patientService = patientService;
     }
 
-    @PostMapping("/patients/suggest-diagnosis")
-    public ResponseEntity diagnose(@RequestParam long patientId) {
+    @PostMapping("/diseases/suggest-diseases")
+    public ResponseEntity diagnose(@RequestParam long patientId, @RequestBody List<Symptom> symptoms) {
         final Patient patient = patientService.findById(patientId);
+
+        Set<Symptom> symptomSet = symptoms.stream()
+                .map(symptom -> symptomService.findById(symptom.getId())).collect(Collectors.toSet());
         Set<Symptom> symptomsFirst = new HashSet<>();
         symptomsFirst.add(symptomService.findByName("Curenje iz nosa"));
         symptomsFirst.add(symptomService.findByName("Bol u grlu"));
@@ -71,7 +74,7 @@ public class DiagnosisController {
         symptomsFirst.addAll(symptomsSecond);
         symptomsFirst.addAll(symptomsThird);
 
-        List<Disease> diseases = diagnosisReasonerService.diagnose(patient, symptomsFirst);
+        List<Disease> diseases = diagnosisReasonerService.diagnose(patient, symptomSet);
 
         return ResponseEntity.ok(diseases);
     }

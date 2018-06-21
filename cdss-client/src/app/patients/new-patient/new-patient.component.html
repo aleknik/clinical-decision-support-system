@@ -10,14 +10,14 @@
         <label for="last">Last</label>
         <input type="text" class="form-control" id="last" placeholder="Last" [(ngModel)]="patient.lastName" name="last" required>
       </div>
-      <button type="submit" class="btn btn-primary" [disabled]="patientForm.form.invalid">Create</button>
+      <button type="submit" class="btn btn-lg btn-primary btn-block" [disabled]="patientForm.form.invalid">Create</button>
     </form>
   </div>
   <div class="col-sm-4">
     <h2 class="form-heading">Medicine allergies</h2>
     <label for="medicine">Medicine</label>
     <input name="medicine" [(ngModel)]="selectedMedicineName" [typeahead]="allMedicines" class="form-control" typeaheadOptionField="name"
-      (typeaheadOnSelect)="medicineSelected($event)">
+      (typeaheadOnSelect)="medicineSelected($event)" [typeaheadOptionsInScrollableView]="5" [typeaheadScrollable]="true">
     <br>
     <ul class="list-group">
       <li *ngFor="let medicine of selectedMedicines" class="list-group-item">
@@ -31,7 +31,7 @@
     <h2 class="form-heading">Ingredient allergies</h2>
     <label for="ingredient">Ingredient</label>
     <input name="ingredient" [(ngModel)]="selectedIngredientName" [typeahead]="allIngredients" class="form-control" typeaheadOptionField="name"
-      (typeaheadOnSelect)="ingredientSelected($event)">
+      (typeaheadOnSelect)="ingredientSelected($event)" [typeaheadOptionsInScrollableView]="5" [typeaheadScrollable]="true">
     <br>
     <ul class="list-group">
       <li *ngFor="let ingredient of selectedIngredients" class="list-group-item">

@@ -12,6 +12,7 @@ import { TokenInterceptorService } from './http/token-interceptor.service';
 import { PatientService } from './http/patient.service';
 import { MedicineService } from './http/medicine.service';
 import { IngredientService } from './http/ingredient.service';
+import { DiseaseService } from './http/disease.service';
 
 @NgModule({
   imports: [
@@ -37,7 +38,8 @@ import { IngredientService } from './http/ingredient.service';
     AuthService,
     PatientService,
     MedicineService,
-    IngredientService
+    IngredientService,
+    DiseaseService
   ]
 })
 export class CoreModule { }

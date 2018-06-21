@@ -4,7 +4,6 @@ import com.aleknik.cdss.cdssservice.controller.exception.NotFoundException;
 import com.aleknik.cdss.cdssservice.model.Patient;
 import com.aleknik.cdss.cdssservice.repository.PatientRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -30,15 +29,18 @@ public class PatientService {
     }
 
     public Patient update(Patient updatedPatient, long id) {
-        final Patient user = findById(id);
+        final Patient patient = findById(id);
 
-        if (!user.getFirstName().equals(updatedPatient.getFirstName())) {
-            user.setFirstName(updatedPatient.getFirstName());
+        if (!patient.getFirstName().equals(updatedPatient.getFirstName())) {
+            patient.setFirstName(updatedPatient.getFirstName());
         }
-        if (!user.getLastName().equals(updatedPatient.getLastName())) {
-            user.setLastName(updatedPatient.getLastName());
+        if (!patient.getLastName().equals(updatedPatient.getLastName())) {
+            patient.setLastName(updatedPatient.getLastName());
         }
 
-        return patientRepository.save(user);
+        patient.setIngredientAllergies(updatedPatient.getIngredientAllergies());
+        patient.setMedicineAllergies(updatedPatient.getMedicineAllergies());
+
+        return patientRepository.save(patient);
     }
 }

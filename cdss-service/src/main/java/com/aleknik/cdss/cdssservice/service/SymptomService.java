@@ -2,8 +2,11 @@ package com.aleknik.cdss.cdssservice.service;
 
 import com.aleknik.cdss.cdssservice.controller.exception.NotFoundException;
 import com.aleknik.cdss.cdssservice.model.Symptom;
+import com.aleknik.cdss.cdssservice.model.SymptomType;
 import com.aleknik.cdss.cdssservice.repository.SymptomRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class SymptomService {
@@ -20,5 +23,9 @@ public class SymptomService {
 
     public Symptom findByName(String name) {
         return symptomRepository.findByName(name).orElseThrow(() -> new NotFoundException("Symptom not found"));
+    }
+
+    public List<Symptom> findByType(SymptomType symptomType) {
+        return symptomRepository.findBySymptomType(symptomType);
     }
 }

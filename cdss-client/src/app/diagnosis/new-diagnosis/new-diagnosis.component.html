@@ -1,0 +1,32 @@
+<div>
+  <tabset>
+    <tab heading="Reasoner">
+      <div class="row">
+        <div class="col-sm-4">
+          <h2 class="form-heading">Symptoms</h2>
+          <label for="symptom">Symptom</label>
+          <input name="symptom" [(ngModel)]="selectedSymptomName" [typeahead]="allSymptoms" class="form-control" typeaheadOptionField="name"
+            (typeaheadOnSelect)="symptomSelected($event)" [typeaheadOptionsInScrollableView]="5" [typeaheadScrollable]="true">
+          <br>
+          <ul class="list-group">
+            <li *ngFor="let symptom of selectedSymptoms" class="list-group-item">
+              {{symptom.name}}
+              <span class="float-right fa fa-trash fa-2x icon-pad pointer" (click)="removeSymptom(symptom)">
+              </span>
+            </li>
+          </ul>
+        </div>
+        <div class="col-sm-4">
+          <button class="btn btn-lg btn-primary btn-block" (click)="suggestDiseases()" [disabled]="selectedSymptoms.length === 0">Find suggested diseases</button>
+          <br>
+          <ul class="list-group">
+            <li *ngFor="let disease of suggestedDiseases" class="list-group-item">
+              {{disease.name}}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </tab>
+    <tab heading="Diagnosis">Basic content 1</tab>
+  </tabset>
+</div>

@@ -63,6 +63,11 @@ public class PatientController {
         final Patient patient = new Patient();
         patient.setFirstName(patientUpdateDto.getFirstName());
         patient.setLastName(patientUpdateDto.getLastName());
+        patient.setMedicineAllergies(patientUpdateDto.getMedicineAllergies().stream().
+                map(medicine -> medicineService.findById(medicine.getId())).collect(Collectors.toSet()));
+
+        patient.setIngredientAllergies(patientUpdateDto.getIngredientAllergies().stream().
+                map(ingredient -> ingredientService.findById(ingredient.getId())).collect(Collectors.toSet()));
 
         return ResponseEntity.ok(patientService.update(patient, id));
     }

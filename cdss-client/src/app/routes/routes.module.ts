@@ -8,6 +8,7 @@ import { PatientListComponent } from '../patients/patient-list/patient-list.comp
 import { IsAuthenticatedGuard } from './is-authenticated.guard';
 import { PatientDetailsComponent } from '../patients/patient-details/patient-details.component';
 import { NewPatientComponent } from '../patients/new-patient/new-patient.component';
+import { NewDiagnosisComponent } from '../diagnosis/new-diagnosis/new-diagnosis.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/patients', pathMatch: 'full' },
@@ -18,6 +19,8 @@ const routes: Routes = [
   { path: 'patients', component: PatientListComponent, canActivate: [IsAuthenticatedGuard] },
   { path: 'patients/new', component: NewPatientComponent, canActivate: [IsAuthenticatedGuard] },
   { path: 'patients/:id', component: PatientDetailsComponent, canActivate: [IsAuthenticatedGuard] },
+
+  { path: 'patients/:id/diagnoses/new', component: NewDiagnosisComponent, canActivate: [IsAuthenticatedGuard] },
 ];
 
 @NgModule({

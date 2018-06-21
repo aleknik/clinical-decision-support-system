@@ -10,7 +10,7 @@ export class RestService<T> {
     protected http: HttpClient,
     protected baseUrl: string,
     private toastr: ToastrService
-  ) {}
+  ) { }
 
   findById(id: number, queryParams = {}): Observable<T> {
     return this.http
@@ -24,10 +24,10 @@ export class RestService<T> {
       .pipe(catchError(this.handleError<T[]>()));
   }
 
-  create<D>(body: T | D, queryParams = {}): Observable<number> {
+  create<D>(body: T | D, queryParams = {}): Observable<T> {
     return this.http
-      .post<number>(this.baseUrl, body, { params: queryParams })
-      .pipe(catchError(this.handleError<number>()));
+      .post<T>(this.baseUrl, body, { params: queryParams })
+      .pipe(catchError(this.handleError<T>()));
   }
 
   update<D>(id: number, body: T | D, queryParams = {}): Observable<T> {
