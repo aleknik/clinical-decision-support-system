@@ -3,10 +3,10 @@
     <tab heading="Reasoner">
       <div class="row">
         <div class="col-sm-4">
-          <h2 class="form-heading">Symptoms</h2>
+          <h2>Symptoms</h2>
           <label for="symptom">Symptom</label>
           <input name="symptom" [(ngModel)]="selectedSymptomName" [typeahead]="allSymptoms" class="form-control" typeaheadOptionField="name"
-            (typeaheadOnSelect)="symptomSelected($event)" [typeaheadOptionsInScrollableView]="5" [typeaheadScrollable]="true">
+            (typeaheadOnSelect)="symptomSelected($event)" [typeaheadOptionsInScrollableView]="10" [typeaheadScrollable]="true">
           <br>
           <ul class="list-group">
             <li *ngFor="let symptom of selectedSymptoms" class="list-group-item">
@@ -27,6 +27,24 @@
         </div>
       </div>
     </tab>
-    <tab heading="Diagnosis">Basic content 1</tab>
+    <tab heading="Diagnosis">
+      <div class="row">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4">
+          <h2>Diagnosis</h2>
+          <label for="medicine">Medicine</label>
+          <input name="medicine" [(ngModel)]="selectedMedicineName" [typeahead]="allMedicines" class="form-control" typeaheadOptionField="name"
+            (typeaheadOnSelect)="medicineSelected($event)" [typeaheadOptionsInScrollableView]="10" [typeaheadScrollable]="true">
+          <br>
+          <ul class="list-group">
+            <li *ngFor="let medicine of selectedMedicines" class="list-group-item">
+              {{medicine.name}}
+              <span class="float-right fa fa-trash fa-2x icon-pad pointer" (click)="removeMedicine(medicine)">
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </tab>
   </tabset>
 </div>
