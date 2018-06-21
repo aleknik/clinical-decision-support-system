@@ -1,0 +1,17 @@
+<div>
+  <h2>Patients</h2>
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">First</th>
+        <th scope="col">Last</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let patient of patients" (click)="onSelect(patient)" class="pointer">
+        <th scope="row">{{patient.firstName}}</th>
+        <th>{{patient.lastName}}</th>
+      </tr>
+    </tbody>
+  </table>
+</div>

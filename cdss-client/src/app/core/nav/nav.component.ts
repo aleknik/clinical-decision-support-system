@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../http/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nav',
@@ -9,12 +11,18 @@ export class NavComponent implements OnInit {
 
   isCollapsed = true;
 
-  constructor() { }
+  constructor(private authService: AuthService,
+    private router: Router) { }
 
   ngOnInit() {
   }
 
   isAuthenticated(): boolean {
-    return false;
+    return this.authService.isAuthenticated();
+  }
+
+  signout() {
+    this.authService.signout();
+    this.router.navigateByUrl('signin');
   }
 }

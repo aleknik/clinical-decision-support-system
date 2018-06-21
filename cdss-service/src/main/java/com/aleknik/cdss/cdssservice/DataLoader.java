@@ -205,6 +205,11 @@ public class DataLoader implements ApplicationRunner {
         diagnosis.setDisease(diseaseRepository.findByName("Prehlada").get());
         diagnosis.getMedicines().add(medicine1);
         diagnosisRepository.save(diagnosis);
+
+        patient = new Patient();
+        patient.setFirstName("peraa");
+        patient.setLastName("milea");
+        patientRepository.save(patient);
     }
 
     private void initializeUser(String username, String password, String roleName) {

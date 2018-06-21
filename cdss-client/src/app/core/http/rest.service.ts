@@ -1,8 +1,8 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { ToastrService } from "ngx-toastr";
-import { Observable } from "rxjs";
-import { catchError } from "rxjs/operators";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
+import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class RestService<T> {
@@ -16,6 +16,12 @@ export class RestService<T> {
     return this.http
       .get<T>(`${this.baseUrl}/${id}`, { params: queryParams })
       .pipe(catchError(this.handleError<T>()));
+  }
+
+  findAll(queryParams = {}): Observable<T[]> {
+    return this.http
+      .get<T[]>(`${this.baseUrl}`, { params: queryParams })
+      .pipe(catchError(this.handleError<T[]>()));
   }
 
   create<D>(body: T | D, queryParams = {}): Observable<number> {
@@ -36,13 +42,13 @@ export class RestService<T> {
       .pipe(catchError(this.handleError<void>()));
   }
 
-  protected handleError<E>(operation = "operation", result?: E) {
+  protected handleError<E>(operation = 'operation', result?: E) {
     return (response: any): Observable<E> => {
       console.error(response);
       if (response.error) {
         this.toastr.error(response.error.error);
       } else {
-        this.toastr.error("Client side error!");
+        this.toastr.error('Client side error!');
       }
       return Observable.throw(result as E);
     };

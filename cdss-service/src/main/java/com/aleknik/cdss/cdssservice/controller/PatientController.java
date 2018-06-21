@@ -2,12 +2,10 @@ package com.aleknik.cdss.cdssservice.controller;
 
 import com.aleknik.cdss.cdssservice.model.Patient;
 import com.aleknik.cdss.cdssservice.model.dto.PatientCreateDto;
+import com.aleknik.cdss.cdssservice.model.dto.PatientUpdateDto;
 import com.aleknik.cdss.cdssservice.service.PatientService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
@@ -32,5 +30,24 @@ public class PatientController {
         patient = patientService.create(patient);
 
         return ResponseEntity.created(URI.create(String.format("api/patients/%d", patient.getId()))).body(patient);
+    }
+
+    @GetMapping("/patients")
+    public ResponseEntity findAll() {
+        return ResponseEntity.ok(patientService.findAll());
+    }
+
+    @GetMapping("/patients/{id}")
+    public ResponseEntity findById(@PathVariable long id) {
+        return ResponseEntity.ok(patientService.findById(id));
+    }
+
+    @PutMapping("/patients/{id}")
+    public ResponseEntity update(@RequestBody PatientUpdateDto patientUpdateDto, @PathVariable long id) {
+        final Patient patient = new Patient();
+        patient.setFirstName(patientUpdateDto.getFirstName());
+        patient.setLastName(patientUpdateDto.getLastName());
+
+        return ResponseEntity.ok(patientService.update(patient, id));
     }
 }

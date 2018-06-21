@@ -1,16 +1,29 @@
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-  <a class="navbar-brand" href="#">CdssClient</a>
+  <a class="navbar-brand" href="#">Clinical Decision Support System</a>
   <button (click)="isCollapsed = !isCollapsed" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
     aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" [collapse]="isCollapsed">
     <ul class="navbar-nav mr-auto">
+        <li class="nav-item dropdown" *ngIf="isAuthenticated()" dropdown>
+            <a class="nav-link dropdown-toggle" href dropdownToggle (click)="false" id="navbarDropdownMenuLink" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              Patients
+            </a>
+            <div *dropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" routerLink="/patients">All patients</a>
+              <a class="dropdown-item" routerLink="">Add patient</a>
+            </div>
+          </li>
     </ul>
 
     <ul class="navbar-nav ml-auto">
       <li class="nav-item" *ngIf="!isAuthenticated()">
         <a class="nav-link" routerLink="/signin">Signin</a>
+      </li>
+      <li class="nav-item" *ngIf="isAuthenticated()" id="signoutButton">
+        <a class="nav-link" (click)="signout()">Sign out</a>
       </li>
     </ul>
   </div>

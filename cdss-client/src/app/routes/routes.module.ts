@@ -4,12 +4,18 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { IsUnauthenticatedGuard } from './is-unauthenticated.guard';
 import { SigninComponent } from '../auth/signin/signin.component';
+import { PatientListComponent } from '../patients/patient-list/patient-list.component';
+import { IsAuthenticatedGuard } from './is-authenticated.guard';
+import { PatientDetailsComponent } from '../patients/patient-details/patient-details.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/signin', pathMatch: 'full' },
+  { path: '', redirectTo: '/patients', pathMatch: 'full' },
 
   // Auth
-  { path: 'signin', component: SigninComponent, canActivate: [IsUnauthenticatedGuard] }
+  { path: 'signin', component: SigninComponent, canActivate: [IsUnauthenticatedGuard] },
+
+  { path: 'patients', component: PatientListComponent, canActivate: [IsAuthenticatedGuard] },
+  { path: 'patients/:id', component: PatientDetailsComponent, canActivate: [IsAuthenticatedGuard] },
 ];
 
 @NgModule({
@@ -19,6 +25,7 @@ const routes: Routes = [
   ],
   exports: [RouterModule],
   providers: [
-    IsUnauthenticatedGuard]
+    IsUnauthenticatedGuard,
+    IsAuthenticatedGuard]
 })
 export class RoutesModule { }
