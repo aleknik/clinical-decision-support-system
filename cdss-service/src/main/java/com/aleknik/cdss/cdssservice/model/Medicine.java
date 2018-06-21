@@ -1,6 +1,7 @@
 package com.aleknik.cdss.cdssservice.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -16,7 +17,7 @@ public class Medicine {
     @JoinTable(name = "medicine_ingredient",
             joinColumns = @JoinColumn(name = "medicine_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "ingredient_id", referencedColumnName = "id"))
-    private Set<Ingredient> ingredients;
+    private Set<Ingredient> ingredients = new HashSet<>();
 
     @Enumerated(EnumType.STRING)
     private MedicineType medicineType;

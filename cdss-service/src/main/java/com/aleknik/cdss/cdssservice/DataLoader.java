@@ -29,13 +29,16 @@ public class DataLoader implements ApplicationRunner {
 
     private final DiagnosisRepository diagnosisRepository;
 
+    private final IngredientRepository ingredientRepository;
+
     public DataLoader(UserRepository userRepository,
                       PasswordEncoder passwordEncoder,
                       SymptomRepository symptomRepository,
                       DiseaseRepository diseaseRepository,
                       PatientRepository patientRepository,
                       MedicineRepository medicineRepository,
-                      DiagnosisRepository diagnosisRepository) {
+                      DiagnosisRepository diagnosisRepository,
+                      IngredientRepository ingredientRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.symptomRepository = symptomRepository;
@@ -43,6 +46,7 @@ public class DataLoader implements ApplicationRunner {
         this.patientRepository = patientRepository;
         this.medicineRepository = medicineRepository;
         this.diagnosisRepository = diagnosisRepository;
+        this.ingredientRepository = ingredientRepository;
     }
 
     public void run(ApplicationArguments args) {
@@ -194,9 +198,14 @@ public class DataLoader implements ApplicationRunner {
         patient.setLastName("mile");
         patientRepository.save(patient);
 
+        Ingredient ingredient = new Ingredient();
+        ingredient.setName("TestIng");
+        ingredientRepository.save(ingredient);
+
         Medicine medicine1 = new Medicine();
         medicine1.setName("testmedicne");
         medicine1.setMedicineType(MedicineType.ANTIBIOTIC);
+        medicine1.getIngredients().add(ingredient);
         medicineRepository.save(medicine1);
 
         Diagnosis diagnosis = new Diagnosis();

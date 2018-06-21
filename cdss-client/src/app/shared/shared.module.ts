@@ -2,8 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { FormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 
 @NgModule({
   imports: [
@@ -11,13 +13,16 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     CollapseModule.forRoot(),
     BsDropdownModule.forRoot(),
     FormsModule,
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    TypeaheadModule.forRoot(),
+    AngularFontAwesomeModule
   ],
   declarations: [],
   exports: [
     BsDropdownModule,
     CollapseModule,
-    FormsModule
+    FormsModule,
+    TypeaheadModule
   ],
 })
 export class SharedModule { }

@@ -19,6 +19,18 @@ public class Patient {
             fetch = FetchType.EAGER, mappedBy = "patient")
     private Set<Diagnosis> diagnoses = new HashSet<>();
 
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinTable(name = "patient_medicine_allergies",
+            joinColumns = @JoinColumn(name = "patient_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "medicine_id", referencedColumnName = "id"))
+    private Set<Medicine> medicineAllergies = new HashSet<>();
+
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinTable(name = "patient_ingredient_allergies",
+            joinColumns = @JoinColumn(name = "patient_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "ingredient_id", referencedColumnName = "id"))
+    private Set<Ingredient> ingredientAllergies = new HashSet<>();
+
     public long getId() {
         return id;
     }
@@ -49,6 +61,22 @@ public class Patient {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public Set<Medicine> getMedicineAllergies() {
+        return medicineAllergies;
+    }
+
+    public void setMedicineAllergies(Set<Medicine> medicineAllergies) {
+        this.medicineAllergies = medicineAllergies;
+    }
+
+    public Set<Ingredient> getIngredientAllergies() {
+        return ingredientAllergies;
+    }
+
+    public void setIngredientAllergies(Set<Ingredient> ingredientAllergies) {
+        this.ingredientAllergies = ingredientAllergies;
     }
 
     @Override

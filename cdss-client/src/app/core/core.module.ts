@@ -9,6 +9,9 @@ import { TokenUtilsService } from './util/token-utils.service';
 import { AuthService } from './http/auth.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptorService } from './http/token-interceptor.service';
+import { PatientService } from './http/patient.service';
+import { MedicineService } from './http/medicine.service';
+import { IngredientService } from './http/ingredient.service';
 
 @NgModule({
   imports: [
@@ -31,7 +34,10 @@ import { TokenInterceptorService } from './http/token-interceptor.service';
       useClass: TokenInterceptorService,
       multi: true
     },
-    AuthService
+    AuthService,
+    PatientService,
+    MedicineService,
+    IngredientService
   ]
 })
-export class CoreModule {}
+export class CoreModule { }

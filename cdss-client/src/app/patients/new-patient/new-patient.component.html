@@ -1,0 +1,44 @@
+<div class="row">
+  <div class="col-sm-4">
+    <form class="form" (ngSubmit)="create()" #patientForm="ngForm">
+      <h2 class="form-heading">Patient details</h2>
+      <div class="form-group">
+        <label for="first">First</label>
+        <input type="text" class="form-control" id="first" placeholder="First" [(ngModel)]="patient.firstName" name="first" required>
+      </div>
+      <div class="form-group">
+        <label for="last">Last</label>
+        <input type="text" class="form-control" id="last" placeholder="Last" [(ngModel)]="patient.lastName" name="last" required>
+      </div>
+      <button type="submit" class="btn btn-primary" [disabled]="patientForm.form.invalid">Create</button>
+    </form>
+  </div>
+  <div class="col-sm-4">
+    <h2 class="form-heading">Medicine allergies</h2>
+    <label for="medicine">Medicine</label>
+    <input name="medicine" [(ngModel)]="selectedMedicineName" [typeahead]="allMedicines" class="form-control" typeaheadOptionField="name"
+      (typeaheadOnSelect)="medicineSelected($event)">
+    <br>
+    <ul class="list-group">
+      <li *ngFor="let medicine of selectedMedicines" class="list-group-item">
+        {{medicine.name}}
+        <span class="float-right fa fa-trash fa-2x icon-pad pointer" (click)="removeMedicine(medicine)">
+        </span>
+      </li>
+    </ul>
+  </div>
+  <div class="col-sm-4">
+    <h2 class="form-heading">Ingredient allergies</h2>
+    <label for="ingredient">Ingredient</label>
+    <input name="ingredient" [(ngModel)]="selectedIngredientName" [typeahead]="allIngredients" class="form-control" typeaheadOptionField="name"
+      (typeaheadOnSelect)="ingredientSelected($event)">
+    <br>
+    <ul class="list-group">
+      <li *ngFor="let ingredient of selectedIngredients" class="list-group-item">
+        {{ingredient.name}}
+        <span class="float-right fa fa-trash fa-2x icon-pad pointer" (click)="removeIngredient(ingredient)">
+        </span>
+      </li>
+    </ul>
+  </div>
+</div>

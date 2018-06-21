@@ -5,6 +5,8 @@ import com.aleknik.cdss.cdssservice.model.Medicine;
 import com.aleknik.cdss.cdssservice.repository.MedicineRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class MedicineService {
 
@@ -38,5 +40,9 @@ public class MedicineService {
         medicine.setIngredients(updatedMedicine.getIngredients());
 
         return medicineRepository.save(medicine);
+    }
+
+    public List<Medicine> findAll() {
+        return medicineRepository.findAll();
     }
 }

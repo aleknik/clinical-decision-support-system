@@ -1,5 +1,8 @@
 package com.aleknik.cdss.cdssservice.model.dto;
 
+import com.aleknik.cdss.cdssservice.model.Ingredient;
+import com.aleknik.cdss.cdssservice.model.Medicine;
+
 import java.util.List;
 
 public class PatientCreateDto {
@@ -8,9 +11,9 @@ public class PatientCreateDto {
 
     private String lastName;
 
-    private List<Long> medicineIds;
+    private List<Medicine> medicineAllergies;
 
-    private List<Long> ingredientIds;
+    private List<Ingredient> ingredientAllergies;
 
     public String getFirstName() {
         return firstName;
@@ -28,19 +31,19 @@ public class PatientCreateDto {
         this.lastName = lastName;
     }
 
-    public List<Long> getMedicineIds() {
-        return medicineIds;
+    public List<Medicine> getMedicineAllergies() {
+        return medicineAllergies;
     }
 
-    public void setMedicineIds(List<Long> medicineIds) {
-        this.medicineIds = medicineIds;
+    public void setMedicineAllergies(List<Medicine> medicineAllergies) {
+        this.medicineAllergies = medicineAllergies;
     }
 
-    public List<Long> getIngredientIds() {
-        return ingredientIds;
+    public List<Ingredient> getIngredientAllergies() {
+        return ingredientAllergies;
     }
 
-    public void setIngredientIds(List<Long> ingredientIds) {
-        this.ingredientIds = ingredientIds;
+    public void setIngredientAllergies(List<Ingredient> ingredientAllergies) {
+        this.ingredientAllergies = ingredientAllergies;
     }
 }
