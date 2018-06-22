@@ -2,7 +2,7 @@
   <tabset>
     <tab heading="Reasoner">
       <div class="row">
-        <div class="col-sm-4">
+        <div class="col-sm-3">
           <h2>Symptoms</h2>
           <label for="symptom">Search symptom</label>
           <input name="symptom" [(ngModel)]="selectedSymptomName" [typeahead]="allSymptoms" class="form-control" typeaheadOptionField="name"
@@ -16,12 +16,40 @@
             </li>
           </ul>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-3">
           <button class="btn btn-lg btn-primary btn-block" (click)="suggestDiseases()" [disabled]="selectedSymptoms.length === 0">Find suggested diseases</button>
           <br>
           <ul class="list-group">
             <li *ngFor="let disease of suggestedDiseases" class="list-group-item">
               {{disease.name}}
+            </li>
+          </ul>
+        </div>
+        <div class="col-sm-3">
+          <button class="btn btn-lg btn-primary btn-block" (click)="getConnectedDiseases()" [disabled]="selectedSymptoms.length === 0">Find connected diseases</button>
+          <br>
+          <ul class="list-group">
+            <li *ngFor="let disease of connectedDiseases" class="list-group-item">
+              {{disease.name}}
+            </li>
+          </ul>
+        </div>
+        <div class="col-sm-3">
+          <h2>Disease</h2>
+          <label for="disease">Search disease</label>
+          <input name="disease" [(ngModel)]="selectedDisease2Name" [typeahead]="allDiseases" class="form-control" typeaheadOptionField="name"
+            (typeaheadOnSelect)="diseaseSelected2($event)" [typeaheadOptionsInScrollableView]="10" [typeaheadScrollable]="true">
+          <div class="form-group row">
+            <label for="diseaseName" class="col-sm-4 col-form-label">Disease name</label>
+            <div class="col-sm-8">
+              <input type="text" readonly class="form-control-plaintext" required id="diseaseName" placeholder="Disease name" [(ngModel)]="selectedDisease2.name"
+                name="diseaseName">
+            </div>
+          </div>
+          <button class="btn btn-lg btn-primary btn-block" (click)="findMatchingSymptoms()" [disabled]="selectedSymptoms.length === 0">Find matching symptoms</button>
+          <ul class="list-group">
+            <li *ngFor="let symptom of foundSymptoms" class="list-group-item">
+              {{symptom.name}}
             </li>
           </ul>
         </div>

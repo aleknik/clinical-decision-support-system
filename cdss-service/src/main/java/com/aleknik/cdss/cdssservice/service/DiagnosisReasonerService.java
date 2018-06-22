@@ -13,9 +13,7 @@ import org.kie.api.runtime.rule.QueryResults;
 import org.kie.api.runtime.rule.QueryResultsRow;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class DiagnosisReasonerService {
@@ -56,19 +54,56 @@ public class DiagnosisReasonerService {
         return result.getDiseases();
     }
 
-    public List<Disease> getSortedDiseases(List<Symptom> symptoms) {
+    public List<Disease> getSortedDiseases(Set<Symptom> symptoms) {
         final KieSession kieSession = kieContainer.newKieSession("cdssSession");
         kieSession.addEventListener(new DebugAgendaEventListener());
 
         diseaseRepository.findAll().forEach(kieSession::insert);
+        SymptomListDto symptomListDto = new SymptomListDto();
+        symptomListDto.setSymptoms(symptoms);
+        kieSession.insert(symptomListDto);
 
-        QueryResults results = kieSession.getQueryResults("Get diseases", symptoms.toArray());
+        QueryResults results = kieSession.getQueryResults("Get diseases");
 
         List<Disease> sorted = new ArrayList<>();
         for (QueryResultsRow result : results) {
             sorted.add((Disease) result.get("$disease"));
         }
 
+        sorted.sort((o1, o2) -> {
+            HashSet<Symptom> intersection1 = new HashSet<>(symptoms);
+            intersection1.retainAll(o1.getAllSymptoms());
+
+            HashSet<Symptom> intersection2 = new HashSet<>(symptoms);
+            intersection2.retainAll(o2.getAllSymptoms());
+
+            return intersection2.size() - intersection1.size();
+        });
+
         return sorted;
+    }
+
+    public List<Symptom> getSortedSymptoms(Disease disease, Set<Symptom> symptoms) {
+        final KieSession kieSession = kieContainer.newKieSession("cdssSession");
+        kieSession.addEventListener(new DebugAgendaEventListener());
+
+        diseaseRepository.findAll().forEach(kieSession::insert);
+        SymptomListDto symptomListDto = new SymptomListDto();
+        symptomListDto.setSymptoms(symptoms);
+        kieSession.insert(symptomListDto);
+
+        QueryResults results = kieSession.getQueryResults("Get symptoms", disease.getName());
+
+        List<Symptom> sorted = new ArrayList<>();
+        for (QueryResultsRow result : results) {
+            sorted.addAll((Collection<? extends Symptom>) result.get("$foundSpecific"));
+        }
+
+        for (QueryResultsRow result : results) {
+            sorted.addAll((Collection<? extends Symptom>) result.get("$foundGeneral"));
+        }
+
+        return sorted;
+
     }
 }

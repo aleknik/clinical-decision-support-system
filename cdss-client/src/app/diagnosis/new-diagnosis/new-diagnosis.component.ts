@@ -28,12 +28,17 @@ export class NewDiagnosisComponent implements OnInit {
   selectedSymptomName: string;
   selectedMedicineName: string;
   selectedDiseaseName: string;
+  selectedDisease2Name: string;
 
+  foundSymptoms = Array<Symptom>();
   selectedSymptoms = Array<Symptom>();
   selectedMedicines = Array<Medicine>();
   selectedDisease = new Disease();
+  selectedDisease2 = new Disease();
 
   suggestedDiseases = Array<Disease>();
+
+  connectedDiseases = new Array<Disease>();
 
   constructor(private symptomService: SymptomService,
     private diseaseService: DiseaseService,
@@ -88,12 +93,18 @@ export class NewDiagnosisComponent implements OnInit {
     this.selectedDisease = event.item;
     this.selectedDiseaseName = '';
   }
+  diseaseSelected2(event) {
+    this.selectedDisease2 = event.item;
+    this.selectedDisease2Name = '';
+    this.foundSymptoms = []
+  }
 
   removeSymptom(symptom: Symptom) {
     const index: number = this.selectedSymptoms.indexOf(symptom);
     if (index !== -1) {
       this.selectedSymptoms.splice(index, 1);
       this.suggestedDiseases = [];
+      this.connectedDiseases = [];
     }
   }
 
@@ -107,7 +118,7 @@ export class NewDiagnosisComponent implements OnInit {
   suggestDiseases() {
     this.diseaseService.suggestDiseases(this.selectedSymptoms, this.patientId).subscribe(result => {
       if (result.length === 0) {
-        this.toastr.warning('No diseases matching symptoms');
+        this.toastr.warning('No disease suggestion found');
       }
       this.suggestedDiseases = result;
     });
@@ -119,6 +130,24 @@ export class NewDiagnosisComponent implements OnInit {
     this.diagnosisService.create(this.diagnosis, { 'patientId': this.patientId }).subscribe(diagnosis => {
       this.toastr.success('Diagnosis created');
       this.router.navigate(['diagnoses', diagnosis.id]);
+    });
+  }
+
+  getConnectedDiseases() {
+    this.diagnosisService.connectedDiseases(this.selectedSymptoms).subscribe(result => {
+      if (result.length === 0) {
+        this.toastr.warning('No connected diseases found');
+      }
+      this.connectedDiseases = result;
+    });
+  }
+
+  findMatchingSymptoms() {
+    this.symptomService.sortSymptoms(this.selectedSymptoms, this.selectedDisease2.id).subscribe(result => {
+      if (result.length === 0) {
+        this.toastr.warning('No matching symptoms found');
+      }
+      this.foundSymptoms = result;
     });
   }
 }

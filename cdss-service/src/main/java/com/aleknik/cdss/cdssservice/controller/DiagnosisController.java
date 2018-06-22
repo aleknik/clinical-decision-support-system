@@ -109,9 +109,9 @@ public class DiagnosisController {
 
     @PostMapping("diagnoses/diseases")
     @PreAuthorize("hasAuthority('" + RoleConstants.DOCTOR + "')")
-    public ResponseEntity getSuggestedDiseases(@RequestBody IdListDto symptomIds) {
-        symptomIds.getIds().add(symptomService.findByName("Kijanje").getId());
-        final List<Symptom> symptoms = symptomIds.getIds().stream().map(symptomService::findById).collect(Collectors.toList());
+    public ResponseEntity getSuggestedDiseases(@RequestBody List<Symptom> symptomList) {
+        final Set<Symptom> symptoms = symptomList.stream()
+                .map(symptom -> symptomService.findById(symptom.getId())).collect(Collectors.toSet());
 
         return ResponseEntity.ok(diagnosisReasonerService.getSortedDiseases(symptoms));
     }

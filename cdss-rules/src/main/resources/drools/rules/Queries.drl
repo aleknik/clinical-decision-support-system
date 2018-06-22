@@ -10,11 +10,12 @@ import com.aleknik.cdss.cdssservice.model.dto.SymptomListDto;
 import com.aleknik.cdss.cdssservice.model.Disease;
 import java.util.List;
 
-query "Get diseases" (Symptom[] mySymptoms)
+query "Get diseases" ()
+    SymptomListDto($symptomList: symptoms)
     $disease: Disease($symptoms: getAllSymptoms())
 
     Number(intValue > 0) from accumulate(
-        Symptom(this memberOf $symptoms) from mySymptoms,
+        Symptom(this memberOf $symptomList) from $symptoms,
         count()
     )
 end
