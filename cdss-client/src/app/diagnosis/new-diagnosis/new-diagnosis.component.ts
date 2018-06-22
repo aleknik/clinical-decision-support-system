@@ -160,8 +160,7 @@ export class NewDiagnosisComponent implements OnInit {
 
       if (result.length === 0) {
         this.toastr.success('No allergies found');
-      }
-      else {
+      } else {
         this.toastr.warning('Allergies found');
       }
     });

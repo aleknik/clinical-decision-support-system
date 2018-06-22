@@ -15,6 +15,7 @@ import { IngredientService } from './http/ingredient.service';
 import { DiseaseService } from './http/disease.service';
 import { DiagnosisService } from './http/diagnosis.service';
 import { ReportService } from './http/report.service';
+import { DoctorService } from './http/doctor.service';
 
 @NgModule({
   imports: [
@@ -43,7 +44,8 @@ import { ReportService } from './http/report.service';
     IngredientService,
     DiseaseService,
     DiagnosisService,
-    ReportService
+    ReportService,
+    DoctorService
   ]
 })
 export class CoreModule { }

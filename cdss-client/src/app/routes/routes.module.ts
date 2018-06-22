@@ -16,6 +16,7 @@ import { ReportDetailsComponent } from '../reports/report-details/report-details
 import { NewIngredientComponent } from '../ingredients/new-ingredient/new-ingredient.component';
 import { IsAdminGuard } from './is-admin.guard';
 import { NewMedicineComponent } from '../medicines/new-medicine/new-medicine.component';
+import { NewDoctorComponent } from '../doctors/new-doctor/new-doctor.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/patients', pathMatch: 'full' },
@@ -35,6 +36,8 @@ const routes: Routes = [
   { path: 'ingredients/new', component: NewIngredientComponent, canActivate: [IsAdminGuard] },
 
   { path: 'medicines/new', component: NewMedicineComponent, canActivate: [IsAdminGuard] },
+
+  { path: 'doctors/new', component: NewDoctorComponent, canActivate: [IsAdminGuard] },
 
 ];
 

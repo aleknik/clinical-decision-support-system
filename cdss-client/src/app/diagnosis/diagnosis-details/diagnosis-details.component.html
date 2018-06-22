@@ -23,7 +23,7 @@
     <h2>Prescribed medicine</h2>
     <ul class="list-group">
       <li *ngFor="let medicine of diagnosis.medicines" class="list-group-item">
-        {{medicine.name}}
+        {{medicine.name}} ({{medicine.medicineType}})
       </li>
     </ul>
   </div>

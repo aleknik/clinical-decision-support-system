@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="col-sm-4"></div>
+  <form class="col-sm-4 form" (ngSubmit)="create()" #doctorForm="ngForm">
+    <h2 class="form-heading">Register doctor</h2>
+
+    <label>Username</label>
+    <input type="text" class="form-control" [(ngModel)]="user.username" name="username" required autofocus>
+    <label>Password</label>
+    <input type="password" class="form-control" [(ngModel)]="user.password" name="password" required>
+    <label>First name</label>
+    <input type="text" class="form-control" [(ngModel)]="user.firstName" name="firstName" required autofocus>
+    <label>Last name</label>
+    <input type="text" class="form-control" [(ngModel)]="user.lastName" name="lastName" required autofocus>
+    <br/>
+    <button [disabled]="doctorForm.form.invalid" class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+  </form>
+</div>

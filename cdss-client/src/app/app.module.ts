@@ -11,6 +11,7 @@ import { DiagnosisModule } from './diagnosis/diagnosis.module';
 import { ReportsModule } from './reports/reports.module';
 import { IngredientsModule } from './ingredients/ingredients.module';
 import { MedicinesModule } from './medicines/medicines.module';
+import { DoctorsModule } from './doctors/doctors.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,7 +24,8 @@ import { MedicinesModule } from './medicines/medicines.module';
     DiagnosisModule,
     ReportsModule,
     IngredientsModule,
-    MedicinesModule],
+    MedicinesModule,
+    DoctorsModule],
   providers: [],
   bootstrap: [AppComponent]
 })

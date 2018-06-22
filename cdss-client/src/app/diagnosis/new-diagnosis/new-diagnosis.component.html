@@ -82,7 +82,7 @@
           <br>
           <ul class="list-group">
             <li *ngFor="let medicine of selectedMedicines" [ngClass]="{'allergic': medicine.isAllergic}" class="list-group-item">
-              {{medicine.name}}
+              {{medicine.name}} ({{medicine.medicineType}})
               <span class="float-right fa fa-trash fa-2x icon-pad pointer" (click)="removeMedicine(medicine)">
               </span>
             </li>
