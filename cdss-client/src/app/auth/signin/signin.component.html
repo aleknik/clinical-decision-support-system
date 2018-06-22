@@ -1,10 +1,13 @@
-<form class="form" (ngSubmit)="signin()" #signinForm="ngForm">
-  <h2 class="form-heading">Sign in</h2>
+<div class="row">
+  <div class="col-sm-4"></div>
+  <form class="col-sm-4 form" (ngSubmit)="signin()" #signinForm="ngForm">
+    <h2 class="form-heading">Sign in</h2>
 
-  <label>Username</label>
-  <input type="text" class="form-control" [(ngModel)]="user.username" name="username" required autofocus>
-  <label>Password</label>
-  <input type="password" class="form-control" [(ngModel)]="user.password" name="password" required>
-  <br/>
-  <button id="signinButton" [disabled]="signinForm.form.invalid" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-</form>
+    <label>Username</label>
+    <input type="text" class="form-control" [(ngModel)]="user.username" name="username" required autofocus>
+    <label>Password</label>
+    <input type="password" class="form-control" [(ngModel)]="user.password" name="password" required>
+    <br/>
+    <button id="signinButton" [disabled]="signinForm.form.invalid" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+  </form>
+</div>

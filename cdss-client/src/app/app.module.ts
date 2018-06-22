@@ -9,10 +9,21 @@ import { SharedModule } from './shared/shared.module';
 import { PatientsModule } from './patients/patients.module';
 import { DiagnosisModule } from './diagnosis/diagnosis.module';
 import { ReportsModule } from './reports/reports.module';
+import { IngredientsModule } from './ingredients/ingredients.module';
+import { MedicinesModule } from './medicines/medicines.module';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, AuthModule, CoreModule, RoutesModule, SharedModule, PatientsModule, DiagnosisModule, ReportsModule],
+  imports: [BrowserModule,
+    AuthModule,
+    CoreModule,
+    RoutesModule,
+    SharedModule,
+    PatientsModule,
+    DiagnosisModule,
+    ReportsModule,
+    IngredientsModule,
+    MedicinesModule],
   providers: [],
   bootstrap: [AppComponent]
 })

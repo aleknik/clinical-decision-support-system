@@ -3,7 +3,6 @@ package com.aleknik.cdss.cdssservice.service;
 import com.aleknik.cdss.cdssservice.model.dto.Report;
 import com.aleknik.cdss.cdssservice.repository.DiagnosisRepository;
 import com.aleknik.cdss.cdssservice.util.DebugAgendaEventListener;
-import com.sun.org.apache.regexp.internal.RE;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.springframework.stereotype.Service;
@@ -31,6 +30,5 @@ public class ReportService {
         kieSession.fireAllRules();
 
         return report;
-
     }
 }

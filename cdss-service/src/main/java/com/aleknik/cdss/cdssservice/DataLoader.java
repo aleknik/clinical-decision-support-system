@@ -9,7 +9,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Component
@@ -208,12 +207,12 @@ public class DataLoader implements ApplicationRunner {
         medicine1.getIngredients().add(ingredient);
         medicineRepository.save(medicine1);
 
-        Diagnosis diagnosis = new Diagnosis();
-        diagnosis.setDate(new Date());
-        diagnosis.setPatient(patient);
-        diagnosis.setDisease(diseaseRepository.findByName("Prehlada").get());
-        diagnosis.getMedicines().add(medicine1);
-        diagnosisRepository.save(diagnosis);
+//        Diagnosis diagnosis = new Diagnosis();
+//        diagnosis.setDate(new Date());
+//        diagnosis.setPatient(patient);
+//        diagnosis.setDisease(diseaseRepository.findByName("Prehlada").get());
+//        diagnosis.getMedicines().add(medicine1);
+//        diagnosisRepository.save(diagnosis);
 
         patient = new Patient();
         patient.setFirstName("peraa");

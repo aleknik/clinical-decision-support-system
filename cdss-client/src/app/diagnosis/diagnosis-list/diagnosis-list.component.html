@@ -1,3 +1,19 @@
-<p>
-  diagnosis-list works!
-</p>
+<div>
+  <h2>Patients</h2>
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Disease name</th>
+        <th scope="col">Doctor name</th>
+        <th scope="col">Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let diagnosis of diagnoses" (click)="onSelect(diagnosis)" class="pointer">
+        <th scope="row">{{diagnosis.disease.name}}</th>
+        <th>{{diagnosis.doctor.firstName}} {{diagnosis.doctor.lastName}}</th>
+        <th scope="row">{{diagnosis.date | date: 'MMM d, y, HH:mm'}}</th>
+      </tr>
+    </tbody>
+  </table>
+</div>

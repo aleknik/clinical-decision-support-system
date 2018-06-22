@@ -6,7 +6,8 @@
           <h2>Symptoms</h2>
           <label for="symptom">Search symptom</label>
           <input name="symptom" [(ngModel)]="selectedSymptomName" [typeahead]="allSymptoms" class="form-control" typeaheadOptionField="name"
-            (typeaheadOnSelect)="symptomSelected($event)" [typeaheadOptionsInScrollableView]="10" [typeaheadScrollable]="true">
+            (typeaheadOnSelect)="symptomSelected($event)" [typeaheadMinLength]="0" [typeaheadOptionsInScrollableView]="10"
+            [typeaheadScrollable]="true">
           <br>
           <ul class="list-group">
             <li *ngFor="let symptom of selectedSymptoms" class="list-group-item">
@@ -38,7 +39,8 @@
           <h2>Disease</h2>
           <label for="disease">Search disease</label>
           <input name="disease" [(ngModel)]="selectedDisease2Name" [typeahead]="allDiseases" class="form-control" typeaheadOptionField="name"
-            (typeaheadOnSelect)="diseaseSelected2($event)" [typeaheadOptionsInScrollableView]="10" [typeaheadScrollable]="true">
+            (typeaheadOnSelect)="diseaseSelected2($event)" [typeaheadMinLength]="0" [typeaheadOptionsInScrollableView]="10"
+            [typeaheadScrollable]="true">
           <div class="form-group row">
             <label for="diseaseName" class="col-sm-4 col-form-label">Disease name</label>
             <div class="col-sm-8">
@@ -62,7 +64,8 @@
           <h2>Disease</h2>
           <label for="disease">Search disease</label>
           <input name="disease" [(ngModel)]="selectedDiseaseName" [typeahead]="allDiseases" class="form-control" typeaheadOptionField="name"
-            (typeaheadOnSelect)="diseaseSelected($event)" [typeaheadOptionsInScrollableView]="10" [typeaheadScrollable]="true">
+            (typeaheadOnSelect)="diseaseSelected($event)" [typeaheadMinLength]="0" [typeaheadOptionsInScrollableView]="10"
+            [typeaheadScrollable]="true">
           <div class="form-group row">
             <label for="diseaseName" class="col-sm-4 col-form-label">Disease name</label>
             <div class="col-sm-8">
@@ -71,18 +74,21 @@
             </div>
           </div>
           <br>
-          <h2>Diagnosis</h2>
+          <h2>Prescribed medicine</h2>
           <label for="medicine">Search medicine</label>
           <input name="medicine" [(ngModel)]="selectedMedicineName" [typeahead]="allMedicines" class="form-control" typeaheadOptionField="name"
-            (typeaheadOnSelect)="medicineSelected($event)" [typeaheadOptionsInScrollableView]="10" [typeaheadScrollable]="true">
+            (typeaheadOnSelect)="medicineSelected($event)" [typeaheadMinLength]="0" [typeaheadOptionsInScrollableView]="10"
+            [typeaheadScrollable]="true">
           <br>
           <ul class="list-group">
-            <li *ngFor="let medicine of selectedMedicines" class="list-group-item">
+            <li *ngFor="let medicine of selectedMedicines" [ngClass]="{'allergic': medicine.isAllergic}" class="list-group-item">
               {{medicine.name}}
               <span class="float-right fa fa-trash fa-2x icon-pad pointer" (click)="removeMedicine(medicine)">
               </span>
             </li>
           </ul>
+          <br>
+          <button type='button' class="btn btn-lg btn-primary btn-block" [disabled]="selectedMedicines.length === 0" (click)="checkAllergies()">Check allergies</button>
           <button type="submit" class="btn btn-lg btn-primary btn-block" [disabled]="diagnosisForm.form.invalid || selectedMedicines.length === 0">Create</button>
         </form>
       </div>

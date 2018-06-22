@@ -151,4 +151,19 @@ export class NewDiagnosisComponent implements OnInit {
       this.foundSymptoms = result;
     });
   }
+
+  checkAllergies() {
+    this.medicineService.checkAllergies(this.selectedMedicines, this.patientId).subscribe(result => {
+      for (const medicine of this.selectedMedicines) {
+        medicine.isAllergic = result.some(med => med.id === medicine.id);
+      }
+
+      if (result.length === 0) {
+        this.toastr.success('No allergies found');
+      }
+      else {
+        this.toastr.warning('Allergies found');
+      }
+    });
+  }
 }

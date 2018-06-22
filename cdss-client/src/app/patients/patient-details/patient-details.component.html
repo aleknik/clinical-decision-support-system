@@ -13,13 +13,16 @@
       <button type="submit" class="btn btn-lg btn-primary btn-block" [disabled]="patientForm.form.invalid">Save</button>
     </form>
     <br>
+    <br>
     <button class="btn btn-lg btn-primary btn-block" (click)="diagnosePatient()">Diagnose patient</button>
+    <br>
+    <button class="btn btn-lg btn-primary btn-block" (click)="allDiagnoses()">All diagnoses</button>
   </div>
   <div class="col-sm-4">
     <h2 class="form-heading">Medicine allergies</h2>
     <label for="medicine">Medicine</label>
     <input name="medicine" [(ngModel)]="selectedMedicineName" [typeahead]="allMedicines" class="form-control" typeaheadOptionField="name"
-      (typeaheadOnSelect)="medicineSelected($event)" [typeaheadOptionsInScrollableView]="5" [typeaheadScrollable]="true">
+      (typeaheadOnSelect)="medicineSelected($event)" [typeaheadMinLength]="0" [typeaheadOptionsInScrollableView]="10" [typeaheadScrollable]="true">
     <br>
     <ul class="list-group">
       <li *ngFor="let medicine of selectedMedicines" class="list-group-item">
@@ -33,7 +36,7 @@
     <h2 class="form-heading">Ingredient allergies</h2>
     <label for="ingredient">Ingredient</label>
     <input name="ingredient" [(ngModel)]="selectedIngredientName" [typeahead]="allIngredients" class="form-control" typeaheadOptionField="name"
-      (typeaheadOnSelect)="ingredientSelected($event)" [typeaheadOptionsInScrollableView]="5" [typeaheadScrollable]="true">
+      (typeaheadOnSelect)="ingredientSelected($event)" [typeaheadMinLength]="0" [typeaheadOptionsInScrollableView]="10" [typeaheadScrollable]="true">
     <br>
     <ul class="list-group">
       <li *ngFor="let ingredient of selectedIngredients" class="list-group-item">

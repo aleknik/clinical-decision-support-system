@@ -1,8 +1,10 @@
 package com.aleknik.cdss.cdssservice.service;
 
 import com.aleknik.cdss.cdssservice.model.Disease;
+import com.aleknik.cdss.cdssservice.model.Medicine;
 import com.aleknik.cdss.cdssservice.model.Patient;
 import com.aleknik.cdss.cdssservice.model.Symptom;
+import com.aleknik.cdss.cdssservice.model.dto.Allergies;
 import com.aleknik.cdss.cdssservice.model.dto.DiagnosisResultDto;
 import com.aleknik.cdss.cdssservice.model.dto.SymptomListDto;
 import com.aleknik.cdss.cdssservice.repository.DiseaseRepository;
@@ -80,6 +82,8 @@ public class DiagnosisReasonerService {
             return intersection2.size() - intersection1.size();
         });
 
+        kieSession.dispose();
+
         return sorted;
     }
 
@@ -103,7 +107,24 @@ public class DiagnosisReasonerService {
             sorted.addAll((Collection<? extends Symptom>) result.get("$foundGeneral"));
         }
 
-        return sorted;
+        kieSession.dispose();
 
+        return sorted;
+    }
+
+    public Set<Medicine> checkAllergies(Set<Medicine> medicines, Patient patient) {
+        final KieSession kieSession = kieContainer.newKieSession("cdssSession");
+        kieSession.addEventListener(new DebugAgendaEventListener());
+
+        Allergies allergies = new Allergies();
+        kieSession.insert(allergies);
+        medicines.forEach(kieSession::insert);
+        kieSession.insert(patient);
+
+        kieSession.fireAllRules();
+
+        kieSession.dispose();
+
+        return allergies.getMedicines();
     }
 }

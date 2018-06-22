@@ -1,0 +1,32 @@
+<div class="row">
+  <div class="col-sm-4"></div>
+  <form class="col-sm-4 form" (ngSubmit)="create()" #ingredientForm="ngForm">
+    <h2 class="form-heading">Create medicine</h2>
+
+    <label>Name</label>
+    <input type="text" class="form-control" [(ngModel)]="medicine.name" name="name" required autofocus>
+    <label class="form-check-inline">
+      <input class="form-check-input" type="radio" name="type" required value="ANTIBIOTIC" [(ngModel)]="medicine.medicineType"> Antibiotic
+    </label>
+    <label class="form-check-inline">
+      <input class="form-check-input" type="radio" name="type" required value="ANALGESIC" [(ngModel)]="medicine.medicineType"> Analgesic
+    </label>
+    <label class="form-check-inline">
+      <input class="form-check-input" type="radio" name="type" required value="OTHER" [(ngModel)]="medicine.medicineType"> Other
+    </label>
+    <h2 class="form-heading">Ingredients</h2>
+    <label for="ingredient">Ingredient</label>
+    <input name="ingredient" [(ngModel)]="selectedIngredientName" [typeahead]="allIngredients" class="form-control" typeaheadOptionField="name"
+      (typeaheadOnSelect)="ingredientSelected($event)" [typeaheadOptionsInScrollableView]="10" [typeaheadMinLength]="0" [typeaheadScrollable]="true">
+    <br>
+    <ul class="list-group">
+      <li *ngFor="let ingredient of selectedIngredients" class="list-group-item">
+        {{ingredient.name}}
+        <span class="float-right fa fa-trash fa-2x icon-pad pointer" (click)="removeIngredient(ingredient)">
+        </span>
+      </li>
+    </ul>
+    <br/>
+    <button id="button" [disabled]="ingredientForm.form.invalid" class="btn btn-lg btn-primary btn-block" type="submit">Create</button>
+  </form>
+</div>

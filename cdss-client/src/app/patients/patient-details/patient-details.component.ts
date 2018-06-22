@@ -44,6 +44,10 @@ export class PatientDetailsComponent implements OnInit {
     });
   }
 
+  allDiagnoses() {
+    this.router.navigate(['patients', this.patientId, 'diagnoses']);
+  }
+
   private getPatient(): void {
     this.patientService.findById(this.patientId).subscribe(result => {
       this.patient = result;

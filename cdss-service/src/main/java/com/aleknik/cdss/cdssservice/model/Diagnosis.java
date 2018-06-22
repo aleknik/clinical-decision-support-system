@@ -1,6 +1,5 @@
 package com.aleknik.cdss.cdssservice.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.kie.api.definition.type.Role;
 import org.kie.api.definition.type.Timestamp;

@@ -1,0 +1,39 @@
+import com.aleknik.cdss.cdssservice.model.Patient;
+import com.aleknik.cdss.cdssservice.model.Disease;
+import com.aleknik.cdss.cdssservice.model.DiseaseGroup;
+import com.aleknik.cdss.cdssservice.model.Symptom;
+import com.aleknik.cdss.cdssservice.model.Medicine;
+import com.aleknik.cdss.cdssservice.model.Ingredient;
+import com.aleknik.cdss.cdssservice.model.dto.DiagnosisResultDto;
+import com.aleknik.cdss.cdssservice.model.dto.SymptomListDto;
+import com.aleknik.cdss.cdssservice.model.dto.DiseaseCandidate;
+import com.aleknik.cdss.cdssservice.model.dto.Allergies;
+import java.util.List;
+
+
+rule "Check medicine"
+    when
+       $allergies: Allergies()
+       $patients: Patient($medicineAllergies: medicineAllergies)
+       $medicine: Medicine()
+
+       exists Medicine(name.equals($medicine.name)) from $medicineAllergies
+    then
+        modify($allergies){
+            getMedicines().add($medicine);
+        }
+end
+
+
+rule "Check ingredients"
+    when
+       $allergies: Allergies()
+       $patients: Patient($ingredientAllergies: ingredientAllergies)
+       $medicine: Medicine($ingredients: ingredients)
+
+       exists Ingredient(this memberOf $ingredients) from $ingredientAllergies
+    then
+        modify($allergies){
+            getMedicines().add($medicine);
+        }
+end

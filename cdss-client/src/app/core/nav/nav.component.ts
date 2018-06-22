@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../http/auth.service';
 import { Router } from '@angular/router';
-import { DOCTOR } from '../util/constants';
+import { DOCTOR, ADMIN } from '../util/constants';
 
 @Component({
   selector: 'app-nav',
@@ -24,6 +24,10 @@ export class NavComponent implements OnInit {
 
   isDoctor(): boolean {
     return this.authService.checkPermission(DOCTOR);
+  }
+
+  isAdmin(): boolean {
+    return this.authService.checkPermission(ADMIN);
   }
 
   signout() {

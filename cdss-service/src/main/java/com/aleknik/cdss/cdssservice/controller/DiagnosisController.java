@@ -2,7 +2,6 @@ package com.aleknik.cdss.cdssservice.controller;
 
 import com.aleknik.cdss.cdssservice.model.*;
 import com.aleknik.cdss.cdssservice.model.dto.DiagnosisCreateDto;
-import com.aleknik.cdss.cdssservice.model.dto.IdListDto;
 import com.aleknik.cdss.cdssservice.security.RoleConstants;
 import com.aleknik.cdss.cdssservice.service.*;
 import org.springframework.http.ResponseEntity;
@@ -120,5 +119,11 @@ public class DiagnosisController {
     @PreAuthorize("hasAuthority('" + RoleConstants.DOCTOR + "')")
     ResponseEntity findById(@PathVariable long id) {
         return ResponseEntity.ok(diagnosisService.findById(id));
+    }
+
+    @GetMapping("/diagnoses")
+    @PreAuthorize("hasAuthority('" + RoleConstants.DOCTOR + "')")
+    ResponseEntity getDaignosesForPatients(@RequestParam long patientId) {
+        return ResponseEntity.ok(diagnosisService.findByPatient(patientId));
     }
 }

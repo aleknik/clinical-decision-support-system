@@ -13,11 +13,13 @@ import { DiagnosisListComponent } from '../diagnosis/diagnosis-list/diagnosis-li
 import { DiagnosisDetailsComponent } from '../diagnosis/diagnosis-details/diagnosis-details.component';
 import { IsDoctorGuard } from './is-doctor.guard';
 import { ReportDetailsComponent } from '../reports/report-details/report-details.component';
+import { NewIngredientComponent } from '../ingredients/new-ingredient/new-ingredient.component';
+import { IsAdminGuard } from './is-admin.guard';
+import { NewMedicineComponent } from '../medicines/new-medicine/new-medicine.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/patients', pathMatch: 'full' },
 
-  // Auth
   { path: 'signin', component: SigninComponent, canActivate: [IsUnauthenticatedGuard] },
 
   { path: 'patients', component: PatientListComponent, canActivate: [IsDoctorGuard] },
@@ -29,6 +31,11 @@ const routes: Routes = [
   { path: 'diagnoses/:id', component: DiagnosisDetailsComponent, canActivate: [IsDoctorGuard] },
 
   { path: 'reports', component: ReportDetailsComponent, canActivate: [IsAuthenticatedGuard] },
+
+  { path: 'ingredients/new', component: NewIngredientComponent, canActivate: [IsAdminGuard] },
+
+  { path: 'medicines/new', component: NewMedicineComponent, canActivate: [IsAdminGuard] },
+
 ];
 
 @NgModule({

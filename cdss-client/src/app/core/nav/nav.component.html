@@ -19,6 +19,24 @@
       <li class="nav-item" *ngIf="isAuthenticated()">
         <a class="nav-link" routerLink="/reports">Reports</a>
       </li>
+      <li class="nav-item dropdown" *ngIf="isAdmin()" dropdown>
+        <a class="nav-link dropdown-toggle" href dropdownToggle (click)="false" id="navbarDropdownMenuLink" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Ingredients
+        </a>
+        <div *dropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" routerLink="/ingredients/new">Add ingredient</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown" *ngIf="isAdmin()" dropdown>
+        <a class="nav-link dropdown-toggle" href dropdownToggle (click)="false" id="navbarDropdownMenuLink" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Medicines
+        </a>
+        <div *dropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" routerLink="/medicines/new">Add medicine</a>
+        </div>
+      </li>
     </ul>
 
     <ul class="navbar-nav ml-auto">

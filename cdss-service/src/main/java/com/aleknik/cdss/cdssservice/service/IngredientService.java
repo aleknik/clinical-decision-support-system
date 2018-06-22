@@ -23,4 +23,10 @@ public class IngredientService {
     public Ingredient findById(long id) {
         return ingredientRepository.findById(id).orElseThrow(() -> new NotFoundException("Ingredient not found"));
     }
+
+    public Ingredient create(Ingredient ingredient) {
+        Ingredient newIngredient = new Ingredient();
+        ingredient.setName(ingredient.getName());
+        return ingredientRepository.save(newIngredient);
+    }
 }

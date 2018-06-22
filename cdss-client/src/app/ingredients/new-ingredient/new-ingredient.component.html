@@ -1,0 +1,11 @@
+<div class="row">
+  <div class="col-sm-4"></div>
+  <form class="col-sm-4 form" (ngSubmit)="create()" #ingredientForm="ngForm">
+    <h2 class="form-heading">Create ingredient</h2>
+
+    <label>Name</label>
+    <input type="text" class="form-control" [(ngModel)]="ingredient.name" name="name" required autofocus>
+    <br/>
+    <button id="button" [disabled]="ingredientForm.form.invalid" class="btn btn-lg btn-primary btn-block" type="submit">Create</button>
+  </form>
+</div>
