@@ -46,7 +46,7 @@
                 name="diseaseName">
             </div>
           </div>
-          <button class="btn btn-lg btn-primary btn-block" (click)="findMatchingSymptoms()" [disabled]="selectedSymptoms.length === 0">Find matching symptoms</button>
+          <button class="btn btn-lg btn-primary btn-block" (click)="findMatchingSymptoms()" [disabled]="selectedSymptoms.length === 0 || !selectedDisease2.name">Find matching symptoms</button>
           <ul class="list-group">
             <li *ngFor="let symptom of foundSymptoms" class="list-group-item">
               {{symptom.name}}
@@ -83,7 +83,7 @@
               </span>
             </li>
           </ul>
-          <button type="submit" class="btn btn-lg btn-primary btn-block" [disabled]="diagnosisForm.form.invalid">Create</button>
+          <button type="submit" class="btn btn-lg btn-primary btn-block" [disabled]="diagnosisForm.form.invalid || selectedMedicines.length === 0">Create</button>
         </form>
       </div>
     </tab>

@@ -1,0 +1,53 @@
+<div class="row">
+  <div class="col-sm-4">
+    <h2>Chronic patients</h2>
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">First</th>
+          <th scope="col">Last</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let patient of report.chronicPatients" (click)="onSelect(patient)" class="pointer">
+          <th scope="row">{{patient.firstName}}</th>
+          <th>{{patient.lastName}}</th>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-sm-4">
+    <h2>Addict patients</h2>
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">First</th>
+          <th scope="col">Last</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let patient of report.addictPatients" (click)="onSelect(patient)" class="pointer">
+          <th scope="row">{{patient.firstName}}</th>
+          <th>{{patient.lastName}}</th>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-sm-4">
+    <h2>Weak immune system patients</h2>
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">First</th>
+          <th scope="col">Last</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let patient of report.weakImmuneSystemPatients" (click)="onSelect(patient)" class="pointer">
+          <th scope="row">{{patient.firstName}}</th>
+          <th>{{patient.lastName}}</th>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

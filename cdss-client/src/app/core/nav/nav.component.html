@@ -6,16 +6,19 @@
   </button>
   <div class="collapse navbar-collapse" [collapse]="isCollapsed">
     <ul class="navbar-nav mr-auto">
-        <li class="nav-item dropdown" *ngIf="isAuthenticated()" dropdown>
-            <a class="nav-link dropdown-toggle" href dropdownToggle (click)="false" id="navbarDropdownMenuLink" data-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="false">
-              Patients
-            </a>
-            <div *dropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <a class="dropdown-item" routerLink="/patients">All patients</a>
-              <a class="dropdown-item" routerLink="/patients/new">Add patient</a>
-            </div>
-          </li>
+      <li class="nav-item dropdown" *ngIf="isDoctor()" dropdown>
+        <a class="nav-link dropdown-toggle" href dropdownToggle (click)="false" id="navbarDropdownMenuLink" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Patients
+        </a>
+        <div *dropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" routerLink="/patients">All patients</a>
+          <a class="dropdown-item" routerLink="/patients/new">Add patient</a>
+        </div>
+      </li>
+      <li class="nav-item" *ngIf="isAuthenticated()">
+        <a class="nav-link" routerLink="/reports">Reports</a>
+      </li>
     </ul>
 
     <ul class="navbar-nav ml-auto">

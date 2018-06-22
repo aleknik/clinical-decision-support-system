@@ -8,10 +8,11 @@ import { RoutesModule } from './routes/routes.module';
 import { SharedModule } from './shared/shared.module';
 import { PatientsModule } from './patients/patients.module';
 import { DiagnosisModule } from './diagnosis/diagnosis.module';
+import { ReportsModule } from './reports/reports.module';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, AuthModule, CoreModule, RoutesModule, SharedModule, PatientsModule, DiagnosisModule],
+  imports: [BrowserModule, AuthModule, CoreModule, RoutesModule, SharedModule, PatientsModule, DiagnosisModule, ReportsModule],
   providers: [],
   bootstrap: [AppComponent]
 })

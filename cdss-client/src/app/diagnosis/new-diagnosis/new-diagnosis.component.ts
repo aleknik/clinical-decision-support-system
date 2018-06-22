@@ -96,7 +96,7 @@ export class NewDiagnosisComponent implements OnInit {
   diseaseSelected2(event) {
     this.selectedDisease2 = event.item;
     this.selectedDisease2Name = '';
-    this.foundSymptoms = []
+    this.foundSymptoms = [];
   }
 
   removeSymptom(symptom: Symptom) {
@@ -105,6 +105,7 @@ export class NewDiagnosisComponent implements OnInit {
       this.selectedSymptoms.splice(index, 1);
       this.suggestedDiseases = [];
       this.connectedDiseases = [];
+      this.foundSymptoms = [];
     }
   }
 

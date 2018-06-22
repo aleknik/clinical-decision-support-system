@@ -12,6 +12,7 @@ import { NewDiagnosisComponent } from '../diagnosis/new-diagnosis/new-diagnosis.
 import { DiagnosisListComponent } from '../diagnosis/diagnosis-list/diagnosis-list.component';
 import { DiagnosisDetailsComponent } from '../diagnosis/diagnosis-details/diagnosis-details.component';
 import { IsDoctorGuard } from './is-doctor.guard';
+import { ReportDetailsComponent } from '../reports/report-details/report-details.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/patients', pathMatch: 'full' },
@@ -26,6 +27,8 @@ const routes: Routes = [
   { path: 'patients/:id/diagnoses', component: DiagnosisListComponent, canActivate: [IsDoctorGuard] },
   { path: 'patients/:id/diagnoses/new', component: NewDiagnosisComponent, canActivate: [IsDoctorGuard] },
   { path: 'diagnoses/:id', component: DiagnosisDetailsComponent, canActivate: [IsDoctorGuard] },
+
+  { path: 'reports', component: ReportDetailsComponent, canActivate: [IsAuthenticatedGuard] },
 ];
 
 @NgModule({
