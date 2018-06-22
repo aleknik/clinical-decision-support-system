@@ -1,33 +1,36 @@
 package com.aleknik.cdss.cdssservice.model.dto;
 
+import com.aleknik.cdss.cdssservice.model.Disease;
+import com.aleknik.cdss.cdssservice.model.Medicine;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public class DiagnosisCreateDto {
 
-    private long diseaseId;
+    private Disease disease;
 
     @NotNull
     @NotEmpty
-    private List<Long> medicineIds;
+    private List<Medicine> medicines;
 
     public DiagnosisCreateDto() {
     }
 
-    public long getDiseaseId() {
-        return diseaseId;
+    public Disease getDisease() {
+        return disease;
     }
 
-    public void setDiseaseId(long diseaseId) {
-        this.diseaseId = diseaseId;
+    public void setDisease(Disease disease) {
+        this.disease = disease;
     }
 
-    public List<Long> getMedicineIds() {
-        return medicineIds;
+    public List<Medicine> getMedicines() {
+        return medicines;
     }
 
-    public void setMedicineIds(List<Long> medicineIds) {
-        this.medicineIds = medicineIds;
+    public void setMedicines(List<Medicine> medicines) {
+        this.medicines = medicines;
     }
 }

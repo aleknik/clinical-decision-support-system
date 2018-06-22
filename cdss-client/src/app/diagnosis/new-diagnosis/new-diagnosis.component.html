@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-sm-4">
           <h2>Symptoms</h2>
-          <label for="symptom">Symptom</label>
+          <label for="symptom">Search symptom</label>
           <input name="symptom" [(ngModel)]="selectedSymptomName" [typeahead]="allSymptoms" class="form-control" typeaheadOptionField="name"
             (typeaheadOnSelect)="symptomSelected($event)" [typeaheadOptionsInScrollableView]="10" [typeaheadScrollable]="true">
           <br>
@@ -30,9 +30,21 @@
     <tab heading="Diagnosis">
       <div class="row">
         <div class="col-sm-4"></div>
-        <div class="col-sm-4">
+        <form class="form col-sm-4" (ngSubmit)="create()" #diagnosisForm="ngForm">
+          <h2>Disease</h2>
+          <label for="disease">Search disease</label>
+          <input name="disease" [(ngModel)]="selectedDiseaseName" [typeahead]="allDiseases" class="form-control" typeaheadOptionField="name"
+            (typeaheadOnSelect)="diseaseSelected($event)" [typeaheadOptionsInScrollableView]="10" [typeaheadScrollable]="true">
+          <div class="form-group row">
+            <label for="diseaseName" class="col-sm-4 col-form-label">Disease name</label>
+            <div class="col-sm-8">
+              <input type="text" readonly class="form-control-plaintext" required id="diseaseName" placeholder="Disease name" [(ngModel)]="selectedDisease.name"
+                name="diseaseName">
+            </div>
+          </div>
+          <br>
           <h2>Diagnosis</h2>
-          <label for="medicine">Medicine</label>
+          <label for="medicine">Search medicine</label>
           <input name="medicine" [(ngModel)]="selectedMedicineName" [typeahead]="allMedicines" class="form-control" typeaheadOptionField="name"
             (typeaheadOnSelect)="medicineSelected($event)" [typeaheadOptionsInScrollableView]="10" [typeaheadScrollable]="true">
           <br>
@@ -43,7 +55,8 @@
               </span>
             </li>
           </ul>
-        </div>
+          <button type="submit" class="btn btn-lg btn-primary btn-block" [disabled]="diagnosisForm.form.invalid">Create</button>
+        </form>
       </div>
     </tab>
   </tabset>

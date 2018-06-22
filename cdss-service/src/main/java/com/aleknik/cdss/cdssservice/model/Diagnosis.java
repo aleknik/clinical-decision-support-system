@@ -1,6 +1,7 @@
 package com.aleknik.cdss.cdssservice.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.kie.api.definition.type.Role;
 import org.kie.api.definition.type.Timestamp;
 
@@ -20,14 +21,14 @@ public class Diagnosis {
 
     private Date date;
 
-    @ManyToOne
-    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonIgnoreProperties("diagnoses")
     private Patient patient;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Disease disease;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.EAGER)
     private User doctor;
 
     @ManyToMany(fetch = FetchType.EAGER)

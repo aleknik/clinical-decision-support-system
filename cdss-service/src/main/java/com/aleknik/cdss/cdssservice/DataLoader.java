@@ -52,8 +52,8 @@ public class DataLoader implements ApplicationRunner {
     public void run(ApplicationArguments args) {
 
         // Users
-        initializeUser("admin", "admin", RoleConstants.ADMIN);
-        initializeUser("doctor", "doctor", RoleConstants.DOCTOR);
+        initializeUser("admin", "admin", "Mika", "Mitic", RoleConstants.ADMIN);
+        initializeUser("doctor", "doctor", "Milan", "Milovic", RoleConstants.DOCTOR);
 
         // Symptoms
         Symptom symptom1 = new Symptom("Curenje iz nosa", SymptomType.SIMPLE);
@@ -221,10 +221,12 @@ public class DataLoader implements ApplicationRunner {
         patientRepository.save(patient);
     }
 
-    private void initializeUser(String username, String password, String roleName) {
+    private void initializeUser(String username, String password, String firstName, String lastName, String roleName) {
         User user = new User();
         user.setUsername(username);
         user.setPassword(passwordEncoder.encode(password));
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
 
         final List<Role> roles = new ArrayList<>();
         final Role role = new Role(roleName);

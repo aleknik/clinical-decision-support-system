@@ -9,6 +9,9 @@ import { IsAuthenticatedGuard } from './is-authenticated.guard';
 import { PatientDetailsComponent } from '../patients/patient-details/patient-details.component';
 import { NewPatientComponent } from '../patients/new-patient/new-patient.component';
 import { NewDiagnosisComponent } from '../diagnosis/new-diagnosis/new-diagnosis.component';
+import { DiagnosisListComponent } from '../diagnosis/diagnosis-list/diagnosis-list.component';
+import { DiagnosisDetailsComponent } from '../diagnosis/diagnosis-details/diagnosis-details.component';
+import { IsDoctorGuard } from './is-doctor.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/patients', pathMatch: 'full' },
@@ -16,11 +19,13 @@ const routes: Routes = [
   // Auth
   { path: 'signin', component: SigninComponent, canActivate: [IsUnauthenticatedGuard] },
 
-  { path: 'patients', component: PatientListComponent, canActivate: [IsAuthenticatedGuard] },
-  { path: 'patients/new', component: NewPatientComponent, canActivate: [IsAuthenticatedGuard] },
-  { path: 'patients/:id', component: PatientDetailsComponent, canActivate: [IsAuthenticatedGuard] },
+  { path: 'patients', component: PatientListComponent, canActivate: [IsDoctorGuard] },
+  { path: 'patients/new', component: NewPatientComponent, canActivate: [IsDoctorGuard] },
+  { path: 'patients/:id', component: PatientDetailsComponent, canActivate: [IsDoctorGuard] },
 
-  { path: 'patients/:id/diagnoses/new', component: NewDiagnosisComponent, canActivate: [IsAuthenticatedGuard] },
+  { path: 'patients/:id/diagnoses', component: DiagnosisListComponent, canActivate: [IsDoctorGuard] },
+  { path: 'patients/:id/diagnoses/new', component: NewDiagnosisComponent, canActivate: [IsDoctorGuard] },
+  { path: 'diagnoses/:id', component: DiagnosisDetailsComponent, canActivate: [IsDoctorGuard] },
 ];
 
 @NgModule({
@@ -31,6 +36,7 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: [
     IsUnauthenticatedGuard,
-    IsAuthenticatedGuard]
+    IsAuthenticatedGuard,
+    IsDoctorGuard]
 })
 export class RoutesModule { }

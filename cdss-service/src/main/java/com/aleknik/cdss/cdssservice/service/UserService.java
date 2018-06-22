@@ -1,8 +1,12 @@
 package com.aleknik.cdss.cdssservice.service;
 
+import com.aleknik.cdss.cdssservice.controller.exception.ForbiddenException;
 import com.aleknik.cdss.cdssservice.controller.exception.NotFoundException;
 import com.aleknik.cdss.cdssservice.model.User;
 import com.aleknik.cdss.cdssservice.repository.UserRepository;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -42,5 +46,21 @@ public class UserService {
         }
 
         return userRepository.save(user);
+    }
+
+    /**
+     * Gets a user currently logged in.
+     * If no user is logged in, throws {@link ForbiddenException}.
+     *
+     * @return user currently logged in
+     */
+    public User findCurrentUser() {
+        final UsernamePasswordAuthenticationToken authentication = (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null) {
+            throw new ForbiddenException("User is not authenticated!");
+        }
+
+        final UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        return findByUsername(userDetails.getUsername());
     }
 }

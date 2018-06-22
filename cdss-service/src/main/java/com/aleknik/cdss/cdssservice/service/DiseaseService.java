@@ -5,6 +5,8 @@ import com.aleknik.cdss.cdssservice.model.Disease;
 import com.aleknik.cdss.cdssservice.repository.DiseaseRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class DiseaseService {
 
@@ -16,5 +18,9 @@ public class DiseaseService {
 
     public Disease findById(long id) {
         return diseaseRepository.findById(id).orElseThrow(() -> new NotFoundException("Disease not found."));
+    }
+
+    public List<Disease> findAll() {
+        return diseaseRepository.findAll();
     }
 }

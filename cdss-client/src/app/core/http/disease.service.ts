@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Disease } from '../../shared/model/disease.nodel';
+import { Disease } from '../../shared/model/disease.model';
 import { RestService } from './rest.service';
 import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';

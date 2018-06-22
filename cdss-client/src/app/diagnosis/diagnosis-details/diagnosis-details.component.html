@@ -1,0 +1,31 @@
+<div class="row">
+  <div class="col-sm-2"></div>
+  <div class="col-sm-4">
+    <h2>Diagnosis details</h2>
+    <div class="row">
+      <p class="col-sm-4">Disease name</p>
+      <p class="col-sm-8">{{diagnosis?.disease?.name}}</p>
+    </div>
+    <div class="row">
+      <p class="col-sm-4">Diagnosis date</p>
+      <p class="col-sm-8">{{diagnosis?.date | date: 'MMM d, y, HH:mm'}}</p>
+    </div>
+    <div class="row">
+      <p class="col-sm-4">Patient name</p>
+      <p class="col-sm-8">{{diagnosis?.patient?.firstName}} {{diagnosis?.patient?.lastName}}</p>
+    </div>
+    <div class="row">
+      <p class="col-sm-4">Doctor name</p>
+      <p class="col-sm-8">{{diagnosis?.doctor?.firstName}} {{diagnosis?.doctor?.lastName}}</p>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <h2>Prescribed medicine</h2>
+    <ul class="list-group">
+      <li *ngFor="let medicine of diagnosis.medicines" class="list-group-item">
+        {{medicine.name}}
+      </li>
+    </ul>
+  </div>
+
+</div>

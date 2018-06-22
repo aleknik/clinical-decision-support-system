@@ -3,8 +3,10 @@ package com.aleknik.cdss.cdssservice.controller;
 import com.aleknik.cdss.cdssservice.model.*;
 import com.aleknik.cdss.cdssservice.model.dto.DiagnosisCreateDto;
 import com.aleknik.cdss.cdssservice.model.dto.IdListDto;
+import com.aleknik.cdss.cdssservice.security.RoleConstants;
 import com.aleknik.cdss.cdssservice.service.*;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -31,18 +33,22 @@ public class DiagnosisController {
 
     private final PatientService patientService;
 
+    private final UserService userService;
+
     public DiagnosisController(DiagnosisReasonerService diagnosisReasonerService,
                                MedicineService medicineService,
                                DiseaseService diseaseService,
                                SymptomService symptomService,
                                DiagnosisService diagnosisService,
-                               PatientService patientService) {
+                               PatientService patientService,
+                               UserService userService) {
         this.diagnosisReasonerService = diagnosisReasonerService;
         this.medicineService = medicineService;
         this.diseaseService = diseaseService;
         this.symptomService = symptomService;
         this.diagnosisService = diagnosisService;
         this.patientService = patientService;
+        this.userService = userService;
     }
 
     @PostMapping("/diseases/suggest-diseases")
@@ -80,30 +86,39 @@ public class DiagnosisController {
     }
 
     @PostMapping("/diagnoses")
+    @PreAuthorize("hasAuthority('" + RoleConstants.DOCTOR + "')")
     public ResponseEntity create(@RequestBody @Valid DiagnosisCreateDto diagnosisCreateDto, @RequestParam long patientId) {
 
         final Patient patient = patientService.findById(patientId);
 
-        Set<Medicine> medicines = diagnosisCreateDto.getMedicineIds().stream().
-                map(medicineService::findById)
+        Set<Medicine> medicines = diagnosisCreateDto.getMedicines().stream().
+                map(medicine -> medicineService.findById(medicine.getId()))
                 .collect(Collectors.toSet());
 
         Diagnosis diagnosis = new Diagnosis();
         diagnosis.setDate(new Date());
-        diagnosis.setDisease(diseaseService.findById(diagnosisCreateDto.getDiseaseId()));
+        diagnosis.setDisease(diseaseService.findById(diagnosisCreateDto.getDisease().getId()));
         diagnosis.setMedicines(medicines);
         diagnosis.setPatient(patient);
+        diagnosis.setDoctor(userService.findCurrentUser());
 
         diagnosis = diagnosisService.create(diagnosis);
 
         return ResponseEntity.created(URI.create(String.format("api/diagnoses/%d", diagnosis.getId()))).body(diagnosis);
     }
 
-    @PostMapping("diagnoses/suggest-diseases")
+    @PostMapping("diagnoses/diseases")
+    @PreAuthorize("hasAuthority('" + RoleConstants.DOCTOR + "')")
     public ResponseEntity getSuggestedDiseases(@RequestBody IdListDto symptomIds) {
         symptomIds.getIds().add(symptomService.findByName("Kijanje").getId());
         final List<Symptom> symptoms = symptomIds.getIds().stream().map(symptomService::findById).collect(Collectors.toList());
 
         return ResponseEntity.ok(diagnosisReasonerService.getSortedDiseases(symptoms));
+    }
+
+    @GetMapping("diagnoses/{id}")
+    @PreAuthorize("hasAuthority('" + RoleConstants.DOCTOR + "')")
+    ResponseEntity findById(@PathVariable long id) {
+        return ResponseEntity.ok(diagnosisService.findById(id));
     }
 }
