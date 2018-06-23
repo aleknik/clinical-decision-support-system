@@ -1,19 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { MedicineService } from '../../core/http/medicine.service';
-import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { Medicine } from '../../shared/model/medicine.model';
 import { Ingredient } from '../../shared/model/ingredient.model';
+import { MedicineService } from '../../core/http/medicine.service';
 import { IngredientService } from '../../core/http/ingredient.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-new-medicine',
-  templateUrl: './new-medicine.component.html',
-  styleUrls: ['./new-medicine.component.css']
+  selector: 'app-medicine-details',
+  templateUrl: './medicine-details.component.html',
+  styleUrls: ['./medicine-details.component.css']
 })
-export class NewMedicineComponent implements OnInit {
+export class MedicineDetailsComponent implements OnInit {
 
   medicine = new Medicine();
+
+  id: number;
 
   selectedIngredientName: string;
 
@@ -23,17 +25,30 @@ export class NewMedicineComponent implements OnInit {
 
   constructor(private medicineService: MedicineService,
     private ingredientService: IngredientService,
+    private route: ActivatedRoute,
     private router: Router,
     private toastr: ToastrService) { }
 
   ngOnInit() {
-    this.getAllIngredients();
+    this.route.params.subscribe(params => {
+      this.id = params['id'];
+      this.getMedicine();
+      this.getAllIngredients();
+
+    });
+  }
+
+  getMedicine() {
+    this.medicineService.findById(this.id).subscribe(result => {
+      this.medicine = result;
+      this.selectedIngredients = result.ingredients;
+    });
   }
 
   create() {
     this.medicine.ingredients = this.selectedIngredients;
-    this.medicineService.create(this.medicine).subscribe(result => {
-      this.toastr.success('Medicine created');
+    this.medicineService.update(this.id, this.medicine).subscribe(result => {
+      this.toastr.success('Medicine updated');
     });
   }
 
@@ -56,5 +71,4 @@ export class NewMedicineComponent implements OnInit {
       this.selectedIngredients.splice(index, 1);
     }
   }
-
 }

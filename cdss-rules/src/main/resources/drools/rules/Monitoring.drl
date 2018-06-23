@@ -8,6 +8,7 @@ import com.aleknik.cdss.cdssservice.model.monitoring.Notification;
 import com.aleknik.cdss.cdssservice.service.NotificationService;
 
 rule "Oxygen problems"
+    agenda-group "Monitoring"
     lock-on-active true
     when
         $notificationService: NotificationService()
@@ -24,6 +25,7 @@ rule "Oxygen problems"
 end
 
 rule "Fast heart rate"
+    agenda-group "Monitoring"
     lock-on-active true
     when
         $notificationService: NotificationService()
@@ -39,6 +41,7 @@ rule "Fast heart rate"
 end
 
 rule "Need dialysis"
+    agenda-group "Monitoring"
     lock-on-active true
     when
         $notificationService: NotificationService()

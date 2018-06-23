@@ -12,6 +12,7 @@ import java.util.List;
 
 rule "Bolovao od prehlade ili groznice u poslednjih 60 dana"
     salience 150
+    agenda-group "diagnosis rules"
     when
         $symptomService: SymptomService()
         $symptoms: SymptomListDto($symptomList: symptoms)
@@ -27,6 +28,7 @@ end
 
 rule "6 meseci 10 slučajeva visok pritisak"
     salience 150
+    agenda-group "diagnosis rules"
     when
         $symptomService: SymptomService()
         $symptoms: SymptomListDto($symptomList: symptoms)
@@ -44,6 +46,7 @@ end
 
 rule "Pacijent boluje od hipertenzije više od 6 meseci"
     salience 150
+    agenda-group "diagnosis rules"
     when
         $symptomService: SymptomService()
         $symptoms: SymptomListDto($symptomList: symptoms)
@@ -68,6 +71,7 @@ end
 
 rule "Pacijent boluje od dijabetesa"
     salience 150
+    agenda-group "diagnosis rules"
     when
         $symptomService: SymptomService()
         $symptoms: SymptomListDto($symptomList: symptoms)
@@ -82,6 +86,7 @@ end
 
 rule "U poslednjih 14 dana dijagnostikovana bolest koja kao simptom ima povišenu telesnu temperaturu general"
     salience 150
+    agenda-group "diagnosis rules"
     when
         $symptomService: SymptomService()
         $symptoms: SymptomListDto($symptomList: symptoms)
@@ -98,6 +103,7 @@ end
 
 rule "U poslednjih 14 dana dijagnostikovana bolest koja kao simptom ima povišenu telesnu temperaturu specific"
     salience 150
+    agenda-group "diagnosis rules"
     when
         $symptomService: SymptomService()
         $symptoms: SymptomListDto($symptomList: symptoms)
@@ -114,6 +120,7 @@ end
 
 rule "U poslednjih 21 dana dijagnostikovana bolest za koju je primao antibiotike"
     salience 150
+    agenda-group "diagnosis rules"
     when
         $symptomService: SymptomService()
         $symptoms: SymptomListDto($symptomList: symptoms)

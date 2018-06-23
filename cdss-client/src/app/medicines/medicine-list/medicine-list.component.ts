@@ -25,4 +25,8 @@ export class MedicineListComponent implements OnInit {
     });
   }
 
+  onSelect(medicine: Medicine) {
+    this.router.navigate(['medicines', medicine.id]);
+  }
+
 }

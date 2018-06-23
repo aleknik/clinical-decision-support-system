@@ -21,6 +21,7 @@ public class ReportService {
 
     public Report getReport() {
         final KieSession kieSession = kieContainer.newKieSession("cdssSession");
+        kieSession.getAgenda().getAgendaGroup("Reporting").setFocus();
         kieSession.addEventListener(new DebugAgendaEventListener());
 
         Report report = new Report();

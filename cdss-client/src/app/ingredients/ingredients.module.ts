@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { NewIngredientComponent } from './new-ingredient/new-ingredient.component';
 import { IngredientListComponent } from './ingredient-list/ingredient-list.component';
+import { IngredientDetailsComponent } from './ingredient-details/ingredient-details.component';
 
 @NgModule({
   imports: [
@@ -11,6 +12,6 @@ import { IngredientListComponent } from './ingredient-list/ingredient-list.compo
     RouterModule,
     SharedModule,
   ],
-  declarations: [NewIngredientComponent, IngredientListComponent]
+  declarations: [NewIngredientComponent, IngredientListComponent, IngredientDetailsComponent]
 })
 export class IngredientsModule { }

@@ -12,6 +12,7 @@ import java.util.List;
 
 
 rule "Check medicine"
+    agenda-group "Allergies"
     when
        $allergies: Allergies()
        $patients: Patient($medicineAllergies: medicineAllergies)
@@ -26,6 +27,7 @@ end
 
 
 rule "Check ingredients"
+    agenda-group "Allergies"
     when
        $allergies: Allergies()
        $patients: Patient($ingredientAllergies: ingredientAllergies)

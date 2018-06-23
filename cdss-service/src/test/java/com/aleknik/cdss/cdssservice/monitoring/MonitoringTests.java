@@ -33,6 +33,7 @@ public class MonitoringTests {
         KieServices ks = KieServices.Factory.get();
         KieContainer kContainer = ks.getKieClasspathContainer();
         ksession = kContainer.newKieSession("cepConfigKsessionPseudoClock");
+        ksession.getAgenda().getAgendaGroup("Monitoring").setFocus();
         ksession.insert(notificationService);
     }
 

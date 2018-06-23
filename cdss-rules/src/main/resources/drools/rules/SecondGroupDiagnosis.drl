@@ -10,6 +10,7 @@ import java.util.List;
 
 rule "Second group disease"
     salience 100
+    agenda-group "diagnosis rules"
     when
         $result: DiagnosisResultDto()
         $symptoms: SymptomListDto()

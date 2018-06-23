@@ -160,4 +160,11 @@ export class PatientDetailsComponent implements OnInit, OnDestroy {
     this.router.navigate(['patients', this.patient.id, 'diagnoses', 'new']);
   }
 
+  delete() {
+    this.patientService.delete(this.patientId).subscribe(result => {
+      this.toastr.success('Patient deleted');
+      this.router.navigate(['patients'], { replaceUrl: true });
+    });
+  }
+
 }

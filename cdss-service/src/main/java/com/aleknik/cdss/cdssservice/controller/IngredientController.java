@@ -29,4 +29,15 @@ public class IngredientController {
 
         return ResponseEntity.created(URI.create("")).body(created);
     }
+
+    @GetMapping("/ingredients/{id}")
+    ResponseEntity findById(@PathVariable long id) {
+        return ResponseEntity.ok(ingredientService.findById(id));
+    }
+
+    @PutMapping("/ingredients/{id}")
+    ResponseEntity findById(@PathVariable long id, @RequestBody Ingredient updated) {
+        ingredientService.findById(id);
+        return ResponseEntity.ok(ingredientService.update(updated, id));
+    }
 }

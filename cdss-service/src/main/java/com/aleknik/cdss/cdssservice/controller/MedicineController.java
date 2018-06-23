@@ -40,6 +40,11 @@ public class MedicineController {
         return ResponseEntity.ok(medicineService.findAll());
     }
 
+    @GetMapping("/medicines/{id}")
+    public ResponseEntity findById(@PathVariable long id) {
+        return ResponseEntity.ok(medicineService.findById(id));
+    }
+
     @PostMapping("/medicines")
     ResponseEntity create(@RequestBody Medicine medicineDto) {
         Medicine medicine = new Medicine();

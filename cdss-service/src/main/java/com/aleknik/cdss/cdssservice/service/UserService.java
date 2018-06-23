@@ -9,6 +9,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService {
 
@@ -62,5 +64,9 @@ public class UserService {
 
         final UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         return findByUsername(userDetails.getUsername());
+    }
+
+    public List<User> findByRole(String role) {
+        return userRepository.findByRole(role);
     }
 }

@@ -10,7 +10,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let medicine of medicines">
+        <tr *ngFor="let medicine of medicines" (click)="onSelect(medicine)" class="pointer">
           <th scope="row">{{medicine.name}}</th>
           <th>{{medicine.medicineType}}</th>
         </tr>

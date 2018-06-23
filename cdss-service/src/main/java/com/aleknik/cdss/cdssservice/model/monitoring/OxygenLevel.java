@@ -4,7 +4,7 @@ import org.kie.api.definition.type.Expires;
 import org.kie.api.definition.type.Role;
 
 @Role(Role.Type.EVENT)
-@Expires("24h")
+@Expires("30m")
 public class OxygenLevel {
 
     private double level;

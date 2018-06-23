@@ -43,4 +43,8 @@ public class PatientService {
 
         return patientRepository.save(patient);
     }
+
+    public void delete(Patient patient) {
+        patientRepository.delete(patient);
+    }
 }

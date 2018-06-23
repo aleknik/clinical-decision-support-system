@@ -9,6 +9,7 @@ import java.util.List;
 
 rule "First group disease candidates"
     salience 100
+    agenda-group "diagnosis rules"
     when
         $result: DiagnosisResultDto()
         $symptoms: SymptomListDto()
@@ -27,6 +28,7 @@ end
 
 rule "First group disease max symptoms"
  salience 50
+ agenda-group "diagnosis rules"
  when
      $result: DiagnosisResultDto($found: diseases)
      not Disease(diseaseGroup == DiseaseGroup.FIRST) from $found

@@ -56,6 +56,7 @@ public class MonitoringTask {
 
     @Scheduled(fixedRate = 5000)
     public void fireRules() {
+        kieSession.getAgenda().getAgendaGroup("Monitoring").setFocus();
         kieSession.fireAllRules();
     }
 }

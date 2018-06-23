@@ -3,12 +3,18 @@ package com.aleknik.cdss.cdssservice.model.dto;
 import com.aleknik.cdss.cdssservice.model.Ingredient;
 import com.aleknik.cdss.cdssservice.model.Medicine;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public class PatientCreateDto {
 
+    @NotEmpty
+    @NotNull
     private String firstName;
 
+    @NotEmpty
+    @NotNull
     private String lastName;
 
     private List<Medicine> medicineAllergies;

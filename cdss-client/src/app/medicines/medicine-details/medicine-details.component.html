@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-sm-4"></div>
   <form class="col-sm-4 form" (ngSubmit)="create()" #ingredientForm="ngForm">
-    <h2 class="form-heading">Create medicine</h2>
+    <h2 class="form-heading">Medicine</h2>
 
     <label>Name</label>
     <input type="text" class="form-control" [(ngModel)]="medicine.name" name="name" required autofocus>
@@ -28,6 +28,6 @@
     </ul>
     <br/>
     <button id="button" [disabled]="ingredientForm.form.invalid || selectedIngredients.length === 0" class="btn btn-lg btn-primary btn-block"
-      type="submit">Create</button>
+      type="submit">Save</button>
   </form>
 </div>

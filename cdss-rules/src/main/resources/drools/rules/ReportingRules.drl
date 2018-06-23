@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 rule "Chronic patients"
+    agenda-group "Reporting"
     when
         $diagnosis: Diagnosis(!disease.name.equals("Prehlada") &&
                               !disease.name.equals("Gnoznica"), $patient: patient) over window:time( 730d )
@@ -22,6 +23,7 @@ end
 
 
 rule "Addict patients"
+    agenda-group "Reporting"
     when
         Diagnosis($patient: patient) over window:time( 180d )
         $report: Report(!addictPatients.contains($patient))
@@ -44,6 +46,7 @@ rule "Addict patients"
 end
 
 rule "Weak immune system patients"
+    agenda-group "Reporting"
     when
         Diagnosis($patient: patient) over window:time( 365d )
         $report: Report(!weakImmuneSystemPatients.contains($patient))

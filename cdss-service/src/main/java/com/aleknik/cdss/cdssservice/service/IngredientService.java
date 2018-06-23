@@ -35,4 +35,11 @@ public class IngredientService {
 
         return ingredientRepository.save(newIngredient);
     }
+
+    public Ingredient update(Ingredient ingredient, long id) {
+        Ingredient ingredientCurr = findById(id);
+        ingredientCurr.setName(ingredient.getName());
+
+        return ingredientRepository.save(ingredientCurr);
+    }
 }

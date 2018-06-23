@@ -36,6 +36,7 @@ public class DiagnosisReasonerService {
 
     public List<Disease> diagnose(Patient patient, Set<Symptom> symptoms) {
         final KieSession kieSession = kieContainer.newKieSession("cdssSession");
+        kieSession.getAgenda().getAgendaGroup("diagnosis rules").setFocus();
         kieSession.addEventListener(new DebugAgendaEventListener());
 
         final SymptomListDto symptomListDto = new SymptomListDto();
@@ -114,6 +115,7 @@ public class DiagnosisReasonerService {
 
     public Set<Medicine> checkAllergies(Set<Medicine> medicines, Patient patient) {
         final KieSession kieSession = kieContainer.newKieSession("cdssSession");
+        kieSession.getAgenda().getAgendaGroup("Allergies").setFocus();
         kieSession.addEventListener(new DebugAgendaEventListener());
 
         Allergies allergies = new Allergies();

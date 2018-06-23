@@ -10,6 +10,7 @@ import java.util.List;
 
 rule "Third group disease"
     salience 100
+    agenda-group "diagnosis rules"
     when
         $result: DiagnosisResultDto()
         not Disease(diseaseGroup == DiseaseGroup.THIRD) from $result.diseases
@@ -29,6 +30,7 @@ end
 
 rule "Third group disease max symptoms"
  salience 50
+ agenda-group "diagnosis rules"
  when
      $result: DiagnosisResultDto($found: diseases)
      not Disease(diseaseGroup == DiseaseGroup.THIRD) from $found
