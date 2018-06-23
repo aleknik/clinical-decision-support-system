@@ -13,7 +13,9 @@ spring:
     database: H2
     show_sql: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: create
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
 
 token:
   header: X-Auth-Token

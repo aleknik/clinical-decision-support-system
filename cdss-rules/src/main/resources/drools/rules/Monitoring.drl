@@ -1,0 +1,62 @@
+import com.aleknik.cdss.cdssservice.model.monitoring.HeartBeat;
+import com.aleknik.cdss.cdssservice.model.monitoring.OxygenLevel;
+import com.aleknik.cdss.cdssservice.model.monitoring.UrineLevel;
+import com.aleknik.cdss.cdssservice.model.Patient;
+import com.aleknik.cdss.cdssservice.model.Diagnosis;
+import com.aleknik.cdss.cdssservice.model.monitoring.Notification;
+import com.aleknik.cdss.cdssservice.service.NotificationService;
+
+rule "Oxygen problems"
+    lock-on-active true
+    when
+        $notificationService: NotificationService()
+        $patient: Patient()
+        OxygenLevel(level < 70) over window:length(1)
+        Number(intValue == 0) from accumulate(
+            OxygenLevel(level > 70) over window:time(15m),
+            count()
+        )
+    then
+        Notification notification = new Notification();
+        notification.setMessage("Oxygen problems");
+        $notificationService.notify(notification, $patient);
+end
+
+rule "Fast heart rate"
+    lock-on-active true
+    when
+        $notificationService: NotificationService()
+        $patient: Patient()
+        Number(intValue > 25) from accumulate(
+            HeartBeat() over window:time(15s),
+            count()
+        )
+    then
+        Notification notification = new Notification();
+        notification.setMessage("Fast heart rate");
+        $notificationService.notify(notification, $patient);
+end
+
+rule "Need dialysis"
+    lock-on-active true
+    when
+        $notificationService: NotificationService()
+        $patient: Patient($diagnoses: diagnoses)
+
+        exists Diagnosis(disease.name.equals("Hronična bubrežna bolest")) from $diagnoses
+
+        Number(intValue > 10) from accumulate(
+            HeartBeat() over window:time(10s),
+            count()
+        )
+
+        Number(intValue < 100) from accumulate(
+            UrineLevel($level: level) over window:time(12h),
+            sum($level)
+        )
+
+    then
+        Notification notification = new Notification();
+        notification.setMessage("Need dialysis");
+        $notificationService.notify(notification, $patient);
+end
