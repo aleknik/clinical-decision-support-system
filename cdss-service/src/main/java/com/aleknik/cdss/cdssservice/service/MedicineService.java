@@ -43,6 +43,8 @@ public class MedicineService {
             medicine.setName(updatedMedicine.getName());
         }
 
+        medicine.setMedicineType(updatedMedicine.getMedicineType());
+
         medicine.setIngredients(updatedMedicine.getIngredients());
 
         return medicineRepository.save(medicine);

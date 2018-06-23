@@ -1,5 +1,6 @@
 package com.aleknik.cdss.cdssservice.controller;
 
+import com.aleknik.cdss.cdssservice.model.Ingredient;
 import com.aleknik.cdss.cdssservice.model.Medicine;
 import com.aleknik.cdss.cdssservice.model.Patient;
 import com.aleknik.cdss.cdssservice.service.DiagnosisReasonerService;
@@ -43,6 +44,19 @@ public class MedicineController {
     @GetMapping("/medicines/{id}")
     public ResponseEntity findById(@PathVariable long id) {
         return ResponseEntity.ok(medicineService.findById(id));
+    }
+
+    @PutMapping("/medicines/{id}")
+    public ResponseEntity update(@PathVariable long id, @RequestBody Medicine medicine) {
+
+        medicineService.findById(id);
+
+        Set<Ingredient> ingredients = medicine.getIngredients().stream()
+                .map(ingredient -> ingredientService.findById(ingredient.getId())).collect(Collectors.toSet());
+
+        medicine.setIngredients(ingredients);
+
+        return ResponseEntity.ok(medicineService.update(medicine, id));
     }
 
     @PostMapping("/medicines")
