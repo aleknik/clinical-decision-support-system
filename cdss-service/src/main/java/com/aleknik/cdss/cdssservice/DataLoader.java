@@ -241,7 +241,7 @@ public class DataLoader implements ApplicationRunner {
         patient3.setLastName("Matic");
         patientRepository.save(patient3);
 
-        createChronic(patient1, doctor1, disease6, medicine1);
+        createChronic(patient1, doctor1, disease4, medicine1);
 
         createAddict(disease1, patient2, doctor1, doctor2, doctor3, medicine2);
 

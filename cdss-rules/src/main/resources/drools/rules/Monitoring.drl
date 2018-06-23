@@ -13,9 +13,8 @@ rule "Oxygen problems"
     when
         $notificationService: NotificationService()
         $patient: Patient()
-        OxygenLevel(level < 70) over window:length(1)
         Number(intValue == 0) from accumulate(
-            OxygenLevel(level > 70) over window:time(15m),
+            OxygenLevel(level > 70, patient.id == $patient.id) over window:time(15m),
             count()
         )
     then
@@ -31,7 +30,7 @@ rule "Fast heart rate"
         $notificationService: NotificationService()
         $patient: Patient()
         Number(intValue > 25) from accumulate(
-            HeartBeat() over window:time(15s),
+            HeartBeat(patient.id == $patient.id) over window:time(15s),
             count()
         )
     then
@@ -47,16 +46,15 @@ rule "Need dialysis"
         $notificationService: NotificationService()
         $patient: Patient($diagnoses: diagnoses)
 
-        Diagnosis($disease: disease) from $diagnoses
-        Disease(name.equals("Hronična bubrežna bolest"))
+        exists (Diagnosis(disease.name.equals("Hronična bubrežna bolest")) from $diagnoses)
 
         Number(intValue > 10) from accumulate(
-            HeartBeat() over window:time(10s),
+            HeartBeat(patient.id == $patient.id) over window:time(10s),
             count()
         )
 
         Number(doubleValue < 100) from accumulate(
-            UrineLevel($level: level) over window:time(12h),
+            UrineLevel($level: level, patient.id == $patient.id) over window:time(12h),
             sum($level)
         )
 

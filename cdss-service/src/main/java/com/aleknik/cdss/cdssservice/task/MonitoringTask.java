@@ -1,7 +1,9 @@
 package com.aleknik.cdss.cdssservice.task;
 
+import com.aleknik.cdss.cdssservice.model.Patient;
 import com.aleknik.cdss.cdssservice.model.monitoring.HeartBeat;
 import com.aleknik.cdss.cdssservice.model.monitoring.OxygenLevel;
+import com.aleknik.cdss.cdssservice.model.monitoring.UrineLevel;
 import com.aleknik.cdss.cdssservice.service.NotificationService;
 import com.aleknik.cdss.cdssservice.service.PatientService;
 import com.aleknik.cdss.cdssservice.util.DebugAgendaEventListener;
@@ -47,11 +49,23 @@ public class MonitoringTask {
 
     @Scheduled(fixedDelay = 200)
     public void InsertIntoSession() {
-        OxygenLevel oxygenLevel = new OxygenLevel();
-        oxygenLevel.setLevel(50);
-        kieSession.insert(oxygenLevel);
 
-        kieSession.insert(new HeartBeat());
+        patientHandles.forEach(factHandle -> {
+            Patient patient = (Patient) kieSession.getObject(factHandle);
+            OxygenLevel oxygenLevel = new OxygenLevel();
+            oxygenLevel.setLevel(50);
+            oxygenLevel.setPatient(patient);
+            kieSession.insert(oxygenLevel);
+
+            HeartBeat heartBeat = new HeartBeat();
+            heartBeat.setPatient(patient);
+            kieSession.insert(heartBeat);
+
+            UrineLevel urineLevel = new UrineLevel();
+            urineLevel.setPatient(patient);
+            urineLevel.setLevel(0);
+            kieSession.insert(urineLevel);
+        });
     }
 
     @Scheduled(fixedRate = 5000)
