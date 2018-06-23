@@ -12,7 +12,7 @@
           Patients
         </a>
         <div *dropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" routerLink="/patients">All patients</a>
+          <a class="dropdown-item" routerLink="/patients">Patient list</a>
           <a class="dropdown-item" routerLink="/patients/new">Add patient</a>
         </div>
       </li>
@@ -45,8 +45,18 @@
           Doctors
         </a>
         <div *dropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" routerLink="/doctors">List</a>
+          <a class="dropdown-item" routerLink="/doctors">Doctor list</a>
           <a class="dropdown-item" routerLink="/doctors/new">Add doctor</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown" *ngIf="isAdmin()" dropdown>
+        <a class="nav-link dropdown-toggle" href dropdownToggle (click)="false" id="navbarDropdownMenuLink" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Diseases
+        </a>
+        <div *dropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" routerLink="/diseases">Disease list</a>
+          <a class="dropdown-item" routerLink="/diseases/new">Add disease</a>
         </div>
       </li>
     </ul>

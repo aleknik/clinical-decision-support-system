@@ -24,7 +24,7 @@ export class SigninComponent implements OnInit {
     this.authService.authenticate(this.user).subscribe(
       response => {
         this.toastr.success(`Welcome ${this.user.username}`);
-        this.router.navigateByUrl('patients');
+        this.router.navigateByUrl('');
       },
       err => { });
   }

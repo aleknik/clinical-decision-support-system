@@ -1,5 +1,6 @@
 package com.aleknik.cdss.cdssservice.service;
 
+import com.aleknik.cdss.cdssservice.controller.exception.BadRequestException;
 import com.aleknik.cdss.cdssservice.controller.exception.NotFoundException;
 import com.aleknik.cdss.cdssservice.model.Disease;
 import com.aleknik.cdss.cdssservice.repository.DiseaseRepository;
@@ -22,5 +23,13 @@ public class DiseaseService {
 
     public List<Disease> findAll() {
         return diseaseRepository.findAll();
+    }
+
+    public Disease create(Disease disease) {
+        if (diseaseRepository.findByName(disease.getName()).isPresent()) {
+            throw new BadRequestException(String.format("Disease '%s'", disease.getName()));
+        }
+
+        return diseaseRepository.save(disease);
     }
 }

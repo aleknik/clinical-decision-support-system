@@ -1,0 +1,48 @@
+<div class="row">
+  <div class="col-sm-4">
+    <form class="form" (ngSubmit)="create()" #diseaseForm="ngForm">
+      <h2 class="form-heading">Create disease</h2>
+      <label>Name</label>
+      <input type="text" class="form-control" [(ngModel)]="disease.name" name="name" required autofocus>
+      <label class="form-check-inline">
+        <input class="form-check-input" type="radio" name="type" required value="FIRST" [(ngModel)]="disease.diseaseGroup"> First
+      </label>
+      <label class="form-check-inline">
+        <input class="form-check-input" type="radio" name="type" required value="SECOND" [(ngModel)]="disease.diseaseGroup"> Second
+      </label>
+      <label class="form-check-inline">
+        <input class="form-check-input" type="radio" name="type" required value="THIRD" [(ngModel)]="disease.diseaseGroup"> Third
+      </label>
+      <br/>
+      <button id="button" [disabled]="diseaseForm.form.invalid" class="btn btn-lg btn-primary btn-block" type="submit">Create</button>
+    </form>
+  </div>
+  <div class="col-sm-4">
+    <h2>Specific Symptoms</h2>
+    <label for="symptom">Search symptom</label>
+    <input name="symptom" [(ngModel)]="selectedSymptomName1" [typeahead]="allSymptoms" class="form-control" typeaheadOptionField="name"
+      (typeaheadOnSelect)="symptomSelected1($event)" [typeaheadMinLength]="0" [typeaheadOptionsInScrollableView]="10" [typeaheadScrollable]="true">
+    <br>
+    <ul class="list-group">
+      <li *ngFor="let symptom of selectedSymptoms1" class="list-group-item">
+        {{symptom.name}}
+        <span class="float-right fa fa-trash fa-2x icon-pad pointer" (click)="removeSymptom2(symptom)">
+        </span>
+      </li>
+    </ul>
+  </div>
+  <div class="col-sm-4">
+    <h2>General symptoms</h2>
+    <label for="symptom">Search symptom</label>
+    <input name="symptom" [(ngModel)]="selectedSymptomName2" [typeahead]="allSymptoms" class="form-control" typeaheadOptionField="name"
+      (typeaheadOnSelect)="symptomSelected2($event)" [typeaheadMinLength]="0" [typeaheadOptionsInScrollableView]="10" [typeaheadScrollable]="true">
+    <br>
+    <ul class="list-group">
+      <li *ngFor="let symptom of selectedSymptoms2" class="list-group-item">
+        {{symptom.name}}
+        <span class="float-right fa fa-trash fa-2x icon-pad pointer" (click)="removeSymptom1(symptom)">
+        </span>
+      </li>
+    </ul>
+  </div>
+</div>

@@ -3,12 +3,13 @@
     <form class="form" (ngSubmit)="create()" #patientForm="ngForm">
       <h2 class="form-heading">Patient details</h2>
       <div class="form-group">
-        <label for="first">First</label>
-        <input type="text" class="form-control" id="first" placeholder="First" [(ngModel)]="patient.firstName" name="first" required>
+        <label for="first">First name</label>
+        <input type="text" class="form-control" id="first" placeholder="First name" [(ngModel)]="patient.firstName" name="first"
+          required>
       </div>
       <div class="form-group">
-        <label for="last">Last</label>
-        <input type="text" class="form-control" id="last" placeholder="Last" [(ngModel)]="patient.lastName" name="last" required>
+        <label for="last">Last name</label>
+        <input type="text" class="form-control" id="last" placeholder="Last name" [(ngModel)]="patient.lastName" name="last" required>
       </div>
       <button type="submit" class="btn btn-lg btn-primary btn-block" [disabled]="patientForm.form.invalid">Create</button>
     </form>

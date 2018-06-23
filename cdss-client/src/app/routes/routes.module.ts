@@ -22,9 +22,11 @@ import { MedicineListComponent } from '../medicines/medicine-list/medicine-list.
 import { DoctorListComponent } from '../doctors/doctor-list/doctor-list.component';
 import { IngredientDetailsComponent } from '../ingredients/ingredient-details/ingredient-details.component';
 import { MedicineDetailsComponent } from '../medicines/medicine-details/medicine-details.component';
+import { NewDiseaseComponent } from '../diseases/new-disease/new-disease.component';
+import { DiseaseListComponent } from '../diseases/disease-list/disease-list.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/patients', pathMatch: 'full' },
+  { path: '', redirectTo: '/reports', pathMatch: 'full' },
 
   { path: 'signin', component: SigninComponent, canActivate: [IsUnauthenticatedGuard] },
 
@@ -48,6 +50,9 @@ const routes: Routes = [
 
   { path: 'doctors', component: DoctorListComponent, canActivate: [IsAdminGuard] },
   { path: 'doctors/new', component: NewDoctorComponent, canActivate: [IsAdminGuard] },
+
+  { path: 'diseases', component: DiseaseListComponent, canActivate: [IsAdminGuard] },
+  { path: 'diseases/new', component: NewDiseaseComponent, canActivate: [IsAdminGuard] },
 
 ];
 
