@@ -2,6 +2,7 @@ import com.aleknik.cdss.cdssservice.model.monitoring.HeartBeat;
 import com.aleknik.cdss.cdssservice.model.monitoring.OxygenLevel;
 import com.aleknik.cdss.cdssservice.model.monitoring.UrineLevel;
 import com.aleknik.cdss.cdssservice.model.Patient;
+import com.aleknik.cdss.cdssservice.model.Disease;
 import com.aleknik.cdss.cdssservice.model.Diagnosis;
 import com.aleknik.cdss.cdssservice.model.monitoring.Notification;
 import com.aleknik.cdss.cdssservice.service.NotificationService;
@@ -43,14 +44,15 @@ rule "Need dialysis"
         $notificationService: NotificationService()
         $patient: Patient($diagnoses: diagnoses)
 
-        exists Diagnosis(disease.name.equals("Hronična bubrežna bolest")) from $diagnoses
+        Diagnosis($disease: disease) from $diagnoses
+        Disease(name.equals("Hronična bubrežna bolest"))
 
         Number(intValue > 10) from accumulate(
             HeartBeat() over window:time(10s),
             count()
         )
 
-        Number(intValue < 100) from accumulate(
+        Number(doubleValue < 100) from accumulate(
             UrineLevel($level: level) over window:time(12h),
             sum($level)
         )

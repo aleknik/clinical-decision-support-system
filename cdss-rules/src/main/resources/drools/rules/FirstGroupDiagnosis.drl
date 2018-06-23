@@ -25,25 +25,6 @@ rule "First group disease candidates"
         insert(new DiseaseCandidate($disease, $generalCount, $specificCount));
 end
 
-//rule "First group disease all symptoms"
-//    salience 50
-//    when
-//        $result: DiagnosisResultDto($found: diseases)
-//        not Disease(diseaseGroup == DiseaseGroup.FIRST) from $found
-//        $candidates: List() from collect(DiseaseCandidate(disease.diseaseGroup == DiseaseGroup.FIRST))
-//        $allSymptomsCandidates: List() from collect
-//            (DiseaseCandidate(getSymptomCount() == disease.getSymptomCount())
-//                from $candidates)
-//
-//        DiseaseCandidate($disease: disease, $maxSymptomCount: getSymptomCount() / disease.getSymptomCount()) from $allSymptomsCandidates
-//        not DiseaseCandidate(getSymptomCount() / disease.getSymptomCount() > $maxSymptomCount) from $allSymptomsCandidates
-//
-//    then
-//        modify($result){
-//            getDiseases().add($disease);
-//        }
-// end
-
 rule "First group disease max symptoms"
  salience 50
  when

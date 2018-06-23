@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Patient } from '../../shared/model/patient.model';
 import { PatientService } from '../../core/http/patient.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -7,13 +7,24 @@ import { Medicine } from '../../shared/model/medicine.model';
 import { Ingredient } from '../../shared/model/ingredient.model';
 import { MedicineService } from '../../core/http/medicine.service';
 import { IngredientService } from '../../core/http/ingredient.service';
+import { Subscription, Observable } from 'rxjs';
+import { StompService } from '@stomp/ng2-stompjs';
+import { Message } from '@stomp/stompjs';
+import { Notification } from '../../shared/model/notification.model';
 
 @Component({
   selector: 'app-patient-details',
   templateUrl: './patient-details.component.html',
   styleUrls: ['./patient-details.component.css']
 })
-export class PatientDetailsComponent implements OnInit {
+export class PatientDetailsComponent implements OnInit, OnDestroy {
+
+  // Stream of messages
+  private subscription: Subscription;
+  public messages: Observable<Message>;
+
+  // Subscription status
+  public subscribed: boolean;
 
   patientId: number;
 
@@ -33,7 +44,8 @@ export class PatientDetailsComponent implements OnInit {
     private ingredientService: IngredientService,
     private route: ActivatedRoute,
     private router: Router,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService,
+    private stompService: StompService) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -41,7 +53,45 @@ export class PatientDetailsComponent implements OnInit {
       this.getPatient();
       this.getAllMedicine();
       this.getAllIngredients();
+      this.subscribed = false;
     });
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe();
+  }
+
+  public unsubscribe() {
+    if (!this.subscribed) {
+      return;
+    }
+
+    // This will internally unsubscribe from Stomp Broker
+    // There are two subscriptions - one created explicitly, the other created in the template by use of 'async'
+    this.subscription.unsubscribe();
+    this.subscription = null;
+    this.messages = null;
+
+    this.subscribed = false;
+  }
+
+  public subscribe() {
+    if (this.subscribed) {
+      return;
+    }
+
+    // Stream of messages
+    this.messages = this.stompService.subscribe(`/topic/${this.patientId}`);
+
+    // Subscribe a function to be run on_next message
+    this.subscription = this.messages.subscribe(this.on_next);
+
+    this.subscribed = true;
+  }
+
+  public on_next = (message: Message) => {
+    const notification = JSON.parse(message.body);
+    this.toastr.warning(`Patient ${this.patient.firstName} ${this.patient.lastName}: ${notification.message}`);
   }
 
   allDiagnoses() {

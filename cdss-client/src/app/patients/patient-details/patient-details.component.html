@@ -17,6 +17,10 @@
     <button class="btn btn-lg btn-primary btn-block" (click)="diagnosePatient()">Diagnose patient</button>
     <br>
     <button class="btn btn-lg btn-primary btn-block" (click)="allDiagnoses()">All diagnoses</button>
+
+    <button class="btn btn-lg btn-primary btn-block" [disabled]='subscribed' (click)="subscribe()">Start monitoring</button>
+
+    <button class="btn btn-lg btn-primary btn-block" [disabled]='!subscribed' (click)="unsubscribe()">Stop monitoring</button>
   </div>
   <div class="col-sm-4">
     <h2 class="form-heading">Medicine allergies</h2>

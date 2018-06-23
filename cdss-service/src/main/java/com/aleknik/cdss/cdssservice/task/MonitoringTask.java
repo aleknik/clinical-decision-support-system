@@ -1,15 +1,19 @@
 package com.aleknik.cdss.cdssservice.task;
 
+import com.aleknik.cdss.cdssservice.model.Patient;
 import com.aleknik.cdss.cdssservice.model.monitoring.HeartBeat;
-import com.aleknik.cdss.cdssservice.model.monitoring.Notification;
 import com.aleknik.cdss.cdssservice.model.monitoring.OxygenLevel;
 import com.aleknik.cdss.cdssservice.service.NotificationService;
 import com.aleknik.cdss.cdssservice.service.PatientService;
 import com.aleknik.cdss.cdssservice.util.DebugAgendaEventListener;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
+import org.kie.api.runtime.rule.FactHandle;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class MonitoringTask {
@@ -19,6 +23,8 @@ public class MonitoringTask {
     private final NotificationService notificationService;
 
     private final PatientService patientService;
+
+    private final List<FactHandle> patientHandles = new ArrayList<>();
 
     private KieSession kieSession;
 
@@ -30,11 +36,16 @@ public class MonitoringTask {
         kieSession = this.kieContainer.newKieSession("cdssSession");
         kieSession.addEventListener(new DebugAgendaEventListener());
         kieSession.insert(notificationService);
-        kieSession.insert(patientService.findAll().get(0));
-
     }
 
-    @Scheduled(fixedRate = 100)
+    @Scheduled(fixedDelay = 10000)
+    public void init() {
+        patientHandles.forEach(factHandle -> kieSession.delete(factHandle));
+
+        patientService.findAll().forEach(patient -> kieSession.insert(patient));
+    }
+
+    @Scheduled(fixedDelay = 200)
     public void InsertIntoSession() {
         OxygenLevel oxygenLevel = new OxygenLevel();
         oxygenLevel.setLevel(50);
@@ -43,7 +54,7 @@ public class MonitoringTask {
         kieSession.insert(new HeartBeat());
     }
 
-    @Scheduled(fixedRate = 1000)
+    @Scheduled(fixedRate = 5000)
     public void fireRules() {
         kieSession.fireAllRules();
     }

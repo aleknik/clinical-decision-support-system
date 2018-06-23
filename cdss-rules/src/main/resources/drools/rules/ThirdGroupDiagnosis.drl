@@ -15,16 +15,30 @@ rule "Third group disease"
         not Disease(diseaseGroup == DiseaseGroup.THIRD) from $result.diseases
         $symptoms: SymptomListDto()
         $disease: Disease( diseaseGroup == DiseaseGroup.THIRD, $general: generalSymptoms, $specific: specificSymptoms)
-        Number(intValue >= 2) from accumulate(
+        Number($generalCount: intValue >= 2) from accumulate(
             $s: Symptom( $symptoms.contains(name) ) from $general,
             count()
         )
-        Number(intValue >= 1) from accumulate(
+        Number($specificCount: intValue >= 1) from accumulate(
             $s: Symptom( $symptoms.contains(name) ) from $specific,
             count()
         )
     then
-         modify($result){
-             getDiseases().add($disease);
-         }
+        insert(new DiseaseCandidate($disease, $generalCount, $specificCount));
+end
+
+rule "Third group disease max symptoms"
+ salience 50
+ when
+     $result: DiagnosisResultDto($found: diseases)
+     not Disease(diseaseGroup == DiseaseGroup.THIRD) from $found
+     $candidates: List() from collect(DiseaseCandidate(disease.diseaseGroup == DiseaseGroup.THIRD))
+
+     DiseaseCandidate($disease: disease, $maxSymptomCount: getSymptomCount() / disease.getSymptomCount()) from $candidates
+     not DiseaseCandidate(getSymptomCount() / disease.getSymptomCount() > $maxSymptomCount) from $candidates
+
+ then
+     modify($result){
+         getDiseases().add($disease);
+     }
 end

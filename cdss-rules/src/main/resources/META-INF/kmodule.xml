@@ -3,4 +3,7 @@
     <kbase name="cdssKieBase" eventProcessingMode="stream" packages="drools.rules">
         <ksession name="cdssSession"/>
     </kbase>
+    <kbase name="cepConfigKbase" eventProcessingMode="stream" packages="drools.rules">
+        <ksession name="cepConfigKsessionPseudoClock" clockType="pseudo"/>
+    </kbase>
 </kmodule>
