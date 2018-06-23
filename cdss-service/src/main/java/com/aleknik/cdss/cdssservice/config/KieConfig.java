@@ -31,7 +31,6 @@ public class KieConfig {
         return kieContainer;
     }
 
-
     @Bean
     public KieSession kieSession() {
         final KieServices kieServices = KieServices.Factory.get();

@@ -1,6 +1,5 @@
 package com.aleknik.cdss.cdssservice.task;
 
-import com.aleknik.cdss.cdssservice.model.Patient;
 import com.aleknik.cdss.cdssservice.model.monitoring.HeartBeat;
 import com.aleknik.cdss.cdssservice.model.monitoring.OxygenLevel;
 import com.aleknik.cdss.cdssservice.service.NotificationService;
