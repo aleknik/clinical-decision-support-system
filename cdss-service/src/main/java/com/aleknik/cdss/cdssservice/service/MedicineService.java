@@ -1,5 +1,6 @@
 package com.aleknik.cdss.cdssservice.service;
 
+import com.aleknik.cdss.cdssservice.controller.exception.BadRequestException;
 import com.aleknik.cdss.cdssservice.controller.exception.NotFoundException;
 import com.aleknik.cdss.cdssservice.model.Medicine;
 import com.aleknik.cdss.cdssservice.repository.MedicineRepository;
@@ -21,6 +22,11 @@ public class MedicineService {
     }
 
     public Medicine create(Medicine medicine) {
+
+        if (medicineRepository.findByName(medicine.getName()).isPresent()) {
+            throw new BadRequestException(String.format("Medicine '%s' already exists", medicine.getName()));
+        }
+
         return medicineRepository.save(medicine);
     }
 

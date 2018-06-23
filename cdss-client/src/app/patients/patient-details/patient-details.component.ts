@@ -91,7 +91,9 @@ export class PatientDetailsComponent implements OnInit, OnDestroy {
 
   public on_next = (message: Message) => {
     const notification = JSON.parse(message.body);
-    this.toastr.warning(`Patient ${this.patient.firstName} ${this.patient.lastName}: ${notification.message}`);
+    this.toastr.warning(`Patient ${this.patient.firstName}
+      ${this.patient.lastName}: ${notification.message},
+        Time: ${new Date(notification.timeStamp).toLocaleString()}`);
   }
 
   allDiagnoses() {

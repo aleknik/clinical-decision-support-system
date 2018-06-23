@@ -1,1 +1,0 @@
-INSERT INTO patient(id, firstName, lastName) VALUES (1, 'Sale', 'Matic')

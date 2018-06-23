@@ -41,8 +41,9 @@ public class MonitoringTask {
     @Scheduled(fixedDelay = 10000)
     public void init() {
         patientHandles.forEach(factHandle -> kieSession.delete(factHandle));
+        patientHandles.clear();
 
-        patientService.findAll().forEach(patient -> kieSession.insert(patient));
+        patientService.findAll().forEach(patient -> patientHandles.add(kieSession.insert(patient)));
     }
 
     @Scheduled(fixedDelay = 200)

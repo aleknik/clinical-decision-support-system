@@ -1,5 +1,6 @@
 package com.aleknik.cdss.cdssservice.service;
 
+import com.aleknik.cdss.cdssservice.controller.exception.BadRequestException;
 import com.aleknik.cdss.cdssservice.controller.exception.NotFoundException;
 import com.aleknik.cdss.cdssservice.model.Ingredient;
 import com.aleknik.cdss.cdssservice.repository.IngredientRepository;
@@ -27,6 +28,11 @@ public class IngredientService {
     public Ingredient create(Ingredient ingredient) {
         Ingredient newIngredient = new Ingredient();
         ingredient.setName(ingredient.getName());
+
+        if (ingredientRepository.findByName(ingredient.getName()).isPresent()) {
+            throw new BadRequestException(String.format("Ingredient '%s' already exists", ingredient.getName()));
+        }
+
         return ingredientRepository.save(newIngredient);
     }
 }

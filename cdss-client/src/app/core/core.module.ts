@@ -53,7 +53,7 @@ const stompConfig: StompConfig = {
     BrowserAnimationsModule,
     ToastrModule.forRoot({
       preventDuplicates: true,
-      positionClass: 'toast-position'
+      positionClass: 'toast-bottom-right'
     })
   ],
   declarations: [NavComponent],

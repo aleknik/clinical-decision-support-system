@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -52,7 +53,9 @@ public class DataLoader implements ApplicationRunner {
 
         // Users
         initializeUser("admin", "admin", "Mika", "Mitic", RoleConstants.ADMIN);
-        initializeUser("doctor", "doctor", "Milan", "Milovic", RoleConstants.DOCTOR);
+        User doctor1 = initializeUser("doctor1", "doctor1", "Zoran", "Peric", RoleConstants.DOCTOR);
+        User doctor2 = initializeUser("doctor2", "doctor2", "Milan", "Milanovic", RoleConstants.DOCTOR);
+        User doctor3 = initializeUser("doctor2", "doctor2", "Nenad", "Nenadovic", RoleConstants.DOCTOR);
 
         // Symptoms
         Symptom symptom1 = new Symptom("Curenje iz nosa", SymptomType.SIMPLE);
@@ -156,71 +159,224 @@ public class DataLoader implements ApplicationRunner {
         diseaseRepository.save(disease4);
 
         // Second
-        Disease disease = new Disease("Hipertenzija", DiseaseGroup.SECOND);
-        disease.getGeneralSymptoms().add(symptom15);
-        diseaseRepository.save(disease);
+        Disease disease5 = new Disease("Hipertenzija", DiseaseGroup.SECOND);
+        disease5.getGeneralSymptoms().add(symptom15);
+        diseaseRepository.save(disease5);
 
-        disease = new Disease("Dijabetes", DiseaseGroup.SECOND);
-        disease.getGeneralSymptoms().add(symptom16);
-        disease.getGeneralSymptoms().add(symptom17);
-        disease.getGeneralSymptoms().add(symptom18);
-        disease.getGeneralSymptoms().add(symptom19);
-        diseaseRepository.save(disease);
+        disease5 = new Disease("Dijabetes", DiseaseGroup.SECOND);
+        disease5.getGeneralSymptoms().add(symptom16);
+        disease5.getGeneralSymptoms().add(symptom17);
+        disease5.getGeneralSymptoms().add(symptom18);
+        disease5.getGeneralSymptoms().add(symptom19);
+        diseaseRepository.save(disease5);
 
         // Third
-        disease = new Disease("Hronična bubrežna bolest", DiseaseGroup.THIRD);
-        disease.getGeneralSymptoms().add(symptom18);
-        disease.getGeneralSymptoms().add(symptom20);
-        disease.getGeneralSymptoms().add(symptom21);
-        disease.getGeneralSymptoms().add(symptom22);
-        disease.getGeneralSymptoms().add(symptom23);
-        disease.getSpecificSymptoms().add(symptom24);
-        disease.getSpecificSymptoms().add(symptom25);
-        diseaseRepository.save(disease);
+        Disease disease6 = new Disease("Hronična bubrežna bolest", DiseaseGroup.THIRD);
+        disease6.getGeneralSymptoms().add(symptom18);
+        disease6.getGeneralSymptoms().add(symptom20);
+        disease6.getGeneralSymptoms().add(symptom21);
+        disease6.getGeneralSymptoms().add(symptom22);
+        disease6.getGeneralSymptoms().add(symptom23);
+        disease6.getSpecificSymptoms().add(symptom24);
+        disease6.getSpecificSymptoms().add(symptom25);
+        diseaseRepository.save(disease6);
 
-        disease = new Disease("Akutna bubrežna povreda", DiseaseGroup.THIRD);
-        disease.getSpecificSymptoms().add(symptom26);
-        disease.getGeneralSymptoms().add(symptom18);
-        disease.getGeneralSymptoms().add(symptom22);
-        disease.getGeneralSymptoms().add(symptom21);
-        disease.getGeneralSymptoms().add(symptom27);
-        disease.getSpecificSymptoms().add(symptom28);
-        disease.getSpecificSymptoms().add(symptom29);
-        diseaseRepository.save(disease);
+        Disease disease7 = new Disease("Akutna bubrežna povreda", DiseaseGroup.THIRD);
+        disease7.getSpecificSymptoms().add(symptom26);
+        disease7.getGeneralSymptoms().add(symptom18);
+        disease7.getGeneralSymptoms().add(symptom22);
+        disease7.getGeneralSymptoms().add(symptom21);
+        disease7.getGeneralSymptoms().add(symptom27);
+        disease7.getSpecificSymptoms().add(symptom28);
+        disease7.getSpecificSymptoms().add(symptom29);
+        diseaseRepository.save(disease7);
 
         // other
-        disease = new Disease("Visok pritisak", DiseaseGroup.FIRST);
-        diseaseRepository.save(disease);
+        Disease disease8 = new Disease("Visok pritisak", DiseaseGroup.FIRST);
+        diseaseRepository.save(disease8);
 
-        Patient patient = new Patient();
-        patient.setFirstName("pera");
-        patient.setLastName("mile");
-        patientRepository.save(patient);
+        Patient patient1 = new Patient();
+        patient1.setFirstName("Marko");
+        patient1.setLastName("Markovic");
+        patientRepository.save(patient1);
 
-        Ingredient ingredient = new Ingredient();
-        ingredient.setName("TestIng");
-        ingredientRepository.save(ingredient);
+        Ingredient ingredient1 = new Ingredient();
+        ingredient1.setName("Ingredient1");
+        ingredientRepository.save(ingredient1);
+
+        Ingredient ingredient2 = new Ingredient();
+        ingredient2.setName("Ingredient2");
+        ingredientRepository.save(ingredient2);
+
+        Ingredient ingredient3 = new Ingredient();
+        ingredient3.setName("Ingredient3");
+        ingredientRepository.save(ingredient3);
 
         Medicine medicine1 = new Medicine();
-        medicine1.setName("testmedicne");
+        medicine1.setName("Medicine1");
         medicine1.setMedicineType(MedicineType.ANTIBIOTIC);
-        medicine1.getIngredients().add(ingredient);
+        medicine1.getIngredients().add(ingredient1);
+        medicine1.getIngredients().add(ingredient2);
         medicineRepository.save(medicine1);
 
-//        Diagnosis diagnosis = new Diagnosis();
-//        diagnosis.setDate(new Date());
-//        diagnosis.setPatient(patient);
-//        diagnosis.setDisease(diseaseRepository.findByName("Prehlada").get());
-//        diagnosis.getMedicines().add(medicine1);
-//        diagnosisRepository.save(diagnosis);
+        Medicine medicine2 = new Medicine();
+        medicine2.setName("Medicine2");
+        medicine2.setMedicineType(MedicineType.ANALGESIC);
+        medicine2.getIngredients().add(ingredient2);
+        medicineRepository.save(medicine2);
 
-        patient = new Patient();
-        patient.setFirstName("peraa");
-        patient.setLastName("milea");
-        patientRepository.save(patient);
+        Medicine medicine3 = new Medicine();
+        medicine3.setName("Medicine3");
+        medicine3.setMedicineType(MedicineType.OTHER);
+        medicine3.getIngredients().add(ingredient3);
+        medicineRepository.save(medicine3);
+
+        Patient patient2 = new Patient();
+        patient2.setFirstName("Petar");
+        patient2.setLastName("Petrovic");
+        patientRepository.save(patient2);
+
+        Patient patient3 = new Patient();
+        patient3.setFirstName("Aleksandar");
+        patient3.setLastName("Matic");
+        patientRepository.save(patient3);
+
+        createChronic(patient1, doctor1, disease6, medicine1);
+
+        createAddict(disease1, patient2, doctor1, doctor2, doctor3, medicine2);
+
+        createWeakImmuneSystem(patient3, doctor1, disease2, disease1, medicine1);
     }
 
-    private void initializeUser(String username, String password, String firstName, String lastName, String roleName) {
+    private void createChronic(Patient patient, User doctor, Disease disease, Medicine medicine) {
+        Diagnosis diagnosis1 = new Diagnosis();
+        diagnosis1.setDoctor(doctor);
+        diagnosis1.setPatient(patient);
+        diagnosis1.setDate(new Date());
+        diagnosis1.getMedicines().add(medicine);
+        diagnosis1.setDisease(disease);
+        diagnosisRepository.save(diagnosis1);
+
+        diagnosis1 = new Diagnosis();
+        diagnosis1.setDoctor(doctor);
+        diagnosis1.setPatient(patient);
+        diagnosis1.setDate(new Date());
+        diagnosis1.getMedicines().add(medicine);
+        diagnosis1.setDisease(disease);
+        diagnosisRepository.save(diagnosis1);
+
+        diagnosis1 = new Diagnosis();
+        diagnosis1.setDoctor(doctor);
+        diagnosis1.setDate(new Date());
+        diagnosis1.setPatient(patient);
+        diagnosis1.getMedicines().add(medicine);
+        diagnosis1.setDisease(disease);
+        diagnosisRepository.save(diagnosis1);
+
+        diagnosis1 = new Diagnosis();
+        diagnosis1.setDoctor(doctor);
+        diagnosis1.setDate(new Date());
+        diagnosis1.setPatient(patient);
+        diagnosis1.getMedicines().add(medicine);
+        diagnosis1.setDisease(disease);
+        diagnosisRepository.save(diagnosis1);
+
+        diagnosis1 = new Diagnosis();
+        diagnosis1.setDoctor(doctor);
+        diagnosis1.setDate(new Date());
+        diagnosis1.setPatient(patient);
+        diagnosis1.getMedicines().add(medicine);
+        diagnosis1.setDisease(disease);
+        diagnosisRepository.save(diagnosis1);
+
+        diagnosis1 = new Diagnosis();
+        diagnosis1.setDoctor(doctor);
+        diagnosis1.setDate(new Date());
+        diagnosis1.setPatient(patient);
+        diagnosis1.getMedicines().add(medicine);
+        diagnosis1.setDisease(disease);
+        diagnosisRepository.save(diagnosis1);
+    }
+
+    private void createAddict(Disease disease, Patient patient, User doctor1, User doctor2, User doctor3, Medicine medicine) {
+        Diagnosis diagnosis1 = new Diagnosis();
+        diagnosis1.setDoctor(doctor1);
+        diagnosis1.setDate(new Date());
+        diagnosis1.setPatient(patient);
+        diagnosis1.getMedicines().add(medicine);
+        diagnosis1.setDisease(disease);
+        diagnosisRepository.save(diagnosis1);
+
+        diagnosis1 = new Diagnosis();
+        diagnosis1.setDoctor(doctor2);
+        diagnosis1.setDate(new Date());
+        diagnosis1.setPatient(patient);
+        diagnosis1.getMedicines().add(medicine);
+        diagnosis1.setDisease(disease);
+        diagnosisRepository.save(diagnosis1);
+
+        diagnosis1 = new Diagnosis();
+        diagnosis1.setDoctor(doctor3);
+        diagnosis1.setDate(new Date());
+        diagnosis1.setPatient(patient);
+        diagnosis1.getMedicines().add(medicine);
+        diagnosis1.setDisease(disease);
+        diagnosisRepository.save(diagnosis1);
+
+        diagnosis1 = new Diagnosis();
+        diagnosis1.setDoctor(doctor1);
+        diagnosis1.setDate(new Date());
+        diagnosis1.setPatient(patient);
+        diagnosis1.getMedicines().add(medicine);
+        diagnosis1.setDisease(disease);
+        diagnosisRepository.save(diagnosis1);
+
+        diagnosis1 = new Diagnosis();
+        diagnosis1.setDoctor(doctor1);
+        diagnosis1.setDate(new Date());
+        diagnosis1.setPatient(patient);
+        diagnosis1.getMedicines().add(medicine);
+        diagnosis1.setDisease(disease);
+        diagnosisRepository.save(diagnosis1);
+
+        diagnosis1 = new Diagnosis();
+        diagnosis1.setDoctor(doctor1);
+        diagnosis1.setDate(new Date());
+        diagnosis1.setPatient(patient);
+        diagnosis1.getMedicines().add(medicine);
+        diagnosis1.setDisease(disease);
+        diagnosisRepository.save(diagnosis1);
+    }
+
+    private void createWeakImmuneSystem(Patient patient, User doctor1, Disease disease1, Disease disease2, Medicine medicine) {
+        Diagnosis diagnosis1 = new Diagnosis();
+        diagnosis1.setDoctor(doctor1);
+        diagnosis1.setDate(new Date());
+        diagnosis1.setPatient(patient);
+        diagnosis1.getMedicines().add(medicine);
+        diagnosis1.setDisease(disease1);
+        diagnosisRepository.save(diagnosis1);
+
+        diagnosis1 = new Diagnosis();
+        diagnosis1.setDoctor(doctor1);
+        diagnosis1.setDate(new Date());
+        diagnosis1.setPatient(patient);
+        diagnosis1.getMedicines().add(medicine);
+        diagnosis1.setDisease(disease2);
+        diagnosisRepository.save(diagnosis1);
+
+        for (int i = 0; i < 9; i++) {
+            diagnosis1 = new Diagnosis();
+            diagnosis1.setDoctor(doctor1);
+            diagnosis1.setDate(new Date());
+            diagnosis1.setPatient(patient);
+            diagnosis1.getMedicines().add(medicine);
+            diagnosis1.setDisease(disease2);
+            diagnosisRepository.save(diagnosis1);
+        }
+    }
+
+    private User initializeUser(String username, String password, String firstName, String lastName, String roleName) {
         User user = new User();
         user.setUsername(username);
         user.setPassword(passwordEncoder.encode(password));
@@ -232,6 +388,6 @@ public class DataLoader implements ApplicationRunner {
         roles.add(role);
         user.setRoles(roles);
 
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 }

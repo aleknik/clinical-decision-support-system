@@ -4,11 +4,6 @@ body {
   padding-top: 4.5rem;
 }
 
-.toast-position {
-  top: 68px;
-  right: 12px;
-}
-
 .pointer {
     cursor: pointer;
 }

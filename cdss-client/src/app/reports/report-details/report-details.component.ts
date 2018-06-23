@@ -36,4 +36,8 @@ export class ReportDetailsComponent implements OnInit {
     });
   }
 
+  onSelect(patient) {
+    this.router.navigate(['patients', patient.id]);
+  }
+
 }

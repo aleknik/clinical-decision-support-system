@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { NewMedicineComponent } from './new-medicine/new-medicine.component';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
+import { MedicineListComponent } from './medicine-list/medicine-list.component';
 
 @NgModule({
   imports: [
@@ -10,6 +11,6 @@ import { SharedModule } from '../shared/shared.module';
     RouterModule,
     SharedModule,
   ],
-  declarations: [NewMedicineComponent]
+  declarations: [NewMedicineComponent, MedicineListComponent]
 })
 export class MedicinesModule { }

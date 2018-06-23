@@ -1,0 +1,20 @@
+<div class="row">
+  <div class="col-sm-2"></div>
+  <div class="col-sm-8">
+    <h2>Medicines</h2>
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let medicine of medicines">
+          <th scope="row">{{medicine.name}}</th>
+          <th>{{medicine.medicineType}}</th>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

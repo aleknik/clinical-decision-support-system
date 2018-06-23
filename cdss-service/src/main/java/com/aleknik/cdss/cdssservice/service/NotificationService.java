@@ -6,6 +6,8 @@ import com.aleknik.cdss.cdssservice.util.JsonUtil;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service
 public class NotificationService {
 
@@ -16,7 +18,7 @@ public class NotificationService {
     }
 
     public void notify(Notification notification, Patient patient) {
-        System.out.println(notification.getMessage());
+        notification.setTimeStamp(new Date());
         messagingTemplate.convertAndSend("/topic/" + patient.getId(), JsonUtil.json(notification));
     }
 }

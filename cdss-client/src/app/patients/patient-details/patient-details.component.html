@@ -3,11 +3,11 @@
     <form class="form" (ngSubmit)="update()" #patientForm="ngForm">
       <h2 class="form-heading">Patient details</h2>
       <div class="form-group">
-        <label for="first">First</label>
+        <label for="first">First name</label>
         <input type="text" class="form-control" id="first" placeholder="First" [(ngModel)]="patient.firstName" name="first" required>
       </div>
       <div class="form-group">
-        <label for="last">Last</label>
+        <label for="last">Last name</label>
         <input type="text" class="form-control" id="last" placeholder="Last" [(ngModel)]="patient.lastName" name="last" required>
       </div>
       <button type="submit" class="btn btn-lg btn-primary btn-block" [disabled]="patientForm.form.invalid">Save</button>
@@ -15,9 +15,9 @@
     <br>
     <br>
     <button class="btn btn-lg btn-primary btn-block" (click)="diagnosePatient()">Diagnose patient</button>
-    <br>
-    <button class="btn btn-lg btn-primary btn-block" (click)="allDiagnoses()">All diagnoses</button>
 
+    <button class="btn btn-lg btn-primary btn-block" (click)="allDiagnoses()">All diagnoses</button>
+    <br>
     <button class="btn btn-lg btn-primary btn-block" [disabled]='subscribed' (click)="subscribe()">Start monitoring</button>
 
     <button class="btn btn-lg btn-primary btn-block" [disabled]='!subscribed' (click)="unsubscribe()">Stop monitoring</button>
