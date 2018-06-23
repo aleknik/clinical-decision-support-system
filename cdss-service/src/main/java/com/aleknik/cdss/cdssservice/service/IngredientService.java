@@ -38,6 +38,11 @@ public class IngredientService {
 
     public Ingredient update(Ingredient ingredient, long id) {
         Ingredient ingredientCurr = findById(id);
+        if (!ingredient.getName().equals(ingredientCurr.getName()) &&
+                ingredientRepository.findByName(ingredient.getName()).isPresent()) {
+            throw new BadRequestException(String.format("Ingredient '%s' already exists", ingredient.getName()));
+        }
+
         ingredientCurr.setName(ingredient.getName());
 
         return ingredientRepository.save(ingredientCurr);

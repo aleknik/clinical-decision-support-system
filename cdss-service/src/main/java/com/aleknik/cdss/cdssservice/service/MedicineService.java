@@ -39,6 +39,11 @@ public class MedicineService {
     public Medicine update(Medicine updatedMedicine, long id) {
         final Medicine medicine = findById(id);
 
+        if (!updatedMedicine.getName().equals(medicine.getName()) &&
+                medicineRepository.findByName(updatedMedicine.getName()).isPresent()) {
+            throw new BadRequestException(String.format("Medicine '%s' already exists", updatedMedicine.getName()));
+        }
+
         if (!updatedMedicine.getName().equals(medicine.getName())) {
             medicine.setName(updatedMedicine.getName());
         }
